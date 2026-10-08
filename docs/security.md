@@ -32,8 +32,9 @@ GitHub's API on 2026-10-08; settings can change independently of this file.
 ## Secret scanning and verification
 
 The secrets job downloads Gitleaks 8.30.1 from its official release and verifies
-the archive SHA-256 before execution. It checks the full fetched Git history
-and the checked-out files, using the scanner's built-in rules with no repository
+the archive SHA-256 before execution. It checks the full fetched Git history,
+including diffs introduced by merge commits, and the checked-out files, using
+the scanner's built-in rules with no repository
 baseline or ignore file. Inline gitleaks:allow comments do not suppress findings.
 Potential secret values are redacted in output, and a finding fails the job.
 Proof verification runs only after this scan succeeds.
