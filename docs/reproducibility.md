@@ -38,8 +38,12 @@ Compiled Lean files and Python caches are ignored by Git.
 
 The local checks have passed on native Windows with Python 3.14.4 and Lean 4.11.0.
 The included GitHub Actions workflow targets Ubuntu 24.04 and Python 3.11.
+It first scans Git history and checked-out files with a pinned Gitleaks release.
 It pins action commits and the elan installer, installs the exact Lean version,
-runs the same verifier and saves the reports. Check
+runs the same verifier and saves the reports for 14 days. The secret scan is a
+separate CI check, not part of the local mathematical verification command.
+See [the security review](security.md) before running untrusted contributions.
+Check
 [the Actions runs](https://github.com/littleBro/heilbronn-triangle-bounds/actions/workflows/verify.yml)
 for the result on the commit you use; the workflow file alone is not evidence
 that a remote run passed.

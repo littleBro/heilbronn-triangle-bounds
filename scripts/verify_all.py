@@ -44,7 +44,8 @@ def main():
     evidence = reports + [
         "scripts/verify_all.py", "Makefile", ".github/workflows/verify.yml",
         "README.md", "CONTRIBUTING.md", "CITATION.cff", "NOTICE", "LICENSE",
-        "docs/reproducibility.md", "docs/review.md",
+        "docs/reproducibility.md", "docs/review.md", "docs/security.md",
+        "SECURITY.md", ".github/dependabot.yml", ".github/CODEOWNERS",
     ]
     summary = {
         "status": "pass",

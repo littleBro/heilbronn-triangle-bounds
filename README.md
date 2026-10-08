@@ -114,6 +114,8 @@ The proof notes are supplied as TeX. The local Codex compiler could not download
 
 The [GitHub Actions workflow](.github/workflows/verify.yml) runs the same checks on Ubuntu and saves verification reports. See [Actions](https://github.com/littleBro/heilbronn-triangle-bounds/actions/workflows/verify.yml) for the result on a particular commit. Local reports and remote runs record their own environments.
 
+CI also scans Git history and checked-out files for exposed secrets before proof verification. See [the security controls and publication checklist](docs/security.md) and [security reporting](SECURITY.md).
+
 ## Review and citation
 
 Corrections, independent reproduction and improvements are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). [The review guide](docs/review.md) maps each claim to its evidence and lists the remaining proof obligations. Use [CITATION.cff](CITATION.cff) and include the repository commit when citing a result.

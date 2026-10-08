@@ -4,6 +4,11 @@ Corrections, independent reproduction and stronger conditional exponents are
 welcome. Start with [the review guide](docs/review.md) and identify the exact
 claim, inequality, theorem name or file that your contribution addresses.
 
+Read [the security review](docs/security.md) before running unfamiliar contributions
+locally or approving their CI runs. Workflow changes need human review even when
+their checks pass. Report sensitive security issues as described in
+[SECURITY.md](SECURITY.md).
+
 For an improvement, give the exact integer or rational parameters, the proof of
 the affected steps, and all downstream changes needed by the geometric argument.
 Update the certificate generator, independent checker, Lean statements and note
