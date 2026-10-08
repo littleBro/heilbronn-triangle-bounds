@@ -1,0 +1,311 @@
+--- a/build/sections/03-norm-digits.tex
++++ b/build/sections/03-norm-digits.tex
+@@ -11,8 +11,8 @@
+ 
+ Fix
+ \begin{equation}\label{norm:fixed-parameters}
+- d=41,\qquad M=\binom{4d-1}{d},\qquad
+- T=\binom{M}{3},\qquad k=T^2+1.
++ d=13,\qquad M=\binom{4d-1}{d},\qquad
++ T=\binom{M}{3},\qquad m=17,\qquad A=101,\qquad k=403^{17}.
+ \end{equation}
+ Let $r$ be an odd prime.  We recall the elementary finite-field facts
+ needed here; see \cite[Chapter~2]{LidlNiederreiter1994} for background.
+@@ -120,7 +120,7 @@
+ $n<p\le2n$.
+ \end{lemma}
+ 
+-Set $L=r^{10}$.  For all sufficiently large $r$, apply
++Set $L=400k^2r^4$.  For all sufficiently large $r$, apply
+ Lemma~\ref{norm:prime-interval} with $n=100k^2L^3$ to choose a prime
+ $B$ satisfying
+ \begin{equation}\label{norm:base}
+@@ -129,22 +129,50 @@
+  \tau=\left\lfloor\frac{B^{k-1}}2\right\rfloor,
+  \qquad R_h=\mathbb Z/h\mathbb Z.
+ \end{equation}
+-For $0\le a<T$, designate positions in rows $1,2,3$, respectively, by
++We use a finite centered-sphere form of Behrend's progression-free
++construction.  Put $s=2A=202$ and $b=2s-1=403$.
++For a word $x=(x_0,\ldots,x_{m-1})\in\{0,\ldots,s-1\}^m$, define
++\[
++ E(x)=\sum_{v=0}^{m-1}(2x_v-(s-1))^2,\qquad
++ u(x)=\sum_{v=0}^{m-1}x_vb^v.
++\]
++Each centered coordinate is odd, so its square is $1$ modulo $8$.
++It follows that $E(x)=m+8j$ with
++$0\le j\le mA(A-1)/2$.  There are therefore at most
++$Q=mA(A-1)/2+1=85851$ possible energies.
++The exact inequality
++\[
++ TQ\le 202^{17}
++\]
++and the pigeonhole principle give an energy containing at least $T$
++words.  Choose such an energy class, and enumerate its first $T$
++words in increasing base-$s$ index $\sum_v x_vs^v$
++as $x(a)$, $0\le a<T$.
++Write $u_a=u(x(a))$ and designate positions by
+ \begin{equation}\label{norm:positions}
+- i_a=a,\qquad j_a=Ta,\qquad \ell_a=T^2-(T+1)a.
+-\end{equation}
+-These positions lie in $\{0,\ldots,k-1\}$ and are distinct within each
+-row: they lie respectively in the intervals $[0,T-1]$, $[0,T^2-T]$,
+-and $[1,T^2]$.  The only designated positions whose sum is $k-1$ are
+-the matched triples:
++ i_a=u_a,\qquad j_a=u_a,\qquad \ell_a=k-1-2u_a.
++\end{equation}
++Since $2(s-1)=b-1$, the geometric sum gives $0\le2u_a\le b^m-1$.
++Uniqueness of base-$b$ expansion and the distinctness of the selected
++words show that the positions are in $\{0,\ldots,k-1\}$ and distinct
++within each row.  They satisfy
+ \begin{equation}\label{norm:matching}
+  i_a+j_{a'}+\ell_{a''}=k-1
+  \quad\Longleftrightarrow\quad a=a'=a''.
+ \end{equation}
+-To prove the forward implication, rewrite the equation as
+-$a+Ta'=(T+1)a''$.  Reduction modulo $T$, together with
+-$0\le a,a''<T$, gives $a=a''$; substitution then gives $a'=a''$.
+-The reverse implication follows from \eqref{norm:positions}.
++Indeed, the equality is equivalent to $u_a+u_{a'}=2u_{a''}$.
++Each digit on either side is at most $2(s-1)=b-1$, so there are no
++carries; hence $x(a)+x(a')=2x(a'')$ coordinatewise.
++The centered vectors have the same squared norm, and the identity
++\[
++ \|X-Y\|^2+4\|Z\|^2=2\|X\|^2+2\|Y\|^2,\qquad X+Y=2Z,
++\]
++forces $X=Y=Z$.  Thus the selected words and their indices agree.
++The converse follows by substitution.
++The selection is a finite existence construction; the $T$ words are
++not enumerated computationally.  All subsequent uses of the positions
++require only the matching identity, their range, and their
++distinctness within each row.
+ 
+ A random column $c=(c_1,c_2,c_3)^{\mathsf T}\in R_h^3$ is now defined
+ as follows.  First choose $\xi$ uniformly from $K$.  For each row
+@@ -159,7 +187,7 @@
+ \begin{equation}\label{norm:column}
+  c_i=\sum_{v=0}^{k-1}c_{iv}B^v\pmod h.
+ \end{equation}
+-Every required residue has exactly $L/r=r^9$ possible digits, including
++Every required residue has exactly $L/r=400k^2r^3$ possible digits, including
+ the zero residue.  In particular a digit prescribed to be zero modulo
+ $r$ is still a positive integer.  Since $L<B$, the lowest digit is a
+ unit modulo $B$; thus every entry of $c$ is a unit in $R_h$.
+--- a/build/sections/04-orbits.tex
++++ b/build/sections/04-orbits.tex
+@@ -205,12 +205,12 @@
+ and \eqref{orb:tail} give \eqref{orb:moment}.
+ \end{proof}
+ 
+-For the parameters $L=r^{10}$ and $B\leq200k^2L^3$ of the digit
++For the parameters $L=400k^2r^4$ and $B\leq200k^2L^3$ of the digit
+ construction, we have
+ \[
+- \theta\leq200k^2r^{-6}.
+-\]
+-Thus, for fixed $k$ and all sufficiently large $r$,
++ \theta\leq200k^2r^4/L=\frac12.
++\]
++Thus, uniformly for every allowed $r$,
+ \begin{equation}
+  \mathbb E[D\mid\lambda_1,\lambda_2,\lambda_3]\leq2
+  \quad\text{for every fixed triple of labels.}
+--- a/build/sections/05-auxiliary-cap.tex
++++ b/build/sections/05-auxiliary-cap.tex
+@@ -7,9 +7,9 @@
+ distinct residue columns and gives bounds for the probability of each
+ remaining triple, including triples with equal residue columns.
+ 
+-Retain the main modulus $h\ge 2$, and choose a prime $q$ with
++Retain the main modulus $h\ge 3$, and choose a prime $q$ with
+ \begin{equation}\label{aux:parameters}
+- H=h^2,\qquad h^{100}<q\le 2h^{100},\qquad
++ H=2h,\qquad h^{14}<q\le 2h^{14},\qquad
+  w=\left\lfloor\frac{q}{1000H^2}\right\rfloor.
+ \end{equation}
+ Lemma~\ref{norm:prime-interval} supplies such a prime for all sufficiently
+--- a/build/sections/06-sampling.tex
++++ b/build/sections/06-sampling.tex
+@@ -8,7 +8,7 @@
+ 
+ Set
+ \begin{equation}\label{sam:box}
+- N=(hq)^{10},\qquad
++ N=(hq)^4,\qquad
+  \mathcal B=\bigl([0,N)^2\times[N,2N)\bigr)\cap\mathbb Z^3.
+ \end{equation}
+ For $u\in\mathcal B$, define its projection by
+--- a/build/sections/07-zero-determinants.tex
++++ b/build/sections/07-zero-determinants.tex
+@@ -15,7 +15,7 @@
+ \]
+ Thus $C$ has diagonal form $(1,D,E)$ over $\mathbb Z/h\mathbb Z$,
+ $[\mathbb Z^3:\Lambda]=I$, and $E\mathbb Z^3\subseteq\Lambda$.
+-Recall also $H=h^2$, $q>h^{100}$, the box
++Recall also $H=2h$, $q>h^{14}$, the box
+ $\mathcal B=[0,N)^2\times[N,2N)\cap\mathbb Z^3$, and the weight
+ $W(A)$ from \eqref{aux:weight}.  For a column $u\in\mathcal B$, its
+ projection means $(u_1/u_3,u_2/u_3)$.
+@@ -121,8 +121,7 @@
+  \ll R^3 B^{b+e}=R^3I.
+ \end{align*}
+ The exponents in the last sum strictly increase to $b+e$, so its
+-bound is uniform in $B$.  Finally, $h\ge2$ implies
+-$H/2=h^2/2\ge h$.
++bound is uniform in $B$.  Finally, $H/2=h$ by the choice $H=2h$.
+ \end{proof}
+ 
+ \begin{proof}[Proof of Proposition~\ref{zero:weighted-zero}]
+@@ -192,10 +191,10 @@
+ $g(x)^3\le Ih^2$, and $W(A)\ll(q^3/s)^2$, the contribution is at most
+ \begin{equation}\label{zero:equal-additional}
+  \ll \frac{N^6}{I^2}\,h^2q^{-3}(q^3/s)^2
+- \ll \frac{N^6}{I^2}\,\frac{h^{26}}q
++ \ll \frac{N^6}{I^2}\,\frac{h^{14}}q
+  \ll \frac{N^6}{I^2}.
+ \end{equation}
+-Here and below we use $q^3/s\ll qH^6=qh^{12}$ and $q>h^{100}$.
++Here and below we use $q^3/s\ll qH^6=64qh^6$ and $q>h^{14}$.
+ This argument includes matrices of every rank modulo $q$.
+ 
+ \paragraph{An equal pair without an additional equation.}
+@@ -216,7 +215,7 @@
+ $W(A)\ll q^3/s$ now gives
+ \begin{equation}\label{zero:special-rank-two}
+  \ll \frac{N^6}{I^2}\,h^2q^{-2}(q^3/s)
+- \ll \frac{N^6}{I^2}\,\frac{h^{14}}q
++ \ll \frac{N^6}{I^2}\,\frac{h^8}q
+  \ll \frac{N^6}{I^2}
+ \end{equation}
+ for the contribution of the shell.
+@@ -242,7 +241,7 @@
+ the weighted contribution is at most
+ \begin{equation}\label{zero:special-rank-one}
+  \ll \frac{N^6}{I^2}\,h^2q^{-4}(q^3/s)^2
+- \ll \frac{N^6}{I^2}\,\frac{h^{26}}{q^2}
++ \ll \frac{N^6}{I^2}\,\frac{h^{14}}{q^2}
+  \ll \frac{N^6}{I^2}.
+ \end{equation}
+ 
+--- a/build/sections/08-alteration.tex
++++ b/build/sections/08-alteration.tex
+@@ -13,9 +13,13 @@
+ no such lemma is needed below.
+ 
+ \begin{proof}[Proof of Theorem~\ref{intro:main}]
+-Keep the parameters constructed above, with $d=41$, and set
++Keep the parameters constructed above, with $d=13$.  Define
++\[
++ \rho=1074k+6,\qquad \gamma=\frac{\rho}{2\rho+1}.
++\]
++Thus $0<\gamma<1/2$ and $2\gamma-1=-1/(2\rho+1)<0$.  Set
+ \begin{equation}\label{alt:sample-size}
+- a_r=r\sqrt{N^3/\tau},\qquad n_r=\lfloor a_r\rfloor.
++ a_r=r^\gamma\sqrt{N^3/\tau},\qquad n_r=\lfloor a_r\rfloor.
+ \end{equation}
+ Here $k\ge2$ and $B$ is an odd prime, so $\tau\ge1$.  Take $2n_r$ samples
+ with the shared random choices and independent conditional draws specified
+@@ -31,21 +35,23 @@
+ \end{equation}
+ No independence between the counted events is needed.
+ 
+-Both terms tend to zero.  Indeed, $N=(hq)^{10}$ and $\tau\ge1$ give
++Both terms tend to zero.  Indeed, $N=(hq)^4$ gives
+ \[
+- n_r(hq)^6N^{-3}\le r\tau^{-1/2}(hq)^{-9}=o(1).
++ n_r(hq)^6N^{-3}\le r^\gamma\tau^{-1/2}.
+ \]
++Since $B^{k-1}\ge3$, we have $\tau\ge B^{k-1}/3$.
++Also $B\asymp_k r^{12}$ and $k\ge2$, so the last bound is
++$O_k(r^{\gamma-6(k-1)})=o(1)$.
+ For the other term, the definition of $n_r$ gives
+ \[
+- n_r^2(\log(2N))^2\frac{h}{N^3r^d}
+- \le (\log(2N))^2\frac{h}{\tau}r^{2-d}.
++ n_r^2(\log(2N))^2\frac{h}{N^3r^{13}}
++ \le(\log(2N))^2\frac{h}{\tau}r^{2\gamma-13}.
+ \]
+-Since $B^{k-1}\ge3$, the definition of $\tau$ implies
+-$\tau\ge B^{k-1}/3$, and hence $h/\tau\le3B=O_k(r^{30})$.
+-The bounds $B=O_k(r^{30})$, $q\le2h^{100}$, and $N=(hq)^{10}$
+-also give $\log(2N)=O_k(\log r)$. Thus the second term in
+-\eqref{alt:expected-events} is
+-$O_k((\log r)^2r^{-9})=o(1)$.
++Here $h/\tau\le3B=O_k(r^{12})$.
++The bounds $q\le2h^{14}$ and $N=(hq)^4$ give
++$\log(2N)=O_k(\log r)$.  Thus the second term is
++$O_k((\log r)^2r^{2\gamma-1})=o(1)$.
++The negative exponent is fixed independently of $r$, although very small.
+ Thus $\mathbb EZ=o(n_r)$.
+ 
+ For sufficiently large $r$, choose an outcome with $Z<n_r$.  For each
+@@ -70,49 +76,49 @@
+ \begin{equation}\label{alt:area-bound}
+  \Delta(P_r)\ge\frac{\tau}{16N^3}.
+ \end{equation}
+-Also $\tau<h$ and $N\ge h^{10}$ give
+-$a_r>rh^{29/2}\to\infty$.  Hence $n_r\to\infty$ and eventually
++Also $\tau<h$ and $N\ge h^4$ give
++$a_r>r^\gamma h^{11/2}\to\infty$.  Hence $n_r\to\infty$ and eventually
+ $n_r\ge a_r/2$.  Combining this with \eqref{alt:area-bound} yields
+ \begin{equation}\label{alt:scaled-area}
+- n_r^2\Delta(P_r)\ge\frac{r^2}{64}.
++ n_r^2\Delta(P_r)\ge\frac{r^{2\gamma}}{64}.
+ \end{equation}
+ 
+ We now express both the cardinality and the area bound in terms of $r$.
+ The parameter choices give
+ \[
+  \begin{gathered}
+-  100k^2r^{30}<B\le200k^2r^{30},\qquad h=B^k,\\
+-  h^{100}<q\le2h^{100},\qquad N^{3/2}=(hq)^{15},\\
++  100k^2(400k^2)^3r^{12}<B\le200k^2(400k^2)^3r^{12},\qquad h=B^k,\\
++  h^{14}<q\le2h^{14},\qquad N^{3/2}=(hq)^6,\\
+   B^{k-1}/3\le\tau\le B^{k-1}/2.
+  \end{gathered}
+ \]
+ Consequently, if
+ \[
+- \beta=1515k-\frac{k-1}{2}=\frac{3029k+1}{2},
++ \beta=90k-\frac{k-1}{2}=\frac{179k+1}{2},
+ \]
+ then
+ \[
+- \sqrt{2}\,rB^\beta<a_r\le2^{15}\sqrt{3}\,rB^\beta.
++ \sqrt{2}\,r^\gamma B^\beta<a_r\le2^6\sqrt{3}\,r^\gamma B^\beta.
+ \]
+ Since $a_r/2\le n_r\le a_r$ for sufficiently large $r$, there are fixed
+ constants $A_k,D_k>0$ such that
+ \begin{equation}\label{alt:cardinality-growth}
+  A_kr^\alpha\le n_r\le D_kr^\alpha,
+- \qquad \alpha=1+30\beta=45435k+16,
++ \qquad \alpha=\gamma+12\beta=\rho+\gamma,
+ \end{equation}
+ for every sufficiently large prime $r$. In particular, put
+ \begin{equation}\label{alt:exponent}
+- \eta=\frac2\alpha=\frac{2}{45435k+16}.
++ \eta=\frac{2\gamma}{\alpha}=\frac1{\rho+1}=\frac1{1074k+7}.
+ \end{equation}
+ The upper bound in \eqref{alt:cardinality-growth} gives
+-$r^2\ge D_k^{-\eta}n_r^\eta$. Combining this with
++$r^{2\gamma}\ge D_k^{-\eta}n_r^\eta$. Combining this with
+ \eqref{alt:scaled-area}, we obtain
+ \begin{equation}\label{alt:prime-area}
+  \Delta(P_r)\ge c_*n_r^{-2+\eta},
+  \qquad c_*=\frac1{64D_k^\eta}>0.
+ \end{equation}
+ Thus the same cardinality estimate that will permit interpolation also
+-converts the factor $r^2$ into a fixed power of the number of points.
++converts the factor $r^{2\gamma}$ into a fixed power of the number of points.
+ 
+ For a sufficiently large integer $n$, put
+ $m=\lceil(n/A_k)^{1/\alpha}\rceil$.
+@@ -132,6 +138,6 @@
+ \]
+ Taking $c_1=c_*C_k^{-2+\eta}$ proves Theorem~\ref{intro:main}.
+ All constants are absolute because $k$ is fixed independently of $r$ and
+-$n$. The formula \eqref{alt:exponent} is explicit; no attempt has been
+-made to optimize the construction parameters.
++$n$. The formula \eqref{alt:exponent} is explicit.  These choices improve
++the earlier scales; no unrestricted optimality claim is made.
+ \end{proof}

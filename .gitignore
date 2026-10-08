@@ -1,0 +1,6 @@
+__pycache__/
+*.olean
+*.ilean
+*.aux
+*.log
+*.out

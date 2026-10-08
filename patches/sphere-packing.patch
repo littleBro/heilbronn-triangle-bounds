@@ -1,0 +1,74 @@
+--- a/build/sections/03-norm-digits.tex
++++ b/build/sections/03-norm-digits.tex
+@@ -12,7 +12,8 @@
+ Fix
+ \begin{equation}\label{norm:fixed-parameters}
+  d=41,\qquad M=\binom{4d-1}{d},\qquad
+- T=\binom{M}{3},\qquad k=T^2+1.
++ T=\binom{M}{3},\qquad m=29,\qquad A=10003,\qquad
++ k=(4A-1)^m=40011^{29}.
+ \end{equation}
+ Let $r$ be an odd prime.  We recall the elementary finite-field facts
+ needed here; see \cite[Chapter~2]{LidlNiederreiter1994} for background.
+@@ -129,22 +130,50 @@
+  \tau=\left\lfloor\frac{B^{k-1}}2\right\rfloor,
+  \qquad R_h=\mathbb Z/h\mathbb Z.
+ \end{equation}
+-For $0\le a<T$, designate positions in rows $1,2,3$, respectively, by
++We use a finite centered-sphere form of Behrend's progression-free
++construction.  Put $s=2A=20006$ and $b=2s-1=40011$.
++For a word $x=(x_0,\ldots,x_{m-1})\in\{0,\ldots,s-1\}^m$, define
++\[
++ E(x)=\sum_{v=0}^{m-1}(2x_v-(s-1))^2,\qquad
++ u(x)=\sum_{v=0}^{m-1}x_vb^v.
++\]
++Each centered coordinate is odd, so its square is $1$ modulo $8$.
++It follows that $E(x)=m+8j$ with
++$0\le j\le mA(A-1)/2$.  There are therefore at most
++$Q=mA(A-1)/2+1=1450725088$ possible energies.
++The exact inequality
++\[
++ TQ\le 20006^{29}
++\]
++and the pigeonhole principle give an energy containing at least $T$
++words.  Choose such an energy class, and enumerate its first $T$
++words in increasing base-$s$ index $\sum_v x_vs^v$
++as $x(a)$, $0\le a<T$.
++Write $u_a=u(x(a))$ and designate positions by
+ \begin{equation}\label{norm:positions}
+- i_a=a,\qquad j_a=Ta,\qquad \ell_a=T^2-(T+1)a.
+-\end{equation}
+-These positions lie in $\{0,\ldots,k-1\}$ and are distinct within each
+-row: they lie respectively in the intervals $[0,T-1]$, $[0,T^2-T]$,
+-and $[1,T^2]$.  The only designated positions whose sum is $k-1$ are
+-the matched triples:
++ i_a=u_a,\qquad j_a=u_a,\qquad \ell_a=k-1-2u_a.
++\end{equation}
++Since $2(s-1)=b-1$, the geometric sum gives $0\le2u_a\le b^m-1$.
++Uniqueness of base-$b$ expansion and the distinctness of the selected
++words show that the positions are in $\{0,\ldots,k-1\}$ and distinct
++within each row.  They satisfy
+ \begin{equation}\label{norm:matching}
+  i_a+j_{a'}+\ell_{a''}=k-1
+  \quad\Longleftrightarrow\quad a=a'=a''.
+ \end{equation}
+-To prove the forward implication, rewrite the equation as
+-$a+Ta'=(T+1)a''$.  Reduction modulo $T$, together with
+-$0\le a,a''<T$, gives $a=a''$; substitution then gives $a'=a''$.
+-The reverse implication follows from \eqref{norm:positions}.
++Indeed, the equality is equivalent to $u_a+u_{a'}=2u_{a''}$.
++Each digit on either side is at most $2(s-1)=b-1$, so there are no
++carries; hence $x(a)+x(a')=2x(a'')$ coordinatewise.
++The centered vectors have the same squared norm, and the identity
++\[
++ \|X-Y\|^2+4\|Z\|^2=2\|X\|^2+2\|Y\|^2,\qquad X+Y=2Z,
++\]
++forces $X=Y=Z$.  Thus the selected words and their indices agree.
++The converse follows by substitution.
++The selection is a finite existence construction; the $T$ words are
++not enumerated computationally.  All subsequent uses of the positions
++require only the matching identity, their range, and their
++distinctness within each row.
+ 
+ A random column $c=(c_1,c_2,c_3)^{\mathsf T}\in R_h^3$ is now defined
+ as follows.  First choose $\xi$ uniformly from $K$.  For each row

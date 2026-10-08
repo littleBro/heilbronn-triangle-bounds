@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "checked_results": [
+    "ternary",
+    "sphere",
+    "tuned"
+  ],
+  "generated_files_unchanged": [
+    "certificates/ternary.json",
+    "certificates/sphere.json",
+    "certificates/tuned.json",
+    "patches/ternary-packing.patch",
+    "patches/sphere-packing.patch",
+    "patches/tuned-parameters.patch"
+  ],
+  "environment": "local invocation; see individual reports for runtime versions",
+  "evidence_sha256": {
+    "artifacts/verification.json": "c57d65261ecee431ed0b3e15e175877da91de1a2ee787b5b1ab7424f8c84335f",
+    "artifacts/sphere-verification.json": "ca21d48e2314347cdfe9a81cf49c387f266dfb7f6f30bcb08414b79dec0b0494",
+    "artifacts/tuned-verification.json": "c8dacfeda59db0dc49f2152c6c1a73279afda91c5bd01ae25274d121cf676303",
+    "scripts/verify_all.py": "c3497b5ecb6e0b93e8532e8a3c38e8e1e07e4d4b9cb7dc1aac98e7f9cc4b32ef",
+    "Makefile": "dc12ed61bc1c17be7694f7c0b714931600ea2fa29e72c1ebd2be50fd25fb9d3f",
+    ".github/workflows/verify.yml": "b83077c666567e65e9dd4992e92f4a310ef83f3543be90dec6fe87002f23bd47",
+    "README.md": "94e80b8fc8ccbaf3f18b78723ad935e5a637bcfe7f89b850f78fe2370aa026a7",
+    "CONTRIBUTING.md": "142a1012dbfd04c522c1f61cce4313ecb391e321708ca9f51011d970ca818009",
+    "CITATION.cff": "7b25b2fa374810479467afea48eb5a53019fa68e3ebbd82f73067f3434b5e192",
+    "NOTICE": "932f551b17292e140dcd4f73615e1afd2d1f3135f57f461ea1779cd7fe3aa505",
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "docs/reproducibility.md": "666087f64f8392ecefbaab59585d1a8abb3b5013f5080e4088e3f5dbfb20194d",
+    "docs/review.md": "8a00546839c4849a726edebf5bb67f24e27a27ecfe851effaa405bd7f14c245a"
+  },
+  "scope": "Local proofs, exact certificates, finite controls and source patches; the full geometric theorem remains conditional."
+}

@@ -1,0 +1,28 @@
+This local research package contains material from openai/math:
+
+  A power improvement in the Heilbronn triangle lower bound
+  Author: OpenAI
+  Manuscript date: September 25, 2026
+  Commit: fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+  Repository: https://github.com/openai/math
+
+The upstream source, PDF, comparator target, and scope note are preserved
+without modification in upstream/. Their original Apache-2.0 license is
+included in upstream/LICENSE and copied to LICENSE.
+
+Local additions provide ternary and centered-sphere digit-position
+constructions, local formal proofs, arithmetic certificates, checkers,
+written conditional transfers, and alternative unapplied source patches.
+The classical ternary construction is attributed in notes/packing.tex;
+Behrend's sphere method is attributed in notes/sphere-packing.tex.
+The finite sphere counting, selection, and complete packing are formalized.
+The retuned d=13 packing, integer scale inequalities, and exact exponent
+arithmetic are also formalized; the six-section patch remains unapplied.
+The geometric transfer remains a written conditional argument.
+No priority or unrestricted optimality claim is made.
+
+Local author: Ivan Blinov (@littleBro).
+Research, implementation and drafting used substantial OpenAI Codex assistance.
+The repository organization was informed by Swapnil Jain's integer-mult-kappa
+and CrocSwap's integer-mult-bounds. No mathematical results from those
+integer-multiplication projects are used as assumptions here.

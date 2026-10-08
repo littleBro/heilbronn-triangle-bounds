@@ -1,0 +1,53 @@
+--- a/build/sections/03-norm-digits.tex
++++ b/build/sections/03-norm-digits.tex
+@@ -12,7 +12,7 @@
+ Fix
+ \begin{equation}\label{norm:fixed-parameters}
+  d=41,\qquad M=\binom{4d-1}{d},\qquad
+- T=\binom{M}{3},\qquad k=T^2+1.
++ T=\binom{M}{3},\qquad m=\lceil\log_2 T\rceil,\qquad k=3^m.
+ \end{equation}
+ Let $r$ be an odd prime.  We recall the elementary finite-field facts
+ needed here; see \cite[Chapter~2]{LidlNiederreiter1994} for background.
+@@ -129,22 +129,30 @@
+  \tau=\left\lfloor\frac{B^{k-1}}2\right\rfloor,
+  \qquad R_h=\mathbb Z/h\mathbb Z.
+ \end{equation}
+-For $0\le a<T$, designate positions in rows $1,2,3$, respectively, by
++For $0\le a<T\le2^m$, write the padded binary expansion
++$a=\sum_{v=0}^{m-1}\epsilon_v(a)2^v$ with $\epsilon_v(a)\in\{0,1\}$,
++and put $u_a=\sum_{v=0}^{m-1}\epsilon_v(a)3^v$.
++Designate positions in rows $1,2,3$, respectively, by
+ \begin{equation}\label{norm:positions}
+- i_a=a,\qquad j_a=Ta,\qquad \ell_a=T^2-(T+1)a.
+-\end{equation}
+-These positions lie in $\{0,\ldots,k-1\}$ and are distinct within each
+-row: they lie respectively in the intervals $[0,T-1]$, $[0,T^2-T]$,
+-and $[1,T^2]$.  The only designated positions whose sum is $k-1$ are
+-the matched triples:
++ i_a=u_a,\qquad j_a=u_a,\qquad \ell_a=k-1-2u_a.
++\end{equation}
++Since $0\le2u_a\le3^m-1=k-1$, these positions lie in
++$\{0,\ldots,k-1\}$.  Uniqueness of base-three expansion makes
++$a\mapsto u_a$ injective, so the positions are distinct within each
++row; different rows are permitted to use the same position.
++The only designated positions whose sum is $k-1$ are the matched triples:
+ \begin{equation}\label{norm:matching}
+  i_a+j_{a'}+\ell_{a''}=k-1
+  \quad\Longleftrightarrow\quad a=a'=a''.
+ \end{equation}
+-To prove the forward implication, rewrite the equation as
+-$a+Ta'=(T+1)a''$.  Reduction modulo $T$, together with
+-$0\le a,a''<T$, gives $a=a''$; substitution then gives $a'=a''$.
+-The reverse implication follows from \eqref{norm:positions}.
++Indeed, the equality is equivalent to $u_a+u_{a'}=2u_{a''}$.
++Neither side has carries in base three: at each position it gives
++$\epsilon_v(a)+\epsilon_v(a')=2\epsilon_v(a'')$.
++All three binary digits are therefore equal at every position, which
++implies $a=a'=a''$.  The converse follows by substitution.
++In particular $m=384$ and $k=3^{384}$ for the fixed value $d=41$.
++All subsequent uses of the positions require only this matching
++identity, their range, and their distinctness within each row.
+ 
+ A random column $c=(c_1,c_2,c_3)^{\mathsf T}\in R_h^3$ is now defined
+ as follows.  First choose $\xi$ uniformly from $K$.  For each row

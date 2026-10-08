@@ -1,0 +1,94 @@
+{
+  "schema": "heilbronn-tuned-scales-v1",
+  "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "status": "conditional-on-upstream-estimates",
+  "scope": "paper exponent; not the upstream Lean comparator exponent",
+  "d": 13,
+  "M": "476260169700",
+  "T": "18004519550937520342031694999844900",
+  "dimension": 17,
+  "half_alphabet": 101,
+  "alphabet": 202,
+  "base": 403,
+  "energy_layers": 85851,
+  "cube_size": "1552291504289134026062314691803440873472",
+  "required_capacity": "1545706007967537058883763047431684509900",
+  "k": "195067889127125536409155163057028999943162963",
+  "scales": {
+    "L": "400*k^2*r^4",
+    "B": "100*k^2*L^3 < B <= 200*k^2*L^3; B prime",
+    "h": "B^k",
+    "tau": "floor(B^(k-1)/2)",
+    "H": "2*h",
+    "q": "h^14 < q <= 2*h^14; q prime",
+    "N": "(h*q)^4",
+    "n_r": "floor(r^gamma*sqrt(N^3/tau))"
+  },
+  "rho": "209502912922532826103432645123249145938957022268",
+  "gamma": {
+    "numerator": "209502912922532826103432645123249145938957022268",
+    "denominator": "419005825845065652206865290246498291877914044537"
+  },
+  "beta": {
+    "numerator": "17458576076877735508619387093604095494913085189",
+    "denominator": "1"
+  },
+  "alpha": {
+    "numerator": "87782941046052743639168639873505773549119117407392155135826980491584073238634921064656809772184",
+    "denominator": "419005825845065652206865290246498291877914044537"
+  },
+  "eta": {
+    "numerator": "1",
+    "denominator": "209502912922532826103432645123249145938957022269"
+  },
+  "gain_from_previous_sphere": {
+    "numerator": "1320058880939486512625083453783612589560179873157210278770402547450573256708352181791642325593479491259048543882076435128937234591159322601",
+    "denominator": "419005825845065652206865290246498291877914044538"
+  },
+  "gain_from_original": {
+    "numerator": "62977962658328119330138666876776837106119309987963865046886690167106413508235850732755338335917883554182270166222875901063992208612027211160892977098315909205708359598521945861859131733014882429680799601708624098121229080356687570445451",
+    "denominator": "419005825845065652206865290246498291877914044538"
+  },
+  "constraints": {
+    "theta_upper": {
+      "numerator": "1",
+      "denominator": "2"
+    },
+    "collision_r_power": {
+      "numerator": "-1",
+      "denominator": "419005825845065652206865290246498291877914044537"
+    },
+    "pair_r_power": {
+      "numerator": "-490407491877389629269098546779361863402900094509247703335755125193026165643753740600544009296",
+      "denominator": "419005825845065652206865290246498291877914044537"
+    },
+    "zero_case_h_powers": [
+      0,
+      -6,
+      -14
+    ],
+    "cap_condition": "h >= 3 implies 2000*(2*h)^2 <= h^14 < q"
+  },
+  "parameter_comparison": {
+    "dimensions_inclusive": [
+      3,
+      284
+    ],
+    "claim": "bounded sphere comparison only"
+  },
+  "formal_scope": {
+    "proved": [
+      "complete finite packing with binomial T for d=13",
+      "digit divisibility and moment inequality",
+      "shell threshold, cap modulus and three zero-case inequalities",
+      "cleared-denominator alteration inequalities and exponent identity",
+      "exact gain enclosure"
+    ],
+    "written_not_formalized": [
+      "field norm and determinant decomposition",
+      "upstream lattice, orbit, auxiliary and weighted counting arguments",
+      "probability, asymptotic deletion and interpolation",
+      "parameter comparison monotonicity"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "source": "notes/packing.tex",
+  "status": "unavailable",
+  "compiler": "Codex built-in Tectonic",
+  "reason": "Required TeX bundle is not cached and the compiler could not download its index.",
+  "bundle_url": "https://relay.fullyjustified.net/default_bundle_v33.tar.index.gz",
+  "source_diagnostics_available": false,
+  "new_note_pdf_created": false,
+  "mathematical_verification_affected": false
+}

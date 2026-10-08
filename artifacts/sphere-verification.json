@@ -1,0 +1,103 @@
+{
+  "status": "pass",
+  "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+  "lean": "Lean (version 4.11.0, x86_64-w64-windows-gnu, commit ec3042d94bd1, Release)",
+  "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "source_files_verified": 16,
+  "eta_sphere_approx": "1.51508393214748E-138",
+  "gain_from_original_approx": "4.77084496515085E+97",
+  "gain_from_ternary_approx": "5.64103821036477E+49",
+  "arithmetic_negative_controls": 4,
+  "parameter_comparison": {
+    "dimensions_checked": 282,
+    "claim": "bounded comparison only"
+  },
+  "sphere_regressions": {
+    "cases": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ]
+    ],
+    "words": 1186,
+    "layers": 55,
+    "pair_checks": 48796,
+    "negative_controls": 2
+  },
+  "determinant_regressions": {
+    "coefficient_examples": 6,
+    "nonzero_carry_examples": 5
+  },
+  "lean_axiom_audit": [
+    "'HeilbronnSphere.sphere_matching' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSphere.position_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSphere.encode_injective' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSphere.right_injective' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSphere.paper_capacity' does not depend on any axioms",
+    "'HeilbronnSphere.sphere_gain' does not depend on any axioms",
+    "'HeilbronnSphere.sphere_family' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSphere.packing_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSphere.paper_packing' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSphere.paperT_binomial' does not depend on any axioms",
+    "'HeilbronnSphere.paper_packing_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  ],
+  "patch_applies": true,
+  "evidence_sha256": {
+    "lean/Sphere.lean": "a09d087c8083cf526fb82e6b6e2798ddce8eb70655fb925efa927d6d197cebb1",
+    "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
+    "scripts/build_sphere.py": "9bc551e814838357b6db0ffd9c558cae5c4672a836429e607fbe323ad861f6b7",
+    "scripts/verify_sphere.py": "7c1177b2db18418653d063768675d441db8e3976ebcfe60baad8b5d89e5c69cd",
+    "scripts/verify.py": "cf70186da5027bca1a6e01cf93802bf18724ec1a144be37675f00cfe8226b769",
+    "scripts/build_patch.py": "fb6792ff41bf1b2d16535210d38f93a33320ef72ae1c5fc41b38e8a48ea65079",
+    "certificates/sphere.json": "e9c76c95682da3f1021c30fa72c224fdb8f9ffb1993b63d52166911edacfff02",
+    "patches/sphere-packing.patch": "f6bad1502b906c453a4cb8a93eef4d371765f21e2798cdd4604043da56fc5ad4",
+    "notes/sphere-packing.tex": "25e1c266cfb5f22bd9f56d6ef966ecdf592c30f1ece3581f992f0d7d735f55a6",
+    "notes/packing.tex": "0eb5f502a4393da4ce7e2e238dc800b1010c4ec3975f27b3d1da742f21aa7d4e",
+    "README.md": "94e80b8fc8ccbaf3f18b78723ad935e5a637bcfe7f89b850f78fe2370aa026a7",
+    "NOTICE": "932f551b17292e140dcd4f73615e1afd2d1f3135f57f461ea1779cd7fe3aa505",
+    "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
+    "artifacts/sphere-latex-status.json": "a80e6d76eb249e806a322c6f78b6dc1717f4134783251d100db511d31482895c"
+  },
+  "not_established": [
+    "complete independent proof or formalization of the upstream geometric theorem",
+    "formal proof of parameter-comparison optimality",
+    "practical construction of the full sphere or planar point set",
+    "novelty, priority, or unrestricted packing optimality"
+  ]
+}

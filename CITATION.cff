@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "Please cite this research repository and identify the exact commit used."
+type: software
+title: "Heilbronn triangle bounds: finite packings and improved scales"
+authors:
+  - family-names: Blinov
+    given-names: Ivan
+license: Apache-2.0
+abstract: >-
+  A conditional improvement to the exponent in OpenAI math family 191.
+  Includes complete Lean proofs of finite digit packings, exact arithmetic
+  certificates, independent arithmetic checks, and source patches.
+  The full geometric theorem remains conditional on the pinned upstream
+  estimates. Research, implementation and drafting used OpenAI Codex assistance.
+keywords:
+  - Heilbronn triangle problem
+  - Lean
+  - formal verification
+  - exact certificates
+  - Behrend construction

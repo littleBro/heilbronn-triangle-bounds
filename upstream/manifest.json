@@ -1,0 +1,119 @@
+{
+  "repository": "https://github.com/openai/math",
+  "commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "retrieved_at_utc": "2026-10-08T15:46:16.1682731Z",
+  "files": [
+    {
+      "path": "upstream/manuscript/README.md",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/README.md",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/README.md",
+      "sha256": "944f7aacd6968764c092793770242cb227ca192e95240e2ab01a2f6ed7e3f3f2",
+      "bytes": 622
+    },
+    {
+      "path": "upstream/manuscript/main.pdf",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/main.pdf",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/main.pdf",
+      "sha256": "e43687a84b82e23fd73f8025d8d8c91e7fee91c8ceead9bc41502b0595f09f0a",
+      "bytes": 443755
+    },
+    {
+      "path": "upstream/manuscript/build/main.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/main.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/main.tex",
+      "sha256": "309b0edaee94fcb3b205200011547799b2402a4da9e6d0507ba116f17c31bf3c",
+      "bytes": 3036
+    },
+    {
+      "path": "upstream/manuscript/build/references.bib",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/references.bib",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/references.bib",
+      "sha256": "b0f8748177bffe5c49f0a61a360c3ffff0eb074782630e0c437792ddc9368eed",
+      "bytes": 5540
+    },
+    {
+      "path": "upstream/manuscript/build/sections/01-introduction.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/01-introduction.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/01-introduction.tex",
+      "sha256": "d1441934fee324ecb09e9ddfaecbdf8d28c082976b4a6b8cf9dec33ad70115fe",
+      "bytes": 8174
+    },
+    {
+      "path": "upstream/manuscript/build/sections/02-lattices.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/02-lattices.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/02-lattices.tex",
+      "sha256": "97a9e9e6b10cdca9d7d9e69b3c5a1d58b1c901663e416d6acb7c23a50f459432",
+      "bytes": 8869
+    },
+    {
+      "path": "upstream/manuscript/build/sections/03-norm-digits.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/03-norm-digits.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/03-norm-digits.tex",
+      "sha256": "be965ff6c9155a7ae76d067746c6f82d8daf5bbf84f7f71567daf498f26867a6",
+      "bytes": 9579
+    },
+    {
+      "path": "upstream/manuscript/build/sections/04-orbits.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/04-orbits.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/04-orbits.tex",
+      "sha256": "c6aebd1e090611c9665f0797ee7860a9c67f13d17ed7c272b3b9792bd4918544",
+      "bytes": 9147
+    },
+    {
+      "path": "upstream/manuscript/build/sections/05-auxiliary-cap.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/05-auxiliary-cap.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/05-auxiliary-cap.tex",
+      "sha256": "ff7efc8c9547de2736ac4c2affb1fa572873d94b021024f33ff3e6142c607e33",
+      "bytes": 9630
+    },
+    {
+      "path": "upstream/manuscript/build/sections/06-sampling.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/06-sampling.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/06-sampling.tex",
+      "sha256": "b8e37c2974f2d25c91208c5a45d6e6e85473bdc4176c430448a7b6c8aa715fe7",
+      "bytes": 7724
+    },
+    {
+      "path": "upstream/manuscript/build/sections/07-zero-determinants.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/07-zero-determinants.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/07-zero-determinants.tex",
+      "sha256": "78562eededd7617dabebf7b079b5417f1672b21ee7dd3b9003389c9133ca3a5c",
+      "bytes": 10160
+    },
+    {
+      "path": "upstream/manuscript/build/sections/08-alteration.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/08-alteration.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/08-alteration.tex",
+      "sha256": "c6bc43c6cc8c4aadb1fe53ded4e91220d921610e1e8133a3d0e84f9a4cafcc48",
+      "bytes": 5592
+    },
+    {
+      "path": "upstream/manuscript/build/sections/09-prime-interval.tex",
+      "upstream_path": "preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/09-prime-interval.tex",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026/build/sections/09-prime-interval.tex",
+      "sha256": "f74650aad0150fa19649cb8ca24768d814239c548dc3a388dc8a40aae5fe8606",
+      "bytes": 1733
+    },
+    {
+      "path": "upstream/LICENSE",
+      "upstream_path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "path": "upstream/lean-scope.md",
+      "upstream_path": "lean/docs/191.md",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/docs/191.md",
+      "sha256": "e2250c3010963320569247febbc795f9412f06a90d1fc6a408abb2ba93dcf721",
+      "bytes": 1063
+    },
+    {
+      "path": "upstream/HeilbronnTriangle.lean",
+      "upstream_path": "lean/ComparatorChallenges/HeilbronnTriangle.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/ComparatorChallenges/HeilbronnTriangle.lean",
+      "sha256": "9e12bbd748dff7adf89cabd85e9e1c5321415d6827ce125755d13b4e17dcafa3",
+      "bytes": 1999
+    }
+  ]
+}

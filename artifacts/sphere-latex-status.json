@@ -1,0 +1,11 @@
+{
+  "source": "notes/sphere-packing.tex",
+  "attempt_date": "2026-10-08",
+  "attempt_scope": "Repository preparation and author attribution in the existing open document",
+  "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
+  "status": "environment-failure",
+  "reason": "Required TeX bundle was not cached and its download failed.",
+  "bundle_url": "https://relay.fullyjustified.net/default_bundle_v33.tar.index.gz",
+  "source_diagnostics_available": false,
+  "pdf_generated": false
+}

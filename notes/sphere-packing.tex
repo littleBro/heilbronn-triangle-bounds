@@ -1,0 +1,533 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}[lemma]{Proposition}
+\title{Sphere packing and improved scales for the Heilbronn construction}
+\author{Ivan Blinov\\\small Research draft prepared with OpenAI Codex assistance}
+\date{October 8, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+An elementary finite form of Behrend's classical sphere construction
+replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
+Retuning the dimension to \(d=13\) and reducing the auxiliary scales
+gives the conditional paper exponent
+\[
+ k=403^{17},\qquad
+ \eta_{\rm tuned}=\frac{1}{1074\cdot403^{17}+7}
+       \approx4.77320332233169\cdot10^{-48}.
+\]
+This is approximately \(3.15045471808690\cdot10^{90}\) times the
+previous sphere exponent. The earlier \(d=41\) construction is retained
+below as a baseline. Lean checks both complete finite packings, their
+binomial counts and capacities, and the new integer scale inequalities.
+The full geometric consequence remains conditional on the upstream estimates.
+\end{abstract}
+
+\section{Input and scope}
+The input is OpenAI math family 191, \emph{A power improvement in the
+Heilbronn triangle lower bound}, September 25, 2026, pinned at
+\[
+ \texttt{fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb}.
+\]
+All saved upstream files remain unchanged. For the preserved baseline, retain
+\[
+ d=41,\qquad M=\binom{163}{41},\qquad T=\binom{M}{3}.
+\]
+The exact \(T\) is recorded in the certificate, independently
+recomputed by the verifier, and checked in Lean using the
+falling-factorial quotient formula for binomial coefficients.
+The original packing has \(k=T^2+1\).
+The first local replacement, preserved separately, has \(k=3^{384}\).
+The baseline transfer and interface review below use \(d=41\).
+Section~\ref{sec:retuned} explicitly changes \(d,T,k\) and the other scales.
+This is an application of the classical sphere idea of Behrend
+\cite{behrend}, not a new progression-free-set construction.
+Stronger variants are known \cite{ehps}; neither optimality nor
+novelty of the present application is asserted.
+
+\section{The finite sphere construction}
+\begin{lemma}\label{lem:sphere}
+Let \(A,m,T\) be positive integers and put
+\[
+ s=2A,\quad b=4A-1,\quad k=b^m,\quad Q=mA(A-1)/2+1.
+\]
+If \(TQ\le s^m\), there are \(T\) distinct integers \(u_a\), \(0\le a<T\),
+such that
+\[
+ 0\le2u_a\le k-1,\qquad
+ u_a+u_{a'}=2u_{a''}\quad\Longleftrightarrow\quad a=a'=a''.
+\]
+The positions \(i_a=u_a,\ j_a=u_a,\ \ell_a=k-1-2u_a\) therefore lie
+in \(\{0,\ldots,k-1\}\), are injective within each row, and satisfy
+\[
+ i_a+j_{a'}+\ell_{a''}=k-1
+ \quad\Longleftrightarrow\quad a=a'=a''.
+\]
+\end{lemma}
+\begin{proof}
+For \(x\in\{0,\ldots,s-1\}^m\), set
+\[
+ X_v=2x_v-(s-1),\qquad E(x)=\sum_{v=0}^{m-1}X_v^2.
+\]
+Each centered coordinate is odd, has absolute value between \(1\)
+and \(2A-1\), and its square is \(1\) modulo \(8\). Hence
+\[
+ m\le E(x)\le m(2A-1)^2,\qquad E(x)\equiv m\pmod8.
+\]
+There are at most
+\[
+ \frac{m((2A-1)^2-1)}8+1=mA(A-1)/2+1=Q
+\]
+energies. The cube contains exactly \(s^m\) words, so the pigeonhole
+principle gives a class with at least \(T\) words. This proves
+existence of the needed input rather than assuming it.
+
+Choose an energy class with at least \(T\) words, and take its first
+\(T\) words in increasing order of the base-\(s\) index
+\(\sum_v x_vs^v\), denoted \(x(a)\). This is the selection used in
+the formal existence proof; no least-energy assertion is needed. Define
+\[
+ u_a=\sum_{v=0}^{m-1}x_v(a)b^v.
+\]
+Uniqueness of expansion proves injectivity, and
+\[
+ 2u_a\le2(s-1)\sum_{v=0}^{m-1}b^v=b^m-1
+\]
+because \(2(s-1)=b-1\).
+
+In an equality \(u_a+u_{a'}=2u_{a''}\), each digit on either side
+is at most \(b-1\); thus there are no carries. Consequently
+\(x(a)+x(a')=2x(a'')\) coordinatewise. Centering gives \(X+Y=2Z\).
+These three vectors have equal squared norms, so
+\[
+ \|X-Y\|^2+4\|Z\|^2=2\|X\|^2+2\|Y\|^2
+\]
+implies \(X=Y=Z\). The distinct selected words therefore have
+equal indices. The converse and the position claims follow directly.
+\end{proof}
+The selection is finite but enormous; we do not enumerate this sphere
+or its \(T\) selected words. The existence theorem does not require
+that computation. For \(A=1\), this becomes the binary-digit ternary set.
+
+\section{Baseline parameters and comparison}
+Take
+\[
+ m=29,\quad A=10003,\quad s=20006,\quad b=40011,\quad Q=1450725088.
+\]
+The exact integer comparison is
+\[
+ T\cdot1450725088\le20006^{29}.
+\]
+The right-to-left ratio is approximately \(1.00268267437678\);
+only the integer inequality is used in the proof.
+The preceding alphabet \(A=10002\) fails this sufficient criterion.
+
+The generator compares dimensions \(3\le m\le284\), selecting the
+smallest sufficient \(A\) for each and then comparing \((4A-1)^m\).
+The independent checker instead finds the largest \(A\) whose \(k\)
+would beat the selected value, and checks that its capacity fails.
+Monotonicity of capacity in \(A\) follows since the derivative of
+\((2A)^m/(mA(A-1)/2+1)\) has the sign of
+\[
+ (m-2)A^2-(m-1)A+2
+ =(m-3)A(A-1)+(A-1)^2+1>0
+\]
+for \(m\ge3\), \(A\ge1\). This verifies only the declared bounded
+comparison under a sufficient criterion, not unrestricted optimality
+or exact maximization of sphere populations.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Packing & \(k\) & Conditional paper exponent, approximately\\
+\midrule
+Original & \(T^2+1\) & \(3.17571403643291\cdot10^{-236}\)\\
+Ternary & \(3^{384}\) & \(2.68582462243153\cdot10^{-188}\)\\
+Sphere & \(40011^{29}\) & \(1.51508393214748\cdot10^{-138}\)\\
+Retuned, \(d=13\) & \(403^{17}\) & \(4.77320332233169\cdot10^{-48}\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+The sphere-to-ternary exponent ratio is between \(5\cdot10^{49}\)
+and \(6\cdot10^{49}\). Lean checks this, the capacity inequality,
+and the equality of the supplied \(T\) literal with its binomial formula.
+
+\section{Baseline conditional geometric transfer}
+\begin{proposition}
+Assume the norm, lattice, orbit, auxiliary-set, and lifting/counting
+estimates of the pinned manuscript in their stated generality.
+There are constants \(c>0,n_0\) such that every \(n\ge n_0\) admits
+\(n\) points in the unit square with all triangle areas at least
+\[
+ c n^{-2+\eta_{\rm sph}},\qquad
+ \eta_{\rm sph}=2/(45435\cdot40011^{29}+16).
+\]
+\end{proposition}
+\begin{proof}
+Apply Lemma~\ref{lem:sphere} to the unchanged \(T\) norm-determinant
+summands. Retain
+\[
+ L=r^{10},\quad100k^2L^3<B\le200k^2L^3,\quad
+ h=B^k,\quad\tau=\lfloor B^{k-1}/2\rfloor
+\]
+with \(B\) prime. Conditional on a column's label, draw each of its
+\(3k\) digits independently among the \(L/r\) positive integers with
+the prescribed residue. Equal position numbers in different rows
+do not identify their values or their draws.
+
+In the determinant polynomial
+\[
+ F(Y)=\det\left(\sum_{v=0}^{k-1}c_{iv}^{(j)}Y^v\right)_{i,j=1}^3
+     =\sum_t\gamma_tY^t,
+\]
+the coefficient \(\gamma_{k-1}\) reduces modulo \(r\) to precisely
+the retained norm polynomial: undesignated positions vanish, and
+the matching identity leaves the original \(T\) summands.
+It is nonzero for distinct labels. For every coefficient,
+\[
+ |\gamma_t|\le6k^2L^3.
+\]
+The contribution below degree \(k-1\) is at most
+\(3(B^{k-1}-1)/50\). The truncation through that degree represents
+the determinant modulo \(h\), has absolute value below \(h/2\),
+and, for distinct labels, exceeds \(\tau\). Thus the determinant
+obstruction is preserved.
+
+The conditional smaller-Smith-divisor moment permits arbitrary
+prescribed residues and retains
+\[
+ \theta=B(r/L)^4\le200k^2r^{-6}=o(1),\qquad
+ {\mathbb E}[D\mid\text{labels}]\le2
+\]
+for large \(r\). Keep \(h^{100}<q\le2h^{100}\), \(N=(hq)^{10}\), and
+\(n_r=\lfloor r\sqrt{N^3/\tau}\rfloor\). The original estimates give
+\[
+ \frac{{\mathbb E}Z}{n_r}\ll
+ n_r(hq)^6N^{-3}
+ +n_r^2(\log(2N))^2\frac{h}{N^3r^{41}}=o(1).
+\]
+The terms are bounded by \(r\tau^{-1/2}(hq)^{-9}=o(1)\) and
+\(O_k((\log r)^2r^{-9})\), respectively. Deletion leaves
+\[
+ n_r^2\Delta(P_r)\ge r^2/64,\quad n_r\asymp_k r^\alpha,\quad
+ \alpha=1+30\left(15\cdot101k-\frac{k-1}{2}\right)=45435k+16.
+\]
+This gives exponent \(2/\alpha\) on the constructed sizes.
+The retained prime-interval and subset argument extends it to all
+sufficiently large \(n\), using two-sided power bounds rather than
+assuming monotonicity of \(n_r\).
+\end{proof}
+
+\section{Review of the baseline upstream interfaces}
+These hand checks concern compatibility and specific cancellations.
+They do not constitute independent certification of every upstream
+lemma, and none of these lattice or geometric estimates is formalized here.
+
+\paragraph{Norms and conditional digits.}
+Odd \(d\) makes the norm polynomial alternating. Grouping distinct
+monomial indices into determinant summands uses no division by \(3!\),
+so characteristic three is allowed. The divisor-moment proof fixes
+the first row and column. Its unit pivot prescribes four remaining
+entries modulo \(B^j\); their independent probabilities are at most
+\((r/L)^j\), giving the fourth power. Both arguments retain their
+hypotheses with the sphere positions.
+
+\paragraph{Nonzero determinant counts (source Section 2).}
+Plane-lattice counts use radius at least the second successive minimum;
+otherwise centered short vectors lie on a line. In the anisotropic
+short-line case, the dyadic normal count and three column counts give
+\[
+ U^4Z^2\frac{R_1^2}{UZ}\frac{R_2^2}{UZ}\frac{R_3}{U}
+ =R_1^2R_2^2R_3U\le(R_1R_2R_3)^2.
+\]
+Passing to the sublattice generated by short independent vectors
+has bounded index; scaling coordinates yields an injective map into
+integer matrices. A nonzero determinant itself supplies three
+independent rows of bounded length, as required for that reduction.
+
+\paragraph{Zero determinants (source Section 7).}
+Distinct projected columns force rational rank two and a primitive
+null vector \(x\) whose coordinates are all nonzero. The plane lattice
+has covolume \(J=I|x|/g(x)\), with \(g(x)^3/I\le h^2\).
+The affine-independent residue case excludes \(|x|\le H=h^2\);
+its dyadic radii are therefore in the range needed for the \(g^3\)
+moment. For duplicate residue columns let \(\delta=e_i-e_j\),
+and let \(C_q\) denote the matrix of auxiliary residues.
+The three remaining losses relative to \(N^6/I^2\), per shell, are
+\[
+\begin{array}{ll}
+ \bar x\notin{\mathbb F}_q\delta:
+   & h^2q^{-3}(q^3/s_{\rm aux})^2\ll h^{26}/q,\\
+ \bar x\in{\mathbb F}_q\delta,\ \operatorname{rank}C_q\ge2:
+   & h^2q^{-2}(q^3/s_{\rm aux})\ll h^{14}/q,\\
+ \bar x\in{\mathbb F}_q\delta,\ \operatorname{rank}C_q\le1:
+   & h^2q^{-4}(q^3/s_{\rm aux})^2\ll h^{26}/q^2 .
+\end{array}
+\]
+Here \(s_{\rm aux}\) is the auxiliary cap size, not the digit alphabet.
+In the first case column equality imposes an index-\(q\) condition
+on each row. In the exceptional normal class a nonzero coordinate
+of \(x\) is divisible by \(q\), ensuring the radius needed for its
+residue-class count. In rank at most one, summing the \(q+1\) lines
+of the residue plane yields the additional \(O(q^{-2})\) factor
+for row triples. All losses are bounded for the retained \(q>h^{100}\).
+
+\paragraph{Probability normalization.}
+The lifting factor, orbit bound, and weighted determinant count combine as
+\[
+ \frac{h^9}{N^9}\frac{D^3E^2}{h^8}
+       \frac{N^6(\log N)^2}{D^2E^2}
+ =\frac{hD(\log N)^2}{N^3}.
+\]
+The conditional \(D\)-moment then averages on the label-collision
+event. The sphere radius does not enter any of these estimates.
+The reviewed interfaces show no incompatibility with the replacement.
+
+\section{Retuning the dimension and scales}\label{sec:retuned}
+The digit moment only requires a constant bound \(\theta<1\).
+The proof of the auxiliary zero-determinant estimate also permits much
+smaller \(H,q\) than the original choices. We now use
+\[
+\begin{gathered}
+ d=13,\qquad M=\binom{51}{13}=476260169700,\\
+ T=\binom{M}{3}=18004519550937520342031694999844900,\\
+ m=17,\quad A=101,\quad s=202,\quad b=403,\quad Q=85851,\\
+ TQ\le202^{17},\qquad k=403^{17}.
+\end{gathered}
+\]
+Lemma~\ref{lem:sphere} supplies the complete packing.
+The original norm decomposition applies because \(d\) is still odd.
+It uses \(M=\binom{4d-1}{d}\) monomials and \(T=\binom M3\)
+determinant summands; no new norm identity is assumed.
+The same bounded sphere comparison over \(3\le m\le284\) gives
+the displayed \(m,A\) for this smaller \(T\).
+
+\begin{proposition}\label{prop:tuned}
+Assume the pinned norm, lattice, orbit, auxiliary-set, and counting
+arguments in the general forms used below. There are constants \(c>0,n_0\)
+such that every \(n\ge n_0\) admits \(n\) points in the unit square
+whose triangles all have area at least
+\[
+ c n^{-2+\eta_{\rm tuned}},\qquad
+ \eta_{\rm tuned}=\frac{1}{1074\cdot403^{17}+7}.
+\]
+\end{proposition}
+\begin{proof}
+For a sufficiently large odd prime \(r\), take
+\[
+\begin{gathered}
+ L=400k^2r^4,\qquad100k^2L^3<B\le200k^2L^3,\\
+ h=B^k,\quad\tau=\lfloor B^{k-1}/2\rfloor,\quad H=2h,\\
+ h^{14}<q\le2h^{14},\qquad N=(hq)^4 ,
+\end{gathered}
+\]
+where \(B,q\) are prime. Thus \(B\asymp_k r^{12}\);
+both prime intervals are covered by the retained Bertrand lemma.
+
+\paragraph{Digits and the conditional moment.}
+Every prescribed residue still has exactly \(L/r=400k^2r^3\)
+positive digit choices, and \(L<B\). The coefficient and carry proof
+uses only the matching identity and the unchanged bound
+\(\lvert\gamma_u\rvert\le6k^2L^3\).
+For every fixed triple of labels, including repeated labels,
+\[
+ \theta=B(r/L)^4\le\frac{200k^2r^4}{L}=\frac12,\qquad
+ {\mathbb E}[D\mid\text{labels}]\le2.
+\]
+This uniform constant is sufficient; decay of \(\theta\) is not needed.
+Label collisions have probability at most \(3r^{-13}\).
+
+\paragraph{Auxiliary set and zero determinants.}
+For \(h\ge3\), \(h^{14}\ge8000h^2=2000H^2\), so the cap and
+restricted-shift construction retain their hypotheses.
+The cap size satisfies
+\[
+ s_{\rm aux}\ge\frac{q^2}{2000^3H^6},\qquad
+ q^3/s_{\rm aux}\ll qH^6=64qh^6.
+\]
+Affinely independent residues exclude \(|x|\le H\), so every contributing
+dyadic shell has radius \(R>H/2=h\). This is exactly the range
+\(R\ge h\) of the unchanged \(g(x)^3\) moment estimate.
+For the other three cases, the losses relative to \(N^6/I^2\) are
+\[
+\begin{array}{ll}
+ \bar x\notin{\mathbb F}_q\delta:
+   & h^2q^{-3}(q^3/s_{\rm aux})^2\ll h^{14}/q,\\
+ \bar x\in{\mathbb F}_q\delta,\ \operatorname{rank}C_q\ge2:
+   & h^2q^{-2}(q^3/s_{\rm aux})\ll h^8/q,\\
+ \bar x\in{\mathbb F}_q\delta,\ \operatorname{rank}C_q\le1:
+   & h^2q^{-4}(q^3/s_{\rm aux})^2\ll h^{14}/q^2.
+\end{array}
+\]
+All are bounded because \(q>h^{14}\). They need not tend to zero.
+The factors \(64,4096\) and the cap constant are absorbed into
+absolute constants.
+Also \(q>\tau\), \(q\nmid h\), and \(N\) remains an exact multiple
+of \(hq\). The lifting formula is therefore unchanged.
+The nonzero determinant count still has
+\(\lambda_3(\Lambda)\le E\le h<4N\).
+These observations preserve both probability bounds used in deletion.
+
+\paragraph{Sample size and deletion.}
+Define
+\[
+ \rho=1074k+6,\quad
+ \gamma=\frac{\rho}{2\rho+1},\quad
+ a_r=r^\gamma\sqrt{N^3/\tau},\quad n_r=\lfloor a_r\rfloor .
+\]
+Here \(0<\gamma<1/2\), with
+\(2\gamma-1=-1/(2\rho+1)<0\).
+Since \(\tau\ge B^{k-1}/3\) and \(N^{3/2}=(hq)^6\),
+\[
+ n_r(hq)^6N^{-3}
+ \le r^\gamma\tau^{-1/2}
+ =O_k(r^{\gamma-6(k-1)})=o(1).
+\]
+The triple term satisfies
+\[
+\begin{aligned}
+ n_r^2(\log(2N))^2\frac{h}{N^3r^{13}}
+ &\le(\log(2N))^2\frac{h}{\tau}r^{2\gamma-13}\\
+ &=O_k((\log r)^2r^{2\gamma-1})=o(1).
+\end{aligned}
+\]
+Here \(h/\tau\le3B=O_k(r^{12})\) and \(\log(2N)=O_k(\log r)\).
+The expected number of violations is \(o(n_r)\), so the same deletion
+argument applied to \(2n_r\) samples leaves \(n_r\) distinct projected
+points with minimum triangle area at least \(\tau/(16N^3)\).
+Furthermore, \(\tau<h\) and \(N\ge h^4\) give
+\(a_r>r^\gamma h^{11/2}\to\infty\). Eventually \(n_r\ge a_r/2\), hence
+\[
+ n_r^2\Delta(P_r)\ge r^{2\gamma}/64.
+\]
+
+\paragraph{The exponent and all cardinalities.}
+Set
+\[
+ \beta=6(1+14)k-\frac{k-1}{2}=\frac{179k+1}{2}.
+\]
+The bounds for \(q,\tau\) yield
+\[
+ \sqrt2\,r^\gamma B^\beta<a_r
+ \le2^6\sqrt3\,r^\gamma B^\beta.
+\]
+Consequently \(A_kr^\alpha\le n_r\le D_kr^\alpha\) for fixed positive
+constants, where
+\[
+ \alpha=\gamma+12\beta=\rho+\gamma,\qquad
+ \eta_{\rm tuned}=\frac{2\gamma}{\alpha}
+ =\frac1{\rho+1}=\frac1{1074k+7}.
+\]
+Using \(r^{2\gamma}\ge D_k^{-\eta_{\rm tuned}}n_r^{\eta_{\rm tuned}}\)
+gives the claimed power on the constructed cardinalities.
+For an arbitrary large \(n\), take a prime between
+\(\lceil(n/A_k)^{1/\alpha}\rceil\) and twice this integer.
+Then \(n\le n_r\le C_kn\) for a fixed \(C_k\). Taking an \(n\)-point
+subset proves the result for every sufficiently large \(n\).
+\end{proof}
+
+The exponent is approximately \(4.77320332233169\cdot10^{-48}\).
+Its ratio to the \(d=41\) sphere exponent lies between
+\(3\cdot10^{90}\) and \(4\cdot10^{90}\); the exact ratio is in the
+certificate. This compares exponents, not finite-size triangle areas.
+In particular the collision decay exponent
+\(-1/(2\rho+1)\) is very small: constants and thresholds are not
+controlled for practical point counts. No optimality or priority is claimed.
+
+\section{Verification and remaining boundary}
+For the current result, run \texttt{python scripts/build\_tuned.py},
+then \texttt{python scripts/verify\_tuned.py}. The ternary,
+sphere-only, and retuned patches are three alternatives applied
+directly to the unchanged manuscript, not successive patches.
+The retuned patch updates Sections 3--8, including the full deletion
+and interpolation argument.
+The earlier sphere checks remain available through
+\texttt{python scripts/verify\_sphere.py}.
+
+The verifier independently recomputes binomials by an exact-division
+recurrence, the triple count by a cubic expansion, powers by repeated
+multiplication, and layer counts by triangular-number increments.
+It checks complete small spheres, corrupted certificates, deliberately
+invalid layouts, determinant coefficients and carries, native Lean
+compilation, patch applicability, and all saved upstream hashes.
+The report records exact coverage and evidence hashes.
+
+\texttt{lean/Sphere.lean} now proves the complete finite construction.
+The proof chain is:
+\begin{enumerate}
+\item \texttt{decode\_value} and \texttt{decode\_injective} produce
+\(s^m\) distinct digit words from the indices \(0,\ldots,s^m-1\).
+\item \texttt{energy\_bound} and \texttt{norm\_energy} prove a
+nonnegative layer index \(J(x)\le mA(A-1)/2\) with
+\(E(x)=m+8J(x)\). Internally this uses triangular numbers of the
+absolute centered digit radii.
+\item \texttt{large\_fiber} proves the finite pigeonhole principle
+by bounding every fiber and summing its contribution.
+\texttt{select\_large\_fiber} selects the first \(T\) indices from
+a qualifying fiber and proves their distinctness using list
+nonduplication.
+\item \texttt{sphere\_family} combines the decoder, energy bound,
+and selection. \texttt{packing\_exists} combines this family with
+sphere rigidity and carry-free encoding.
+\item \texttt{paperT\_binomial} checks
+\(\binom{\binom{163}{41}}3\) using the falling-factorial quotient
+definition: \(n(n-1)\cdots(n-k+1)/k!\). Recursion is in \(k\), not
+in the large upper argument. This uses a local definition, not
+Mathlib's binomial API.
+\item \texttt{paper\_packing\_binomial} establishes the final
+packing with \(T=\binom{\binom{163}{41}}3\), \(k=40011^{29}\),
+all position bounds, both row injections, and the matching equivalence.
+\end{enumerate}
+Thus the formal result no longer assumes the existence of a sufficiently
+large equal-energy family. The selected words are defined within the
+existence proof; the enormous list is never evaluated during checking.
+The proofs use only the standard logical axioms
+\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
+The numerical comparison theorems use no axioms.
+Finite examples remain separate implementation checks.
+
+\texttt{lean/Tuned.lean} imports this general sphere proof and establishes
+\texttt{tuned\_packing} with
+\(T=\binom{\binom{51}{13}}3\), \(k=403^{17}\).
+It also proves digit divisibility, the inequality \(2Br^4\le L^4\),
+the shell threshold \(H/2=h\), the cap-modulus inequality for \(h\ge3\),
+and the three integer bounds underlying the zero-determinant cases.
+Cleared-denominator inequalities certify the two negative deletion
+powers and the identity for \(\eta_{\rm tuned}\); an exact numerical
+theorem bounds the gain. These integer facts do not constitute
+formal proofs of the probability estimates or limits.
+
+The retuned verifier rebuilds the imported sphere proof before checking
+the new file, audits their logical axioms, independently derives the
+rational exponent from the scales, and verifies all 16 upstream files.
+It rejects four corrupted certificates and five changes that break the
+stated sufficient estimates: \(d=11\), \(q\asymp h^{13}\),
+\(H=h\), \(N=(hq)^3\), and changing the digit multiplier from \(400\)
+to \(399\) while still asserting \(\theta\le1/2\).
+These controls show failures of the chosen bounds, not impossibility
+of those parameters under a different argument.
+
+The complete geometric theorem, practical point generation, novelty,
+priority, and unrestricted optimality remain outside the established
+scope. The unchanged upstream Lean comparator uses exponent
+\(1/(100000k)\) and a subsequence target; it has not been rerun.
+
+\begin{thebibliography}{9}
+\bibitem{upstream} OpenAI, \emph{A power improvement in the Heilbronn
+triangle lower bound}, September 25, 2026.
+Exact paths and hashes: \texttt{upstream/manifest.json}.
+\url{https://github.com/openai/math}.
+\bibitem{behrend} F. A. Behrend, \emph{On Sets of Integers Which Contain
+No Three Terms in Arithmetical Progression}, PNAS 32 (1946), 331--332.
+\url{https://doi.org/10.1073/pnas.32.12.331}.
+\bibitem{ehps} C. Elsholtz, Z. Hunter, L. Proske, L. Sauermann,
+\emph{Improving Behrend's construction: Sets without arithmetic
+progressions in integers and over finite fields}, 2024.
+\url{https://arxiv.org/abs/2406.12290}.
+\end{thebibliography}
+\end{document}

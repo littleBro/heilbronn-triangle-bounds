@@ -1,0 +1,331 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\title{A ternary digit packing for the Heilbronn construction}
+\author{Local research draft prepared with Codex assistance}
+\date{October 8, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We replace one finite digit-position construction in OpenAI's Heilbronn
+triangle manuscript by the classical ternary progression-free set.
+For the manuscript's fixed dimension \(d=41\), the replacement has
+\(k=3^{384}\) rather than \(k=T^2+1\).
+Keeping the remaining parameter choices gives the conditional exponent
+\[
+ \eta_{\rm new}=\frac{2}{45435\cdot3^{384}+16}
+       \approx 2.68582462243153\cdot10^{-188}.
+\]
+The universal packing interface and finite denominator comparisons are
+checked in Lean 4.11.0. The transfer to triangle areas is a written
+argument conditional on the stated upstream estimates; the complete
+geometric theorem has not been independently formalized or verified here.
+\end{abstract}
+
+\section{Pinned input and the claim}
+For a finite planar point set \(P\) with at least three points, write
+\(\Delta(P)\) for the minimum area over all triples of distinct points.
+The input is \emph{A power improvement in the Heilbronn triangle lower
+bound}, dated September 25, 2026, from OpenAI math family 191
+\cite{upstream}, pinned at commit
+\[
+\texttt{fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb}.
+\]
+The source and its PDF are preserved without edits. The manifest records
+their SHA-256 hashes; the change is supplied as a separate source patch.
+Put
+\[
+ d=41,\qquad M=\binom{4d-1}{d}=\binom{163}{41},\qquad T=\binom{M}{3}.
+\]
+The input uses \(k_{\rm old}=T^2+1\). Its final alteration argument gives
+the paper exponent
+\[
+ \eta_{\rm old}=\frac{2}{45435k_{\rm old}+16}
+       \approx3.17571403643291\cdot10^{-236}.
+\]
+Exact arithmetic gives \(2^{383}<T\le2^{384}\).
+This note changes only the encoding of the \(T\) determinant summands.
+The field dimension \(d\), polynomial decomposition, digit distribution
+rule, and exponents in the other parameter choices are retained.
+
+\begin{proposition}[Conditional transfer]\label{prop:transfer}
+Assume the norm-polynomial decomposition, lattice estimates, orbit
+estimates, auxiliary-cap estimates, and lifting/counting estimates in
+the pinned manuscript, in their stated generality. With the replacement
+proved below, there are constants \(c>0\) and an integer \(n_0\ge3\) such that
+for every integer \(n\ge n_0\) there is a set of \(n\) points in the
+unit square whose every triangle has area at least
+\[
+ c\,n^{-2+\eta_{\rm new}},
+ \qquad \eta_{\rm new}=\frac{2}{45435\cdot3^{384}+16}.
+\]
+\end{proposition}
+Sections 3 and 4 give the transfer argument and identify the precise
+interfaces to those inputs. This is not a deduction from the original
+headline theorem alone: the generality of its intermediate estimates
+is essential.
+
+\section{The finite packing}
+For a positive integer \(T\), let \(m=\lceil\log_2 T\rceil\) and
+\(k=3^m\). For \(0\le a<T\), write its binary expansion, padded to
+length \(m\), as
+\[
+ a=\sum_{v=0}^{m-1}\epsilon_v(a)2^v,\qquad
+ u_a=\sum_{v=0}^{m-1}\epsilon_v(a)3^v,\qquad
+ \epsilon_v(a)\in\{0,1\}.
+\]
+The values \(u_a\) are an initial segment of the classical Stanley
+sequence \(S(0)\); the underlying progression-free construction is
+not new \cite{stanley}. Our application to the pinned manuscript
+and its formal certificate are the subject of this note.
+
+\begin{lemma}[Packing interface]\label{lem:packing}
+Define positions in three separate rows by
+\[
+ i_a=u_a,\qquad j_a=u_a,\qquad \ell_a=k-1-2u_a.
+\]
+Each position lies in \(\{0,\ldots,k-1\}\), each row is injective
+as a function of \(a\), and
+\[
+ i_a+j_b+\ell_c=k-1\quad\Longleftrightarrow\quad a=b=c
+ \qquad (0\le a,b,c<T).
+\]
+\end{lemma}
+\begin{proof}
+The geometric sum gives \(0\le2u_a\le3^m-1\).
+Uniqueness of ternary expansion makes \(a\mapsto u_a\) injective.
+The range and the injectivity of all three rows follow.
+The displayed equality is equivalent to \(u_a+u_b=2u_c\).
+On the left, every ternary digit sum is at most two; on the right,
+twice a digit is either zero or two. Thus neither side has carries,
+and uniqueness of base-three expansion gives
+\[
+ \epsilon_v(a)+\epsilon_v(b)=2\epsilon_v(c)
+ \quad\text{for each }v.
+\]
+For digits in \(\{0,1\}\), this forces all three digits to agree.
+Hence \(a=b=c\). The reverse implication follows by substitution.
+\end{proof}
+Distinctness is required \emph{within} a row. Using the same positions
+in the first and second rows does not identify their polynomial
+coefficients or their random digit draws.
+
+The Lean theorem \texttt{packing\_interface} proves this interface
+for every natural \(T,m\) with \(T\le2^m\), using a binary decoder to
+prove injectivity of the actual index-to-word producer. It does not
+assume an unproved progression-free input. The theorem
+\texttt{paper\_matching} specializes the result to the literal
+value of \(T\) and \(m=384\). The equality of that literal with the
+binomial expression is separately checked by two Python computations;
+it is not a theorem in the current Lean file.
+
+\section{Preserving the determinant obstruction}
+The original norm decomposition, labelled
+\texttt{norm:determinant-sum}, gives \(T\) triples of homogeneous
+polynomials \(f_{1a},f_{2a},f_{3a}\) with
+\[
+ \mathcal N(X^{(1)},X^{(2)},X^{(3)})
+   =\sum_{a=0}^{T-1}\det(f_{ia}(X^{(j)}))_{1\le i,j\le3}.
+\]
+We retain those polynomials and the label vectors \(X(\xi)\).
+Their norm identity is the upstream input that makes \(\mathcal N\)
+nonzero for three distinct labels.
+
+Keep \(L=r^{10}\), choose a prime
+\[
+ 100k^2L^3<B\le200k^2L^3,\qquad
+ h=B^k,\qquad \tau=\left\lfloor B^{k-1}/2\right\rfloor,
+\]
+and use Lemma~\ref{lem:packing} for the designated positions.
+At each position in each row prescribe the original polynomial residue;
+at undesignated positions prescribe zero modulo \(r\).
+Every digit is still drawn independently, conditional on its column
+label, uniformly from \(\{1,\ldots,L\}\) in the prescribed residue class.
+Each class has exactly \(L/r=r^9\) possible digits.
+In particular, a residue zero digit is not fixed to the integer zero.
+All digits are positive and less than \(B\), so each entry's lowest
+digit is a unit modulo the prime \(B\).
+
+Let the digit matrix of three columns give the integer polynomial
+\[
+ F(Y)=\det\left(\sum_{v=0}^{k-1}c_{iv}^{(j)}Y^v\right)_{i,j=1}^3
+     =\sum_{s=0}^{3(k-1)}\gamma_sY^s.
+\]
+Expanding the coefficient \(\gamma_{k-1}\) by rows, all terms with
+an undesignated position vanish modulo \(r\).
+Lemma~\ref{lem:packing} leaves exactly the triples with the same
+index \(a\). Therefore
+\[
+ \gamma_{k-1}\equiv
+ \sum_a\det(f_{ia}(X^{(j)}))_{i,j=1}^3
+ =\mathcal N(X^{(1)},X^{(2)},X^{(3)})\pmod r.
+\]
+This is the sole use of the detailed position layout in the upstream
+determinant obstruction.
+
+For any coefficient and any of the six determinant permutations,
+choosing the first two positions determines the third. Consequently
+\[
+ |\gamma_s|\le A_0:=6k^2L^3.
+\]
+For \(S_C=\sum_{s=0}^{k-1}\gamma_sB^s\), the same carry estimates give
+\[
+ |S_C|\le\frac{3}{50}(h-1)<\frac h2,\qquad
+ \left|\sum_{s=0}^{k-2}\gamma_sB^s\right|
+     \le\frac{3}{50}(B^{k-1}-1).
+\]
+When the labels are distinct, \(\gamma_{k-1}\not\equiv0\pmod r\),
+so \(|\gamma_{k-1}|\ge1\). It follows that
+\[
+ |S_C|\ge B^{k-1}-\frac{3}{50}(B^{k-1}-1)>\tau.
+\]
+Every other representative \(S_C+zh\), \(z\ne0\), has absolute
+value greater than \(h/2>\tau\). This re-establishes the entire
+upstream obstruction with the new positions, conditional only on
+the retained norm identity. Multiplication by an element of
+\(\operatorname{SL}_3(\Z/h\Z)\) preserves it.
+
+\section{Downstream estimates and the new exponent}
+The relevant upstream interfaces are as follows.
+\begin{center}\small
+\begin{tabular}{p{0.34\linewidth}p{0.59\linewidth}}
+\toprule
+Input label & Why the replacement is admissible\\
+\midrule
+\texttt{orb:diagonal}, \texttt{orb:orbit}
+& Apply to any fixed \(k\ge1\) and a matrix with a unit entry.\\
+\texttt{orb:conditional}
+& Explicitly permits arbitrary prescribed digit residues as functions
+of the labels. It requires independent draws with \(L/r\) choices.\\
+\texttt{aux:cap}, \texttt{aux:weights}
+& Depend on \(h\), \(q\), and the independent auxiliary distribution,
+not on the individual digit positions.\\
+\texttt{sam:lifting}, \texttt{sam:bad-triple}
+& Use the orbit law, uniform conditional moment, and the
+distinct-label determinant obstruction.\\
+\texttt{zero:weighted-zero}
+& Applies to the stated row lattice and auxiliary weight; its
+bounds use \(h,q,N\), not the original formula for the positions.\\
+\texttt{alt:exponent}
+& Uses any fixed admissible \(k\), with the retained scales below.\\
+\bottomrule
+\end{tabular}
+\end{center}
+These are assertions about the hypotheses visible in the pinned
+text, not an independent verification of each upstream proof.
+
+The digit estimate retains
+\[
+ \theta=B(r/L)^4\le200k^2r^{-6}\longrightarrow0.
+\]
+Thus the conditional expectation of the smaller Smith divisor is at
+most two for all sufficiently large \(r\), uniformly over every
+fixed triple of labels, including repetitions.
+The collision probability is at most \(3r^{-41}\).
+The new \(k\) is fixed independently of \(r\); changing its value
+changes thresholds and constants, not these powers of \(r\).
+
+Keep the independent auxiliary choices and box scale
+\[
+ h^{100}<q\le2h^{100},\qquad N=(hq)^{10}.
+\]
+With \(a_r=r\sqrt{N^3/\tau}\) and \(n_r=\lfloor a_r\rfloor\),
+the upstream pair and bad-triple estimates give
+\[
+ \frac{\E Z}{n_r}
+ \ll n_r(hq)^6N^{-3}
+   + n_r^2(\log(2N))^2\frac{h}{N^3r^{41}}.
+\]
+The first term is at most \(r\tau^{-1/2}(hq)^{-9}=o(1)\).
+For the second, \(h/\tau\le3B=O_k(r^{30})\) gives
+\[
+ O_k((\log r)^2r^{\,2+30-41})
+       =O_k((\log r)^2r^{-9})=o(1).
+\]
+Deletion therefore leaves \(n_r\) distinct projected points with
+every triangle area at least \(\tau/(16N^3)\), including exclusion
+of determinant-zero triples. As in the input,
+\[
+ n_r^2\Delta(P_r)\ge r^2/64.
+\]
+The cardinality scale is obtained without rounding its exponent:
+\[
+ \begin{split}
+ \beta&=15(101k)-\frac{k-1}{2}
+         =\frac{3029k+1}{2},\\
+ \alpha&=1+30\beta=45435k+16,\qquad
+ n_r\asymp_k r^\alpha.
+ \end{split}
+\]
+This gives \(\Delta(P_r)\ge c_*n_r^{-2+2/\alpha}\).
+The prime-interval and subset argument in the input's final section
+passes from these sizes to every sufficiently large \(n\): its
+two-sided bound \(A_kr^\alpha\le n_r\le D_kr^\alpha\) is preserved,
+and removing points cannot decrease the smallest triangle.
+This proves Proposition~\ref{prop:transfer} under its stated inputs.
+
+\section{Verification and limits}
+The deterministic arithmetic certificate is
+\texttt{certificates/ternary.json}. Its independent checker computes
+\(\binom{163}{41}\) by an exact-division recurrence, computes
+\(\binom{M}{3}\) using the expanded cubic, and determines \(m\) by
+successive doubling. This differs from the generator's binomial and
+bit-length operations.
+The exact exponent ratio satisfies
+\[
+ 8\cdot10^{47}<
+ \frac{\eta_{\rm new}}{\eta_{\rm old}}
+ =\frac{45435(T^2+1)+16}{45435\cdot3^{384}+16}
+ <9\cdot10^{47}.
+\]
+This comparison and the capacity inequalities are also checked
+in Lean on the supplied literal \(T\).
+
+The verification command additionally checks the unchanged source
+hashes, applicability of the source patch, 21 finite packing sizes
+(195873 pair checks), 12 determinant-coefficient and carry examples,
+five malformed layouts, and one corrupted arithmetic certificate.
+These finite examples check implementation behavior; they are not
+the proof of the universal packing lemma.
+Lean reports only \texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound} for the general interface, and no axioms for
+the finite numerical comparisons. No new axioms, admitted goals,
+or native computation axioms are used.
+
+The upstream comparator target uses the smaller exponent
+\(1/(100000k_{\rm old})\) and an unbounded sequence of cardinalities.
+This note compares the two \emph{paper} exponents
+\(2/(45435k+16)\); it does not claim that modifying a definition
+automatically transports the upstream Lean proof. The saved comparator
+is a statement template, not evidence that its proof was rerun.
+
+The full geometric theorem and its upstream estimates are not checked
+by our Lean file. We have not constructed an explicit practical-size
+point set witnessing this asymptotic exponent, obtained independent
+mathematical review, or established priority for this application.
+The general ternary progression-free method is classical, and no
+optimality of the replacement is asserted.
+
+\begin{thebibliography}{9}
+\bibitem{upstream}
+OpenAI, \emph{A power improvement in the Heilbronn triangle lower bound},
+September 25, 2026. Family 191 of \texttt{openai/math}.
+\url{https://github.com/openai/math}.
+The exact manuscript paths, commit, and content hashes are recorded
+in the accompanying \texttt{upstream/manifest.json}.
+\bibitem{stanley}
+R. A. Moy and D. Rolnick, \emph{Novel structures in Stanley sequences},
+2015, especially Section 4.
+\url{https://arxiv.org/abs/1502.06013}.
+\end{thebibliography}
+\end{document}
