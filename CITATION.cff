@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "Please cite this research repository and identify the exact commit used."
 type: software
 title: "Heilbronn triangle bounds: finite packings and improved scales"
+repository-code: "https://github.com/littleBro/heilbronn-triangle-bounds"
 authors:
   - family-names: Blinov
     given-names: Ivan

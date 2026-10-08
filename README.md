@@ -112,7 +112,7 @@ The arithmetic and packing checks do not independently validate the upstream pap
 
 The proof notes are supplied as TeX. The local Codex compiler could not download its missing TeX bundle for either note, so compiled PDFs are not included. The environment failures are recorded in the two LaTeX status files under artifacts. They did not affect the Lean or Python checks.
 
-The [GitHub Actions workflow](.github/workflows/verify.yml) is prepared to run the same checks on Ubuntu and save verification reports. Its first remote run is pending. Local reproduction and a workflow definition do not establish a passing GitHub run.
+The [GitHub Actions workflow](.github/workflows/verify.yml) runs the same checks on Ubuntu and saves verification reports. See [Actions](https://github.com/littleBro/heilbronn-triangle-bounds/actions/workflows/verify.yml) for the result on a particular commit. Local reports and remote runs record their own environments.
 
 ## Review and citation
 
@@ -124,4 +124,4 @@ Author: Ivan Blinov (@littleBro). Research, implementation and drafting used sub
 
 The repository format was informed by [Swapnil Jain's integer-mult-kappa](https://github.com/Swapnil-jain/integer-mult-kappa) and [CrocSwap's integer-mult-bounds](https://github.com/CrocSwap/integer-mult-bounds). Their integer-multiplication results are not mathematical dependencies of this project.
 
-Licensed under [Apache-2.0](LICENSE). This draft has no independent peer review, priority claim or OpenAI endorsement. GitHub publication is pending.
+Licensed under [Apache-2.0](LICENSE). This draft has no independent peer review, priority claim or OpenAI endorsement. The GitHub repository is initially private.

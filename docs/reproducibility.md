@@ -38,9 +38,11 @@ Compiled Lean files and Python caches are ignored by Git.
 
 The local checks have passed on native Windows with Python 3.14.4 and Lean 4.11.0.
 The included GitHub Actions workflow targets Ubuntu 24.04 and Python 3.11.
-Its first remote run is still pending; the workflow file alone is not evidence
-that Linux reproduction has passed. It pins action commits and the elan installer,
-installs the exact Lean version, runs the same verifier and saves the reports.
+It pins action commits and the elan installer, installs the exact Lean version,
+runs the same verifier and saves the reports. Check
+[the Actions runs](https://github.com/littleBro/heilbronn-triangle-bounds/actions/workflows/verify.yml)
+for the result on the commit you use; the workflow file alone is not evidence
+that a remote run passed.
 
 ## Individual checkpoints
 
