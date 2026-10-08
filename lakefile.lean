@@ -11,4 +11,5 @@ require mathlib from git
 lean_lib Heilbronn where
   srcDir := "lean"
   roots := #[`NormExpansion, `NormDescent, `NormAlgebra, `NormPolynomials,
-    `NormVandermonde, `NormCompression, `Slab, `Tuned, `Sphere]
+    `NormVandermonde, `BilinearDescent, `BilinearNorm, `ExactLayerData,
+    `ExactLayer, `NormCompression, `Slab, `Tuned, `Sphere]

@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "e5d3f217b2d2a84d96c884506ad6c808ff43b23589527b1834e1b50b501e55f3",
+  "source_sha256": "6a3d4dfccd192121a9bc5994da53ec36de410e8cfffc243312530dfb0de6f24c",
   "attempt_date": "2026-10-08",
-  "attempt_scope": "Existing note including the complete Lean norm decomposition, homogeneous polynomial coordinates and distinct-label theorem",
+  "attempt_scope": "Existing note including 25-node bilinear descent, exact sphere-layer count, and complete Lean packing proof",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

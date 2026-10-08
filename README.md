@@ -2,23 +2,23 @@
 
 A conditional research draft by **[Ivan Blinov (@littleBro)](https://github.com/littleBro)**, extending [OpenAI math family 191](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026), with OpenAI Codex assistance.
 
-The current version compresses the field-norm determinant decomposition before packing its summands. With dimension d = 13 and the retained slab scales, it gives the **conditional paper exponent**
+The current version combines a 25-node bilinear descent of the field-norm determinants with an exactly counted sphere layer. With dimension d = 13 and the retained slab scales, it gives the **conditional paper exponent**
 
 $$
 \Delta(n)\ge c\,n^{-2+\eta},\qquad
-\boxed{\eta=\frac{1}{498\cdot47^{10}+7}\approx3.81761455590365\cdot10^{-20}}.
+\boxed{\eta=\frac{1}{498\cdot27^{11}+7}\approx3.61217890050488\cdot10^{-19}}.
 $$
 
 The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. Lean proves the complete new norm decomposition, interpolation descent, homogeneous polynomial coordinates and nonzero residue for distinct labels. It also proves the finite packing and selected scale inequalities. The slab geometry, lattice and probability estimates, and full Heilbronn theorem remain outside the formal proof.
 
-[Proof and review guide](docs/review.md) · [Current certificate](certificates/norm.json) · [Lean algebra proof](lean/NormAlgebra.lean) · [Lean packing proof](lean/NormCompression.lean) · [Reproduction guide](docs/reproducibility.md)
+[Proof and review guide](docs/review.md) · [Current certificate](certificates/bilinear.json) · [Lean algebra proof](lean/BilinearNorm.lean) · [Lean packing proof](lean/ExactLayer.lean) · [Reproduction guide](docs/reproducibility.md)
 
 Run all retained results with Python 3.11+, Git and the pinned Lean 4.11.0 toolchain:
 
     python scripts/prepare_mathlib.py
     python scripts/verify_all.py
 
-The first command prepares pinned Mathlib dependencies and compiled imports; run it once per fresh checkout. On systems with Make, make verify runs the checks after this setup. Verification also requires all twelve certificates and patches to regenerate byte for byte.
+The first command prepares pinned Mathlib dependencies and compiled imports; run it once per fresh checkout. On systems with Make, make verify runs the checks after this setup. Verification also requires all fifteen generated certificates, patches and count-table files to regenerate byte for byte.
 
 | Packing | k | Conditional paper exponent |
 | --- | --- | --- |
@@ -29,12 +29,36 @@ The first command prepares pinned Mathlib dependencies and compiled imports; run
 | Slab cap, d = 13 | 403^17 | ≈ 1.02940168035828e-47 |
 | Central energy interval, d = 13 | 379^17 | ≈ 2.92350666167202e-47 |
 | Compressed norm, d = 13 | 47^10 | ≈ 3.81761455590365e-20 |
+| Bilinear descent and exact layer, d = 13 | 27^11 | ≈ 3.61217890050488e-19 |
 
-The current exponent is approximately 1.30583405399879e27 times the previous central-layer exponent. That checkpoint was approximately 2.84000572124043 times the slab exponent. These are comparisons of exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
+The current exponent is approximately **9.46187428722714 times** the previous 37-node norm-compression exponent. These compare exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
 
-The new term bound is T = 37 * 6^12 = 80,540,946,432, replacing binom(binom(51,13),3) ≈ 1.8e34. For this smaller T, the full-range sphere bound suffices: words of length 10 over 24 digits, encoded in base 47, have at most 661 energies and 24^10 >= 661 T. Lean selects the needed distinct words from one layer and proves the packing. The enormous sphere is not enumerated.
+## Current result: bilinear descent and an exact layer
 
-## Current result: compress the norm expansion
+The determinant expansion still gives 6^12 terms over the extension field. To descend a term to the base field, interpolate the product of its first two rows' representatives, each of degree at most 12. That product has degree at most 24, so 25 nodes suffice. The third row uses the linear functional z -> ell(L_t(theta) z). Expanding the six signed products proves the determinant identity with different linear maps in the rows.
+
+This gives T = 25 * 6^12 = 54,419,558,400. The new Lean theorem preserves the exact field norm, homogeneous degree-13 coordinates and the nonzero criterion for three distinct labels. It holds for every prime r >= 25; the manuscript patch retains r >= 37 and all previous slab scales.
+
+For packing, use 11-digit words over 14 digits, encoded in base 27. The layer with energy index 86, or squared centered norm 699, contains exactly 67,169,169,408 words, enough for T. Lean proves the symbolic counting recurrence, checks eleven transitions of an 87-entry table, selects distinct words and proves the complete packing at k = 27^11. It never enumerates the 14^11 words.
+
+- [Written proof and retained parameter transfer](notes/sphere-packing.tex)
+- [25-node interpolation and determinant descent](lean/BilinearDescent.lean)
+- [Universal norm, homogeneous coordinates and distinct-label proofs](lean/BilinearNorm.lean)
+- [Exact layer and complete finite packing](lean/ExactLayer.lean)
+- [Exact certificate](certificates/bilinear.json)
+- [Alternative patch for original manuscript Sections 3–8](patches/bilinear-layer.patch)
+- [Verification report](artifacts/bilinear-verification.json)
+
+Regenerate and verify:
+
+    python scripts/build_bilinear.py
+    python scripts/verify_bilinear.py
+
+The independent checker counts the layer both by a full energy distribution and by a multinomial sum over digit multiplicities. It checks exhaustive products of lengths 0 through 3. Field controls check all basis products and five determinants in each of three extensions of degrees 3, 5 and 13; negative controls detect insufficient nodes, a corrupted interpolation element and an incorrect third-row map. The algebra audit rebuilds seven modules and checks seventeen exported theorems.
+
+The descent uses elementary polynomial interpolation for multiplication, within the classical framework of [bilinear complexity](https://arxiv.org/abs/1107.0336). The chosen packing is a feasible witness; novelty and unrestricted optimality are not claimed.
+
+## Preserved 37-node norm compression
 
 The norm polynomial is a product of d conjugate 3-by-3 determinants. In its permutation expansion, normalize the first permutation to the identity. Because d = 13 is odd, each group of six terms is a determinant, leaving 6^12 determinants over the extension field.
 
@@ -57,7 +81,7 @@ Regenerate and verify:
     python scripts/build_norm.py
     python scripts/verify_norm.py
 
-The checker rebuilds five algebra modules and audits ten exported theorems against the pinned Mathlib version. The final theorem uses Mathlib's actual field norm and supplies the power basis, automorphisms and interpolation nodes from finite-field hypotheses. It proves one family of coordinates works for every label triple. The corresponding polynomials are homogeneous of degree 13.
+The original decomposition occupies five algebra modules with ten exported theorems; the shared checker also rebuilds and audits the two bilinear modules against the pinned Mathlib version. The final theorem uses Mathlib's actual field norm and supplies the power basis, automorphisms and interpolation nodes from finite-field hypotheses. It proves one family of coordinates works for every label triple. The corresponding polynomials are homogeneous of degree 13.
 
 Independent finite controls test the full decomposition on four matrices each over F_(11^3) and F_(17^5), including distinct Vandermonde labels. They check descent on all 37 basis monomials and four matrices over F_(41^13), without enumerating the degree-13 norm expansion. Negative controls detect omitted signs, entrywise projection, insufficient nodes, corrupted weights and the even-degree sign error. These controls supplement the universal Lean proof. No novelty or optimality claim is made.
 
@@ -143,11 +167,11 @@ Regenerate and verify the sphere-only baseline:
 
 **The complete finite sphere packing is now proved in Lean.** This includes the energy-layer bound, a finite pigeonhole theorem, selection of T distinct words from one layer, encoding, bounds, injectivity, and matching. The final theorem also checks T using the falling-factorial quotient definition of binomial coefficients. No sufficiently large sphere is assumed as a precondition, and the enormous set is never enumerated during proof checking.
 
-The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The central-layer checkpoint is central_packing_binomial in Central.lean. The current theorem is norm_packing in NormCompression.lean, with the new term-count formula. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
+The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The central-layer checkpoint is central_packing_binomial in Central.lean. The 37-node checkpoint is norm_packing in NormCompression.lean; the current theorem is bilinear_packing in ExactLayer.lean, with the new term-count formula. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
 
 The sphere idea is classical Behrend; stronger progression-free-set constructions are known ([Elsholtz, Hunter, Proske, Sauermann](https://arxiv.org/abs/2406.12290)). We claim neither a new sphere method nor unrestricted optimality. The certificate records a bounded comparison of dimensions 3–284 under its sufficient-capacity criterion.
 
-All six source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
+All seven source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
 
 ## Preserved ternary baseline
 
@@ -188,7 +212,7 @@ To regenerate the deterministic certificate and patch:
 
 The verifier preserves upstream files, compiles only the local proof, rejects changed source hashes, and checks patch applicability. Its finite tests cover 21 packing sizes, 12 coefficient/carry examples, and six negative controls. Finite coverage is separate from the universal Lean theorem.
 
-The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the earlier sphere proofs check their binomial counts inside Lean. The current packing uses the new formula T = 37 * 6^12. See the respective proof notes for their scopes.
+The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the earlier sphere proofs check their binomial counts inside Lean. The current packing uses T = 25 * 6^12 with an exactly counted layer. See the respective proof notes for their scopes.
 
 The proof notes are supplied as TeX. The current note, including norm compression, compiled successfully with the built-in Tectonic 0.17.0+20260731 after installing its support bundle from the [official v33 mirror](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map). The source hash and bundle identity are recorded in [the compilation report](artifacts/sphere-latex-status.json). Generated note PDFs are not included. The separate artifacts/latex-status.json retains the earlier ternary-note attempt. Note compilation is separate from the Lean and Python checks.
 

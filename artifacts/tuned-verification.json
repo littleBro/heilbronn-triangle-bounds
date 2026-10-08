@@ -58,11 +58,11 @@
     "scripts/build_patch.py": "fb6792ff41bf1b2d16535210d38f93a33320ef72ae1c5fc41b38e8a48ea65079",
     "certificates/tuned.json": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
     "patches/tuned-parameters.patch": "6ee76644779395b51c91f64b45bcf7c3a30f5bce6aeb362e4b56681779a9b85d",
-    "notes/sphere-packing.tex": "e5d3f217b2d2a84d96c884506ad6c808ff43b23589527b1834e1b50b501e55f3",
-    "README.md": "ca3bb0d4797711a89df705b09e076741405655491172009f1962d7633830de3f",
+    "notes/sphere-packing.tex": "6a3d4dfccd192121a9bc5994da53ec36de410e8cfffc243312530dfb0de6f24c",
+    "README.md": "deed45cdf22a9268978014e79b5acd7f70237000ee2e688da3d4aac73675500b",
     "NOTICE": "2719e7e6d016e0371d7e4a36a2f378d6275a77ba5c0bba9b8e872e4697ae9f1e",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
-    "artifacts/sphere-latex-status.json": "b4f40d89168646292b0d85d0686eed6f147d0dc7e9f9191569229f26fe6592e2"
+    "artifacts/sphere-latex-status.json": "682efc5b191338d414000099d868089f21aaa70ee378a34a6be8d34b4cd2905a"
   },
   "not_established": [
     "complete independent proof or Lean formalization of the geometric theorem",

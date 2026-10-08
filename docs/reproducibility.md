@@ -29,11 +29,11 @@ Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
 
 The command first verifies the supplied ternary, sphere, retuned, slab,
-central-layer and norm-compression certificates.
+central-layer, norm-compression and bilinear-layer certificates.
 It checks all saved upstream hashes, compiles the local Lean proofs, audits their
 logical axioms, exercises finite and negative controls, and checks each patch
 against the pinned original manuscript without applying it.
-It then regenerates all certificates and patches and requires exact byte equality
+It then regenerates all certificates, patches and the Lean count table and requires exact byte equality
 with the supplied files. Generated text uses UTF-8 with LF line endings.
 A regeneration mismatch is a failure even when the resulting certificate would pass.
 
@@ -44,11 +44,16 @@ The norm-compression check rebuilds the same three dependencies before its
 permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
 NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
 imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
-and a 120-second timeout. Ten exported theorems are audited, including the
+and a 120-second timeout. The shared algebra checker also rebuilds BilinearDescent and
+BilinearNorm, for seventeen exported theorem audits in total, including the
 prime-field specialization and homogeneous polynomial form. Run this part
 alone with python scripts/verify_algebra.py.
 Independent field controls use small explicit quotients; the degree-13 norm
 expansion is proved symbolically and is not enumerated.
+The bilinear-layer check also rebuilds Sphere, ExactLayerData and ExactLayer.
+Its core Lean proof checks eleven complete histogram transitions, then proves
+the symbolic recurrence, selection and packing; no table entry is trusted as a premise.
+These compilations use the same one-thread, 2048 MB and 120-second limits.
 All Lean checks are bounded subprocesses. Proof compilation does not enumerate
 the enormous sphere or produce planar point configurations.
 The scripts run sequentially and need no WSL, container or parallel search.
@@ -82,16 +87,17 @@ that a remote run passed.
 | Slab cap at d = 13 | scripts/build_slab.py | scripts/verify_slab.py |
 | Central energy interval at d = 13 | scripts/build_central.py | scripts/verify_central.py |
 | Compressed norm at d = 13 | scripts/build_norm.py | scripts/verify_norm.py |
+| Bilinear descent and exact layer | scripts/build_bilinear.py | scripts/verify_bilinear.py |
 
 After intentionally changing a generator, run it, inspect the changed certificate
 and patch, then run the complete verification command.
-The six source patches are alternatives against the same original manuscript.
+The seven source patches are alternatives against the same original manuscript.
 
 ## Proof notes
 
 The current note is notes/sphere-packing.tex; the earlier ternary argument is
 notes/packing.tex. Neither is needed by the executable proof checks.
-The current note, including norm compression, compiled successfully in the desktop editor with
+The current note, including bilinear descent and the exact layer, compiled successfully in the desktop editor with
 Tectonic 0.17.0+20260731. Its source hash and bundle identity are recorded in
 [artifacts/sphere-latex-status.json](../artifacts/sphere-latex-status.json).
 The initial download failure was resolved by using the

@@ -14,22 +14,22 @@
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-At dimension \(d=13\), regrouping the product of conjugate determinants
-and descending by polynomial interpolation reduces the number of norm
-summands to \(T=37\cdot6^{12}\). With the retained slab scales this gives
-the conditional paper exponent
+At dimension \(d=13\), regrouping conjugate determinants and using
+bilinear interpolation reduces the number of norm summands to
+\(T=25\cdot6^{12}\). An exact sphere-layer count and the retained slab
+scales give the conditional paper exponent
 \[
- k=47^{10},\qquad
- \eta_{\rm norm}=\frac{1}{498\cdot47^{10}+7}
-       \approx3.81761455590365\cdot10^{-20}.
+ k=27^{11},\qquad
+ \eta_{\rm bilinear}=\frac{1}{498\cdot27^{11}+7}
+       \approx3.61217890050488\cdot10^{-19}.
 \]
-This is approximately \(1.30583405399879\cdot10^{27}\) times the previous
-central-layer exponent. The earlier constructions are retained below.
-Lean proves the complete norm decomposition, interpolation descent,
-homogeneous degree-13 polynomial coordinates and the distinct-label
-nonvanishing criterion. It also proves the complete finite packing
-and the inherited integer scale inequalities. The algebra proof uses
-Mathlib; the earlier packing and scale proofs use core Lean.
+This is approximately \(9.46187428722714\) times the previous
+37-node norm-compression exponent. The earlier constructions are retained below.
+Lean proves the complete norm decomposition, bilinear descent,
+homogeneous degree-13 coordinates and the distinct-label criterion.
+It also proves the exact layer count, complete finite packing and
+inherited integer scale inequalities. The algebra proof uses Mathlib;
+the packing and scale proofs use core Lean.
 The slab's finite-field geometry is proved in writing, not in Lean.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
@@ -56,6 +56,8 @@ Section~\ref{sec:central} then reduces the alphabet from 202 to 190 digits
 by a second-moment count, while retaining the slab scales.
 Section~\ref{sec:compression} changes the determinant decomposition
 itself: its \(T\) is no longer the binomial count used by earlier variants.
+Section~\ref{sec:bilinear} reduces the interpolation count further and
+uses an exact sphere layer.
 This is an application of the classical sphere idea of Behrend
 \cite{behrend}, not a new progression-free-set construction.
 Stronger variants are known \cite{ehps}; neither optimality nor
@@ -776,14 +778,113 @@ probability and asymptotic transfer arguments.
 The regrouping and interpolation are elementary; novelty, global
 optimality and a practical finite-size improvement are not established.
 
+\section{Bilinear descent and an exact layer}\label{sec:bilinear}
+The preceding construction uses the same evaluation functional in all
+three rows. A row-dependent linear map reduces its interpolation count
+from \(3d-2\) to \(2d-1\). This is elementary polynomial-interpolation
+multiplication, within the classical framework of bilinear complexity
+\cite{bilinear}; no novelty claim is made for the multiplication method.
+
+\begin{lemma}\label{lem:bilinear-descent}
+Let \(K/F\) have power basis \(1,\vartheta,\ldots,\vartheta^{d-1}\),
+let \(\ell:K\to F\) be any \(F\)-linear functional, and choose
+\(2d-1\) distinct elements \(t\in F\). Write \(\widehat x(Y)\) for
+the degree-less-than-\(d\) representative of \(x\in K\), and let
+\(c_t=L_t(\vartheta)\), where \(L_t\) are the Lagrange polynomials.
+For every \(3\)-by-\(3\) matrix \(M\) over \(K\),
+\[
+ \ell(\det M)=\sum_t
+ \det\begin{pmatrix}
+  \widehat M_{11}(t)&\widehat M_{12}(t)&\widehat M_{13}(t)\\
+  \widehat M_{21}(t)&\widehat M_{22}(t)&\widehat M_{23}(t)\\
+  \ell(c_tM_{31})&\ell(c_tM_{32})&\ell(c_tM_{33})
+ \end{pmatrix}.
+\]
+\end{lemma}
+\begin{proof}
+The polynomial \(\widehat x(Y)\widehat y(Y)\) has degree at most
+\(2d-2\). Interpolate it, then evaluate at \(\vartheta\), to obtain
+\[
+ xy=\sum_t\widehat x(t)\widehat y(t)c_t.
+\]
+Multiply by \(z\) and apply \(\ell\):
+\[
+ \ell(xyz)=\sum_t\widehat x(t)\widehat y(t)\ell(c_tz).
+\]
+Apply this formula to each of the six signed terms in \(\det M\).
+Collecting the terms at each node gives the displayed determinant.
+\end{proof}
+
+Apply the lemma with the constant-coordinate functional, which fixes
+\(F\), to each extension-field determinant in
+\eqref{eq:compressed-extension}. For \(a=(\rho,t)\), use
+\[
+ f_{1a}=\epsilon_\rho\widehat F_{1,\rho}(t,X),\qquad
+ f_{2a}=\widehat F_{2,\rho}(t,X),\qquad
+ f_{3a}=\ell(c_tF_{3,\rho}(X)).
+\]
+All maps extend coefficientwise and preserve homogeneity of degree
+\(d\). The exact norm identity therefore holds with
+\[
+ T=(2d-1)6^{d-1}=25\cdot6^{12}=54\,419\,558\,400.
+\]
+The third row's map is essential: replacing it by the old evaluation
+map at only 25 nodes is generally false. The finite checker includes
+counterexamples to that substitution. The new Lean theorem holds for
+every prime \(r\ge25\); the manuscript patch keeps the sufficient
+restriction \(r\ge37\), leaving the later argument unchanged.
+
+Now take \(m=11\), \(s=14\), \(A=7\), and \(b=27\). A digit
+\(x\in\{0,\ldots,13\}\) has energy index
+\(j(x)=((2x-13)^2-1)/8\). Thus its generating polynomial is
+\[
+ D(z)=2(1+z+z^3+z^6+z^{10}+z^{15}+z^{21}).
+\]
+For \(c_n(e)=[z^e]D(z)^n\), the exact recurrence is
+\[
+ c_0(e)=\begin{cases}1&e=0,\\0&e>0,\end{cases}
+ \qquad
+ c_{n+1}(e)=2\sum_{j=0}^6 c_n(e-j(j+1)/2),
+\]
+with \(c_n(e)=0\) when \(e<0\). It gives
+\[
+ c_{11}(86)=67\,169\,169\,408>T.
+\]
+Only energies 0 through 86 are needed: all digit energies are
+nonnegative. The twelve rows of 87 counts are recorded in the
+certificate and in \texttt{ExactLayerData.lean}. The independent
+checker also obtains this count from
+\[
+ 2^{11}\!\!\sum_{\substack{a_0+\cdots+a_6=11\\
+                   \sum_{j=0}^6 a_jj(j+1)/2=86}}
+       \frac{11!}{a_0!\cdots a_6!}.
+\]
+Words at energy index 86 have squared centered norm
+\(11+8\cdot86=699\). Select \(T\) distinct words from this layer.
+The previous midpoint-rigidity and carry-free encoding arguments
+provide the complete packing with
+\[
+ k=27^{11}=5\,559\,060\,566\,555\,523.
+\]
+Proposition~\ref{prop:slab} retains all its hypotheses and yields
+\[
+ \eta_{\rm bilinear}=\frac1{498\cdot27^{11}+7}
+     =\frac1{2\,768\,412\,162\,144\,650\,461}.
+\]
+The exact gain over \(\eta_{\rm norm}\) lies between 9.46 and 9.47.
+These are explicit feasible parameters, with no unrestricted
+optimality claim. The geometric conclusion remains conditional on
+the same upstream estimates as the preceding checkpoints.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the current result, run \texttt{python scripts/build\_norm.py},
-then \texttt{python scripts/verify\_norm.py}. The ternary,
-sphere-only, retuned, slab, central-layer and compressed-norm patches are six alternatives applied
+For the current result, run \texttt{python scripts/build\_bilinear.py},
+then \texttt{python scripts/verify\_bilinear.py}. The ternary,
+sphere-only, retuned, slab, central-layer, compressed-norm and bilinear-layer patches
+are seven alternatives applied
 directly to the unchanged manuscript, not successive patches.
-The retuned, slab, central and norm patches update Sections 3--8, including the full deletion
+The retuned, slab, central, norm and bilinear patches update Sections 3--8, including the full deletion
 and interpolation argument.
 The earlier sphere checks remain available through
 \texttt{python scripts/verify\_sphere.py}.
@@ -901,8 +1002,8 @@ result also covers the arbitrary label functions allowed in upstream
 Section~4. Mathlib is pinned to commit
 \texttt{20c73142afa995ac9c8fb80a9bb585a55ca38308};
 the dependency lock contains all seven exact revisions.
-\texttt{scripts/verify\_algebra.py} rebuilds the five local modules
-sequentially and audits ten exported theorems. Their only logical
+\texttt{scripts/verify\_algebra.py} rebuilds these five modules and the
+two bilinear modules below, auditing seventeen exported theorems in total. Their only logical
 axioms are \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}. Each compilation is limited to one thread,
 2048 MB and 120 seconds.
@@ -916,6 +1017,28 @@ polynomials are checked for irreducibility. Negative controls detect
 omitted signs, entrywise projection, insufficient nodes, corrupted
 weights and the even-degree sign error. These finite controls supplement
 the universal Lean argument.
+
+\texttt{BilinearDescent.lean} proves two-factor interpolation at 25
+nodes, the three-factor projection formula and the determinant descent.
+\texttt{BilinearNorm.lean} combines it with the original orbit
+regrouping and proves the functional norm identity, homogeneous
+polynomial form and distinct-label specialization. The hypotheses
+supply only the fields and their degree and cardinality, not a desired
+decomposition. \texttt{ExactLayer.lean} symbolically enumerates digit
+words, proves their nonduplication and the counting recurrence, and
+checks every row of the finite table with the Lean kernel. It then
+selects the words and proves \texttt{bilinear\_packing}. No count-table
+entry or layer-capacity hypothesis is assumed. The count table is
+checked by list equalities in eleven separate transitions, within
+the same one-thread, 2048 MB and 120-second compilation limits.
+
+The new finite controls check all basis products and five determinants
+in each of the degree-3, degree-5 and degree-13 extensions used above.
+They detect insufficient nodes, a corrupted interpolation element and
+an incorrect third-row map. The layer is independently checked by a
+full energy distribution, the multinomial formula and exhaustive
+products of lengths 0 through 3. Seven corrupted certificates are
+rejected. These checks supplement the universal Lean proofs.
 
 The retuned verifier rebuilds the imported sphere proof before checking
 the new file, audits their logical axioms, independently derives the
@@ -944,5 +1067,9 @@ No Three Terms in Arithmetical Progression}, PNAS 32 (1946), 331--332.
 \emph{Improving Behrend's construction: Sets without arithmetic
 progressions in integers and over finite fields}, 2024.
 \url{https://arxiv.org/abs/2406.12290}.
+\bibitem{bilinear} H. Randriambololona,
+\emph{Bilinear complexity of algebras and the Chudnovsky--Chudnovsky
+interpolation method}, 2012.
+\url{https://arxiv.org/abs/1107.0336}.
 \end{thebibliography}
 \end{document}

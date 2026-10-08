@@ -1,4 +1,4 @@
-"""Rebuild every local algebra proof and audit the ten exported theorems."""
+"""Rebuild every local algebra proof and audit the seventeen exported theorems."""
 from hashlib import sha256
 from pathlib import Path
 import json
@@ -16,6 +16,9 @@ THEOREMS = {
     "NormAlgebra": ["norm_orbit_expansion", "norm_decomposition", "finite_field_norm_decomposition"],
     "NormPolynomials": ["polynomial_norm_decomposition", "finite_field_polynomial_norm_decomposition"],
     "NormVandermonde": ["finite_field_label_decomposition", "prime_field_label_decomposition"],
+    "BilinearDescent": ["bilinear_interpolation", "bilinear_determinant_descent"],
+    "BilinearNorm": ["bilinear_term_card", "bilinear_norm_decomposition", "finite_field_bilinear_norm",
+                     "finite_field_bilinear_polynomials", "prime_field_bilinear_labels"],
 }
 
 
@@ -61,7 +64,8 @@ def verify_algebra():
         "compilation_limits": {"threads": 1, "memory_mb_per_process": 2048,
                                "timeout_seconds_per_module": 120},
         "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial "
-                 "coordinates and nonzero residue exactly for distinct labels; all primes >= 37.",
+                 "coordinates and nonzero residue exactly for distinct labels; "
+                 "37-node and 25-node descents, the latter for all primes >= 25.",
         "not_established": ["slab cap geometry", "lattice and probability estimates",
                             "full Heilbronn theorem"],
         "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},
