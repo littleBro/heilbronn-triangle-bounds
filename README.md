@@ -2,22 +2,22 @@
 
 A conditional research draft by **[Ivan Blinov (@littleBro)](https://github.com/littleBro)**, extending [OpenAI math family 191](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026), with OpenAI Codex assistance.
 
-The current version combines centered-sphere packing with dimension d = 13 and an auxiliary cap restricted to a slab. It gives the **conditional paper exponent**
+The current version counts a central energy interval in the centered-sphere packing, with dimension d = 13 and an auxiliary cap restricted to a slab. It gives the **conditional paper exponent**
 
 $$
 \Delta(n)\ge c\,n^{-2+\eta},\qquad
-\boxed{\eta=\frac{1}{498\cdot403^{17}+7}\approx1.02940168035828\cdot10^{-47}}.
+\boxed{\eta=\frac{1}{498\cdot379^{17}+7}\approx2.92350666167202\cdot10^{-47}}.
 $$
 
-The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. The complete finite packing and selected scale inequalities are proved in Lean. The new slab cap has a written finite-field proof; that geometry and the full Heilbronn theorem are not formalized in Lean.
+The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. The second-moment bound, layer selection, complete finite packing and selected scale inequalities are proved in Lean. The slab cap has a written finite-field proof; that geometry and the full Heilbronn theorem are not formalized in Lean.
 
-[Proof and review guide](docs/review.md) · [Current certificate](certificates/slab.json) · [Lean scale proofs](lean/Slab.lean) · [Reproduction guide](docs/reproducibility.md)
+[Proof and review guide](docs/review.md) · [Current certificate](certificates/central.json) · [Lean packing proof](lean/Central.lean) · [Reproduction guide](docs/reproducibility.md)
 
 Run all retained results with Python 3.11+, Git and the pinned Lean 4.11.0 toolchain:
 
     python scripts/verify_all.py
 
-On systems with Make, make verify runs the same checks. The command also requires all eight certificates and patches to regenerate byte for byte.
+On systems with Make, make verify runs the same checks. The command also requires all ten certificates and patches to regenerate byte for byte.
 
 | Packing | k | Conditional paper exponent |
 | --- | --- | --- |
@@ -26,12 +26,38 @@ On systems with Make, make verify runs the same checks. The command also require
 | Centered sphere | 40011^29 | ≈ 1.51508393214748e-138 |
 | Retuned scales, d = 13 | 403^17 | ≈ 4.77320332233169e-48 |
 | Slab cap, d = 13 | 403^17 | ≈ 1.02940168035828e-47 |
+| Central energy interval, d = 13 | 379^17 | ≈ 2.92350666167202e-47 |
 
-The slab exponent is approximately 2.15662650602410 times the published retuned exponent. The retuned checkpoint was approximately 3.15045471808690e90 times the previous sphere exponent, and 1.50303310297206e188 times the pinned manuscript exponent. These are comparisons of exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
+The current exponent is approximately 2.84000572124043 times the previous slab exponent. That checkpoint was approximately 2.15662650602410 times the retuned exponent. These are comparisons of exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
 
-The current construction selects words of length 17 over 202 digits with the same centered squared norm, then encodes them in base 403. There are at most 85,851 energies, and Lean proves that one class contains at least the required T = binom(binom(51,13),3) words. The actual sphere is not enumerated.
+The current construction selects words of length 17 over 190 digits with the same centered squared norm, then encodes them in base 379. Lean proves that a central interval of 20,001 energies contains at least 20,001 T words, where T = binom(binom(51,13),3). It then selects T distinct words from one layer. The actual sphere is not enumerated.
 
-## Current result: a slab cap
+## Current result: a second-moment count
+
+For each digit t, put j(t) = ((2t − 189)² − 1)/8. Its mean is 1504, so the energy index J of a word has mean 25,568. The sum of squared centered digit scores is 343,855,008. Over all 190^17 words, the second moment is
+
+    V = 17 * 190^16 * 343855008.
+
+Outside 15,568 <= J <= 35,568, the centered score has absolute value at least 10,001. At most floor(V/10001²) words lie outside. The exact inequality
+
+    V + 20001 * T * 10001² <= 190^17 * 10001²
+
+therefore supplies a large enough energy layer. The existing carry-free encoding and slab scales give k = 379^17 and eta = 1/(498k + 7).
+
+- [Written proof and parameter transfer](notes/sphere-packing.tex)
+- [Lean proof from symbolic moments through complete packing](lean/Central.lean)
+- [Exact certificate](certificates/central.json)
+- [Patch for original manuscript Sections 3–8](patches/central-sphere.patch)
+- [Verification report](artifacts/central-verification.json)
+
+Regenerate and verify:
+
+    python scripts/build_central.py
+    python scripts/verify_central.py
+
+The checker independently propagates moments, tests six small Cartesian products, rejects six corrupted certificates, rebuilds the Lean dependencies, audits logical axioms and checks patch applicability. Lean evaluates only the 190 digit scores and a 17-step recurrence. The parameter choice is an explicit feasible witness; no optimality claim is made.
+
+## Preserved slab cap
 
 The short-relation exclusion in upstream Section 5 only bounds the first coordinate. Take
 
@@ -39,7 +65,7 @@ The short-relation exclusion in upstream Section 5 only bounds the first coordin
 
 where ν is a nonsquare and w = floor(q/(1000 H²)). This is a subset of the same elliptic paraboloid, with no three collinear points and exactly wq points. The allowed shifts and inclusion-probability argument still apply. Thus s >= q²/(2000 H²), improving the previous q²/(2000³ H⁶) bound.
 
-With H = 2h, the three degenerate losses become h⁶/q, h⁴/q and h⁶/q². They stay bounded for h⁶ < q <= 2h⁶. Keeping the packing, digit scale and N = (hq)⁴ gives rho = 498k + 6 and the exponent displayed above.
+With H = 2h, the three degenerate losses become h⁶/q, h⁴/q and h⁶/q². They stay bounded for h⁶ < q <= 2h⁶. Keeping the digit scale and N = (hq)⁴ gives rho = 498k + 6 and eta = 1/(498k + 7). This checkpoint uses k = 403^17; the current version retains the slab argument with the smaller packing.
 
 - [Written cap proof and full parameter transfer](notes/sphere-packing.tex)
 - [Lean proofs of the new integer inequalities](lean/Slab.lean)
@@ -88,11 +114,11 @@ Regenerate and verify the sphere-only baseline:
 
 **The complete finite sphere packing is now proved in Lean.** This includes the energy-layer bound, a finite pigeonhole theorem, selection of T distinct words from one layer, encoding, bounds, injectivity, and matching. The final theorem also checks T using the falling-factorial quotient definition of binomial coefficients. No sufficiently large sphere is assumed as a precondition, and the enormous set is never enumerated during proof checking.
 
-The baseline theorem is paper_packing_binomial in Sphere.lean; the current specialization is tuned_packing in Tuned.lean. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
+The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The current theorem is central_packing_binomial in Central.lean. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
 
 The sphere idea is classical Behrend; stronger progression-free-set constructions are known ([Elsholtz, Hunter, Proske, Sauermann](https://arxiv.org/abs/2406.12290)). We claim neither a new sphere method nor unrestricted optimality. The certificate records a bounded comparison of dimensions 3–284 under its sufficient-capacity criterion.
 
-All four source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
+All five source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
 
 ## Preserved ternary baseline
 
@@ -134,7 +160,7 @@ The verifier preserves upstream files, compiles only the local proof, rejects ch
 
 The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the current sphere proof additionally checks its binomial formula inside Lean. See the respective proof notes for their scopes.
 
-The proof notes are supplied as TeX. The current sphere/slab note compiled successfully with the built-in Tectonic 0.17.0+20260731 after installing its support bundle from the [official v33 mirror](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map). The source hash and bundle identity are recorded in [the compilation report](artifacts/sphere-latex-status.json). Generated note PDFs are not included. The separate artifacts/latex-status.json retains the earlier ternary-note attempt. Note compilation is separate from the Lean and Python checks.
+The proof notes are supplied as TeX. The current sphere/slab/central-layer note compiled successfully with the built-in Tectonic 0.17.0+20260731 after installing its support bundle from the [official v33 mirror](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map). The source hash and bundle identity are recorded in [the compilation report](artifacts/sphere-latex-status.json). Generated note PDFs are not included. The separate artifacts/latex-status.json retains the earlier ternary-note attempt. Note compilation is separate from the Lean and Python checks.
 
 The [GitHub Actions workflow](.github/workflows/verify.yml) runs the same checks on Ubuntu and saves verification reports. See [Actions](https://github.com/littleBro/heilbronn-triangle-bounds/actions/workflows/verify.yml) for the result on a particular commit. Local reports and remote runs record their own environments.
 
