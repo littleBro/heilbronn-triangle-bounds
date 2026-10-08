@@ -92,7 +92,7 @@ theorem normalized_sign (p : Fin 6) (w : Word 6 12) :
 
 -- The field-algebra and interpolation argument is written in the note.
 -- These theorems certify its permutation bookkeeping and the resulting
--- packing size, without assuming or asserting a formal field-norm identity.
+-- packing size. NormAlgebra and NormPolynomials prove the field-norm identity.
 def normT : Nat := (3 * 13 - 2) * 6 ^ 12
 
 theorem norm_count : normT = 80540946432 := by decide

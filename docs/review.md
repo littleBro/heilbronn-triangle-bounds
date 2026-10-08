@@ -16,23 +16,32 @@ fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
 | Claim | Evidence | Boundary |
 | --- | --- | --- |
-| Norm decomposition with T = 37 * 6^12 | New written lemma, two-stage proof and patched Section 3 | Permutation normalization and signs in Lean; determinant expansion and field descent are not fully formalized |
-| Interpolation descent using 37 nodes | Written degree bound and Lagrange identity; finite field controls | Universal written proof; no universal Lean interpolation theorem |
+| Norm decomposition with T = 37 * 6^12 | NormExpansion.determinant_product_compression and NormAlgebra.finite_field_norm_decomposition | Fully proved for degree-13 finite extensions with at least 37 base-field elements; uses Mathlib's field norm |
+| Interpolation descent using 37 nodes | NormDescent.determinant_descent | Fully proved from the degree bound and Lagrange identity; projection is used only linearly |
+| Homogeneous degree-13 base-field polynomials | NormPolynomials.finite_field_polynomial_norm_decomposition | Fully proved polynomial homogeneity and the exact norm identity for all coordinate triples; supplies a power basis and 37 nodes |
 | Enough distinct equal-energy words | NormCompression.norm_capacity and Sphere.sphere_family | Fully proved in Lean by the full-range bound and finite pigeonhole |
 | Positions, row injections and exact matching | NormCompression.norm_packing, using Sphere.packing_exists | Fully proved in Lean for T = 37 * 6^12, k = 47^10 |
-| The exact T formula, capacity and gain | NormCompression.lean and independent integer arithmetic | The count formula is numerical; its field-algebra justification is written |
+| The exact T formula, capacity and gain | NormAlgebra.term_card, NormCompression.lean and independent integer arithmetic | Count, algebraic justification, capacity and gain are proved in Lean |
 | Digit and auxiliary scale inequalities | Tuned.lean, Slab.lean, certificates/norm.json | Integer inequalities uniform in k; probability and lattice arguments are separate |
 | Slab cap size and short-relation exclusion | New written lemma and proof in the note and patched Section 5 | Finite-field geometry is not in Lean; small cases are independently checked |
-| Nonzero norm for distinct labels at d = 13 | Pinned Vandermonde identity and new exact norm decomposition | Written field-algebra argument; not fully formalized here |
+| Nonzero norm for distinct labels at d = 13 | NormVandermonde.prime_field_label_decomposition | Fully proved for every prime r >= 37; nonzero if and only if the three labels are distinct |
 | Lattice, orbit and weighted counts | Pinned Sections 2 and 4–7, with the slab lemma and changed scale checks | Relied upon; no complete independent theorem audit |
 | Deletion and all sufficiently large cardinalities | Written note and patched Section 8 | The asymptotic and geometric proof is not in Lean |
 | Current sphere parameters | Explicit A = 12, m = 10, Q = 661 | Feasible witness only; no parameter optimality claim |
 | Fresh reproduction | artifacts/repository-verification.json and its linked reports | Evidence is specific to the recorded sources and environment |
 
 Lean declarations use the namespaces HeilbronnSphere, HeilbronnTuned,
-HeilbronnSlab, HeilbronnCentral and HeilbronnNormCompression.
+HeilbronnSlab, HeilbronnCentral, HeilbronnNormCompression and HeilbronnNorm.
+The last namespace contains the five new Mathlib-based algebra modules.
 Only the standard logical axioms propext, Classical.choice and Quot.sound are
 permitted in these local proofs. Pure numerical comparisons use no axioms.
+
+The algebra theorem assumes fields, a degree-13 finite extension, and at least
+37 base-field elements. It does not assume a compressed norm identity or a
+descent theorem. Its final prime-field specialization constructs the extension
+as GaloisField r 13. The polynomial theorem proves homogeneity and a universally
+quantified evaluation identity; the functional theorem applies to arbitrary
+one-label functions, the interface permitted by upstream Section 4.
 
 ## The steps most useful to review
 

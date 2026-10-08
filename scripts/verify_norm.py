@@ -1,4 +1,4 @@
-"""Exact norm-count arithmetic, field controls and the finite Lean interface."""
+"""Exact arithmetic, field controls, finite packing and the universal norm proof."""
 from copy import deepcopy
 from decimal import Decimal, localcontext
 from fractions import Fraction
@@ -11,6 +11,7 @@ import subprocess
 import sys
 
 from norm_controls import finite_controls
+from verify_algebra import verify_algebra
 from verify import PIN, read_fraction, require, run_checked
 from verify_central import arithmetic as check_central
 from verify_slab import arithmetic as check_slab, rejected, scale_constraints
@@ -38,7 +39,7 @@ def arithmetic(c, previous):
         "extension_field_terms": str(orbits), "representative_degree_max": 12,
         "determinant_degree_max": degree, "interpolation_nodes": nodes, "prime_minimum": 37,
         "preserved_interface": "homogeneous degree-d polynomials over F_r; exact norm identity",
-        "proof_status": "written algebraic proof; permutation normalization and signs in Lean"},
+        "proof_status": "Lean proofs of norm regrouping, interpolation descent, homogeneous coordinates and distinct labels"},
         "decomposition interface")
     Q = 10*sum(range(12))+1
     N, k = repeated_power(24, 10), repeated_power(47, 10)
@@ -66,12 +67,13 @@ def arithmetic(c, previous):
     require(c["formal_scope"] == {
         "proved": ["permutation composition, exhaustive list, signs and normalization bijection",
             "sign identity for 13 determinant factors",
+            "universal field-norm decomposition for degree-13 finite extensions",
+            "37-node interpolation descent and homogeneous degree-13 polynomial coordinates",
+            "nonzero norm residue exactly for distinct labels for every prime >= 37",
             "complete finite packing for T = 37*6^12, k = 47^10",
             "inherited integer scale inequalities and exponent identity",
             "10^27 < gain from central < 2*10^27"],
-        "written_not_formalized": ["norm expansion as determinants over the extension field",
-            "polynomial interpolation and descent to the base field",
-            "slab cap geometry and short-relation exclusion",
+        "written_not_formalized": ["slab cap geometry and short-relation exclusion",
             "lattice, orbit and weighted counting estimates",
             "probability, asymptotic deletion and interpolation"]}, "formal scope")
     require(c["parameter_choice"] == "explicit feasible witness; no optimality claim", "search scope")
@@ -125,6 +127,7 @@ def main():
     for entry in re.findall(r"depends on axioms: \[([^]]*)\]", audit):
         require(set(entry.split(", ")) <= {"propext", "Classical.choice", "Quot.sound"},
                 "unexpected axiom")
+    algebra = verify_algebra()
     patch = ROOT / "patches/norm-compression.patch"
     run_checked(["git", "apply", "--check", "--directory=upstream/manuscript", str(patch)])
     require(patch.read_text(encoding="utf-8").count("\n+++ b/") == 6, "patch coverage")
@@ -135,7 +138,11 @@ def main():
         "scripts/build_patch.py", "scripts/verify.py", "scripts/verify_central.py",
         "certificates/norm.json", "certificates/central.json", "certificates/slab.json",
         "certificates/tuned.json", "patches/norm-compression.patch", "upstream/manifest.json",
-        "notes/sphere-packing.tex", "README.md", "docs/review.md", "artifacts/sphere-latex-status.json"]
+        "notes/sphere-packing.tex", "README.md", "docs/review.md", "artifacts/sphere-latex-status.json",
+        "artifacts/algebra-verification.json", "scripts/verify_algebra.py", "scripts/prepare_mathlib.py",
+        "lakefile.lean", "lake-manifest.json"]
+    evidence.extend(algebra["evidence_sha256"])
+    evidence = list(dict.fromkeys(evidence))
     with localcontext() as ctx:
         ctx.prec = 40
         decimal = lambda f: format(Decimal(f.numerator)/Decimal(f.denominator), ".14E")
@@ -144,9 +151,9 @@ def main():
             "eta_approx": decimal(eta), "gain_from_central_approx": decimal(gain),
             "arithmetic_negative_controls": len(mutations), "finite_controls": finite,
             "lean_axiom_audit": audit.splitlines(), "patch_applies": True, "patched_sections": 6,
+            "algebra_theorems_audited": algebra["audited_theorems"],
             "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},
-            "not_established": ["complete Lean proof of norm decomposition and field descent",
-                "Lean proof of the slab cap geometry or full geometric theorem",
+            "not_established": ["Lean proof of the slab cap geometry or full geometric theorem",
                 "complete independent audit of upstream estimates", "practical finite-n improvement",
                 "novelty, priority or global optimality"]}
     (ROOT / "artifacts/norm-verification.json").write_text(

@@ -2,17 +2,28 @@
 
 Install Python 3.11 or newer, Git, and
 [elan](https://github.com/leanprover/elan), the Lean toolchain manager.
-The checked-in lean-toolchain selects Lean 4.11.0. No Mathlib or third-party
-Python packages are used. Toolchain installation needs network access;
-the proof and certificate checks use the bundled sources and run locally.
+The checked-in lean-toolchain selects Lean 4.11.0. The algebra proof uses
+Mathlib v4.11.0 at commit 20c73142afa995ac9c8fb80a9bb585a55ca38308;
+lake-manifest.json locks all seven dependency revisions. The earlier packing
+and scale proofs use core Lean. No third-party Python packages are used.
+Toolchain and dependency preparation need network access; subsequent proof
+and certificate checks run locally.
 
 From the repository root, install the pinned toolchain if necessary:
 
     elan toolchain install leanprover/lean4:v4.11.0
 
-Then run the same command on Windows, Linux or macOS:
+Prepare the dependencies once per fresh checkout, then verify on Windows,
+Linux or macOS:
 
+    python scripts/prepare_mathlib.py
     python scripts/verify_all.py
+
+Preparation checks the Mathlib revision before running its cache tool and
+fetches compiled imports for the required modules. It does not run lake update.
+Dependencies and compiled files stay in the ignored .lake/ directory.
+The verifier checks all dependency revisions and rejects modified tracked
+dependency sources before rebuilding each local algebra proof.
 
 Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
@@ -30,8 +41,14 @@ The tuned check rebuilds Sphere.olean from its source before importing it.
 The slab check rebuilds both Sphere.olean and Tuned.olean before importing them.
 The central-layer check rebuilds Sphere.olean, Tuned.olean and Slab.olean.
 The norm-compression check rebuilds the same three dependencies before its
-permutation and packing proofs. Its field checks use small explicit quotients;
-the degree-13 norm expansion is not enumerated.
+permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
+NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
+imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
+and a 120-second timeout. Ten exported theorems are audited, including the
+prime-field specialization and homogeneous polynomial form. Run this part
+alone with python scripts/verify_algebra.py.
+Independent field controls use small explicit quotients; the degree-13 norm
+expansion is proved symbolically and is not enumerated.
 All Lean checks are bounded subprocesses. Proof compilation does not enumerate
 the enormous sphere or produce planar point configurations.
 The scripts run sequentially and need no WSL, container or parallel search.
@@ -46,7 +63,8 @@ The local checks have passed on native Windows with Python 3.14.4 and Lean 4.11.
 The included GitHub Actions workflow targets Ubuntu 24.04 and Python 3.11.
 It first scans Git history and checked-out files with a pinned Gitleaks release.
 It pins action commits and the elan installer, installs the exact Lean version,
-runs the same verifier and saves the reports for 14 days. The secret scan is a
+prepares the locked Mathlib imports, runs the same verifier and saves the reports
+for 14 days. The secret scan is a
 separate CI check, not part of the local mathematical verification command.
 See [the security review](security.md) before running untrusted contributions.
 Check

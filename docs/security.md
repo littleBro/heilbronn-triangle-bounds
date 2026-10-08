@@ -52,6 +52,12 @@ and files checked, not proof that every kind of confidential information is abse
 
 Action commits and downloaded installer archives are pinned. Downloading the
 selected Lean toolchain still trusts elan and Lean's release infrastructure.
+The algebra proof adds Mathlib at a fixed commit and six transitive dependencies
+locked in lake-manifest.json. Preparation verifies their revisions and rejects
+modified tracked sources. It downloads compiled imports using that pinned
+Mathlib cache tool; this trusts Mathlib's cache and helper-release infrastructure
+in addition to Lean's distribution. These dependencies require manual review
+when their pins change. CI does not upload or share a writable dependency cache.
 The Actions allowlist governs uses: entries; it does not restrict arbitrary
 commands or network access inside a run.
 

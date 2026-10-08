@@ -18,7 +18,7 @@ GENERATED = [
 def run(script):
     print(f"Checking {script}", flush=True)
     subprocess.run([sys.executable, str(ROOT / "scripts" / script)],
-                   cwd=ROOT, check=True, timeout=60)
+                   cwd=ROOT, check=True, timeout=780 if script == "verify_norm.py" else 60)
 
 
 def main():
@@ -38,7 +38,8 @@ def main():
                          "\n".join(changed))
     reports = ["artifacts/verification.json", "artifacts/sphere-verification.json",
                "artifacts/tuned-verification.json", "artifacts/slab-verification.json",
-               "artifacts/central-verification.json", "artifacts/norm-verification.json"]
+               "artifacts/central-verification.json", "artifacts/norm-verification.json",
+               "artifacts/algebra-verification.json"]
     for name in reports:
         report = json.loads((ROOT / name).read_text(encoding="utf-8"))
         if report["status"] != "pass":

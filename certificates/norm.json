@@ -14,7 +14,7 @@
     "interpolation_nodes": 37,
     "prime_minimum": 37,
     "preserved_interface": "homogeneous degree-d polynomials over F_r; exact norm identity",
-    "proof_status": "written algebraic proof; permutation normalization and signs in Lean"
+    "proof_status": "Lean proofs of norm regrouping, interpolation descent, homogeneous coordinates and distinct labels"
   },
   "packing": {
     "m": 10,
@@ -84,13 +84,14 @@
     "proved": [
       "permutation composition, exhaustive list, signs and normalization bijection",
       "sign identity for 13 determinant factors",
+      "universal field-norm decomposition for degree-13 finite extensions",
+      "37-node interpolation descent and homogeneous degree-13 polynomial coordinates",
+      "nonzero norm residue exactly for distinct labels for every prime >= 37",
       "complete finite packing for T = 37*6^12, k = 47^10",
       "inherited integer scale inequalities and exponent identity",
       "10^27 < gain from central < 2*10^27"
     ],
     "written_not_formalized": [
-      "norm expansion as determinants over the extension field",
-      "polynomial interpolation and descent to the base field",
       "slab cap geometry and short-relation exclusion",
       "lattice, orbit and weighted counting estimates",
       "probability, asymptotic deletion and interpolation"

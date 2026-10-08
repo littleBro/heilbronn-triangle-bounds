@@ -9,15 +9,16 @@ $$
 \boxed{\eta=\frac{1}{498\cdot47^{10}+7}\approx3.81761455590365\cdot10^{-20}}.
 $$
 
-The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. The new norm decomposition and interpolation descent have a written algebraic proof and finite controls. Lean checks the permutation normalization and signs, the complete new finite packing and selected scale inequalities. The field-algebra argument, slab geometry and full Heilbronn theorem are not completely formalized in Lean.
+The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. Lean proves the complete new norm decomposition, interpolation descent, homogeneous polynomial coordinates and nonzero residue for distinct labels. It also proves the finite packing and selected scale inequalities. The slab geometry, lattice and probability estimates, and full Heilbronn theorem remain outside the formal proof.
 
-[Proof and review guide](docs/review.md) · [Current certificate](certificates/norm.json) · [Lean packing proof](lean/NormCompression.lean) · [Reproduction guide](docs/reproducibility.md)
+[Proof and review guide](docs/review.md) · [Current certificate](certificates/norm.json) · [Lean algebra proof](lean/NormAlgebra.lean) · [Lean packing proof](lean/NormCompression.lean) · [Reproduction guide](docs/reproducibility.md)
 
 Run all retained results with Python 3.11+, Git and the pinned Lean 4.11.0 toolchain:
 
+    python scripts/prepare_mathlib.py
     python scripts/verify_all.py
 
-On systems with Make, make verify runs the same checks. The command also requires all twelve certificates and patches to regenerate byte for byte.
+The first command prepares pinned Mathlib dependencies and compiled imports; run it once per fresh checkout. On systems with Make, make verify runs the checks after this setup. Verification also requires all twelve certificates and patches to regenerate byte for byte.
 
 | Packing | k | Conditional paper exponent |
 | --- | --- | --- |
@@ -42,17 +43,23 @@ To express them over the base field, represent coefficients in a power basis of 
 The result is the same exact norm identity with T = 37 * 6^12 homogeneous polynomials per row. The distinct-label obstruction and the conditional digit estimate retain their original interfaces; the latter already permits arbitrary functions of the labels. With the existing slab scales, eta remains 1/(498k + 7), now at k = 47^10.
 
 - [Written algebraic proof and downstream interface review](notes/sphere-packing.tex)
+- [Universal field-norm decomposition](lean/NormAlgebra.lean)
+- [Homogeneous polynomial coordinates](lean/NormPolynomials.lean)
+- [Distinct-label theorem for every prime r >= 37](lean/NormVandermonde.lean)
 - [Lean permutation bookkeeping and complete finite packing](lean/NormCompression.lean)
 - [Exact certificate](certificates/norm.json)
 - [Alternative patch for original manuscript Sections 3–8](patches/norm-compression.patch)
 - [Verification report](artifacts/norm-verification.json)
+- [Algebra proof and dependency audit](artifacts/algebra-verification.json)
 
 Regenerate and verify:
 
     python scripts/build_norm.py
     python scripts/verify_norm.py
 
-The checker tests the full decomposition on four matrices each over F_(11^3) and F_(17^5), including distinct Vandermonde labels. It checks descent on all 37 basis monomials and four matrices over F_(41^13), without enumerating the degree-13 norm expansion. Negative controls detect omitted signs, entrywise projection, insufficient nodes, corrupted weights and the even-degree sign error. The general field-algebra proof is written; these finite controls do not replace it. No novelty or optimality claim is made.
+The checker rebuilds five algebra modules and audits ten exported theorems against the pinned Mathlib version. The final theorem uses Mathlib's actual field norm and supplies the power basis, automorphisms and interpolation nodes from finite-field hypotheses. It proves one family of coordinates works for every label triple. The corresponding polynomials are homogeneous of degree 13.
+
+Independent finite controls test the full decomposition on four matrices each over F_(11^3) and F_(17^5), including distinct Vandermonde labels. They check descent on all 37 basis monomials and four matrices over F_(41^13), without enumerating the degree-13 norm expansion. Negative controls detect omitted signs, entrywise projection, insufficient nodes, corrupted weights and the even-degree sign error. These controls supplement the universal Lean proof. No novelty or optimality claim is made.
 
 ## Preserved second-moment count
 
@@ -119,7 +126,7 @@ The checkpoint changes are L = 400 k² r⁴, H = 2h, q between h¹⁴ and 2h¹�
 
 Lean checks the complete new finite packing, the binomial formula for T, the capacity inequality, integer scale bounds, cleared-denominator deletion constraints, the exponent identity, and the gain enclosure. The verifier rebuilds the imported sphere proof, checks source hashes and patch applicability, and rejects four corrupted certificates and five parameter changes that break the stated sufficient bounds.
 
-The field-norm, lattice, probability, asymptotic deletion, and interpolation arguments remain written conditional mathematics. They are not a complete Lean proof of the geometric theorem. The very small negative collision exponent can require enormous thresholds; no practical finite-size improvement is claimed.
+This checkpoint's transfer of the original decomposition, lattice, probability, asymptotic deletion and interpolation estimates remains a written conditional argument. The current compressed decomposition has the separate Lean proof described above; the full geometric theorem is still not formalized. The very small negative collision exponent can require enormous thresholds; no practical finite-size improvement is claimed.
 
 ## Preserved centered-sphere baseline, d = 41
 
@@ -166,10 +173,11 @@ The key substitution is m = ceil(log2(T)), k = 3^m. Write the binary digits of a
 
 ## Reproduce
 
-Requirements: Python 3.11 or later (standard library only), Git, and native Lean 4.11.0. The local run used Python 3.14.4 on Windows. No Mathlib, WSL, parallel search, or geometric sampling workload is required. Install the pinned toolchain with elan before verification; see the [reproduction guide](docs/reproducibility.md).
+Requirements: Python 3.11 or later (standard library only), Git, and native Lean 4.11.0. The algebra proof uses Mathlib at commit 20c73142afa995ac9c8fb80a9bb585a55ca38308 (v4.11.0), with all seven dependency revisions locked. The earlier packing and scale proofs still use core Lean. The local run used Python 3.14.4 on Windows; no WSL, parallel search or geometric sampling workload is required. See the [reproduction guide](docs/reproducibility.md).
 
 From this directory:
 
+    python scripts/prepare_mathlib.py
     python scripts/verify_all.py
 
 To regenerate the deterministic certificate and patch:

@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "cad9d6e98f1a6da73d63c802bd073580aec0c29c5838f8c963e20e2e83d0fe62",
+  "source_sha256": "e5d3f217b2d2a84d96c884506ad6c808ff43b23589527b1834e1b50b501e55f3",
   "attempt_date": "2026-10-08",
-  "attempt_scope": "Existing note including norm compression, interpolation descent and the retained constructions",
+  "attempt_scope": "Existing note including the complete Lean norm decomposition, homogeneous polynomial coordinates and distinct-label theorem",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

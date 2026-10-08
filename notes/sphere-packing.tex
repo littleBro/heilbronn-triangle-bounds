@@ -25,10 +25,11 @@ the conditional paper exponent
 \]
 This is approximately \(1.30583405399879\cdot10^{27}\) times the previous
 central-layer exponent. The earlier constructions are retained below.
-Lean proves the permutation normalization and signs, the complete new
-finite packing, and the inherited integer scale inequalities.
-The norm expansion and interpolation descent have a written proof and
-finite controls; the full field-algebra argument is not formalized in Lean.
+Lean proves the complete norm decomposition, interpolation descent,
+homogeneous degree-13 polynomial coordinates and the distinct-label
+nonvanishing criterion. It also proves the complete finite packing
+and the inherited integer scale inequalities. The algebra proof uses
+Mathlib; the earlier packing and scale proofs use core Lean.
 The slab's finite-field geometry is proved in writing, not in Lean.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
@@ -769,12 +770,15 @@ smaller \(k\), giving, under the same upstream geometric estimates,
 for every sufficiently large \(n\).
 The gain over \(\eta_{\rm central}\) is approximately
 \(1.30583405399879\cdot10^{27}\).
-This is a written algebraic improvement with a formally checked finite
-packing, not a complete formal proof of the field-norm decomposition.
+The new algebraic decomposition and finite packing are proved in Lean.
+The geometric consequence still relies on the written slab, lattice,
+probability and asymptotic transfer arguments.
 The regrouping and interpolation are elementary; novelty, global
 optimality and a practical finite-size improvement are not established.
 
 \section{Verification and remaining boundary}
+First prepare the pinned algebra dependencies with
+\texttt{python scripts/prepare\_mathlib.py}.
 For the current result, run \texttt{python scripts/build\_norm.py},
 then \texttt{python scripts/verify\_norm.py}. The ternary,
 sphere-only, retuned, slab, central-layer and compressed-norm patches are six alternatives applied
@@ -866,7 +870,43 @@ dependencies and audits the final theorem's logical axioms.
 composition and signs, the normalization bijection in every tuple
 length, and its sign identity for 13 factors. It proves the complete
 packing with \(T=37\cdot6^{12}\), \(k=47^{10}\), and the exact gain
-enclosure. It does not assert a field-norm or interpolation theorem.
+enclosure. The field algebra is proved in five separate modules:
+\begin{enumerate}
+\item \texttt{NormExpansion.lean} proves the symbolic product-of-thirteen
+determinants identity over any commutative ring. Relative permutations
+are reindexed by an equivalence; no enormous sum is evaluated.
+\item \texttt{NormDescent.lean} constructs polynomial representatives
+as a linear map from a power basis, proves their evaluation and degree
+bounds, and proves the 37-node interpolation descent. The constant
+coordinate projection is proved to fix the base field.
+\item \texttt{NormAlgebra.lean} identifies the product with Mathlib's
+\emph{actual field norm}. Its final theorem supplies the power basis,
+automorphism enumeration and interpolation nodes from finite-field
+hypotheses, and produces one family of \(37\cdot6^{12}\) coordinate
+functions working simultaneously for every label triple.
+\item \texttt{NormPolynomials.lean} supplies homogeneous degree-13
+polynomials over the base field, in \(3\cdot13\) coordinates. Its final
+theorem proves their homogeneity and the exact norm identity for all
+triples of coordinate assignments. Coefficient projection commutes
+with evaluation at base-field coordinates because it is linear.
+\item \texttt{NormVandermonde.lean} proves that the determinant sum
+is nonzero if and only if the three labels are distinct. The final
+specialization uses \(\mathbb F_r\) and the constructed extension
+\(\mathbb F_{r^{13}}\), for every prime \(r\ge37\).
+\end{enumerate}
+These proofs assume neither the compressed norm identity nor a descent
+theorem as hypotheses. The polynomial result is stated as homogeneity
+and a universally quantified evaluation identity. The functional
+result also covers the arbitrary label functions allowed in upstream
+Section~4. Mathlib is pinned to commit
+\texttt{20c73142afa995ac9c8fb80a9bb585a55ca38308};
+the dependency lock contains all seven exact revisions.
+\texttt{scripts/verify\_algebra.py} rebuilds the five local modules
+sequentially and audits ten exported theorems. Their only logical
+axioms are \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. Each compilation is limited to one thread,
+2048 MB and 120 seconds.
+
 The independent checker tests the written decomposition in
 \(\mathbb F_{11^3}\) and \(\mathbb F_{17^5}\), with four matrices in each
 field, including Vandermonde labels. It also checks interpolation on
@@ -874,8 +914,8 @@ all 37 basis monomials and four matrices in \(\mathbb F_{41^{13}}\).
 The degree-13 norm expansion is not enumerated. The saved field
 polynomials are checked for irreducibility. Negative controls detect
 omitted signs, entrywise projection, insufficient nodes, corrupted
-weights and the even-degree sign error. These finite controls support
-the written proof; they do not replace its universal argument.
+weights and the even-degree sign error. These finite controls supplement
+the universal Lean argument.
 
 The retuned verifier rebuilds the imported sphere proof before checking
 the new file, audits their logical axioms, independently derives the
