@@ -4,9 +4,10 @@
   "lean": "Lean (version 4.11.0, x86_64-w64-windows-gnu, commit ec3042d94bd1, Release)",
   "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
   "source_files_verified": 16,
-  "eta_approx": "3.61217890050488E-19",
-  "gain_from_norm_approx": "9.46187428722714E+0",
-  "arithmetic_negative_controls": 7,
+  "eta_approx": "9.75288303136317E-18",
+  "gain_from_bilinear_approx": "2.70000000000000E+1",
+  "gain_interval": "26.99 < gain < 27",
+  "arithmetic_negative_controls": 9,
   "finite_controls": {
     "fields": [
       {
@@ -18,9 +19,18 @@
           0,
           1
         ],
-        "nodes": 5,
-        "basis_products": 9,
-        "determinants": 5
+        "averaging_coefficients": [
+          1,
+          0,
+          3
+        ],
+        "basis_invariance_checks": 3,
+        "classes_enumerated": 14,
+        "fixed_patterns": 3,
+        "signed_equivariance_checks": 72,
+        "averaged_descent_checks": 28,
+        "full_norm_checks": 2,
+        "degree_13_patterns_sampled_per_matrix": null
       },
       {
         "p": 17,
@@ -33,9 +43,20 @@
           0,
           1
         ],
-        "nodes": 9,
-        "basis_products": 25,
-        "determinants": 5
+        "averaging_coefficients": [
+          1,
+          0,
+          0,
+          0,
+          6
+        ],
+        "basis_invariance_checks": 5,
+        "classes_enumerated": 260,
+        "fixed_patterns": 1,
+        "signed_equivariance_checks": 2592,
+        "averaged_descent_checks": 520,
+        "full_norm_checks": 2,
+        "degree_13_patterns_sampled_per_matrix": null
       },
       {
         "p": 41,
@@ -56,27 +77,42 @@
           0,
           1
         ],
-        "nodes": 25,
-        "basis_products": 169,
-        "determinants": 5
+        "averaging_coefficients": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          18
+        ],
+        "basis_invariance_checks": 13,
+        "classes_enumerated": null,
+        "fixed_patterns": null,
+        "signed_equivariance_checks": 18,
+        "averaged_descent_checks": 18,
+        "full_norm_checks": 0,
+        "degree_13_patterns_sampled_per_matrix": 9
       }
     ],
     "negative_controls": {
-      "too_few_nodes": 3,
-      "corrupted_element": 3,
-      "unchanged_third_row_detected": 12
-    }
+      "omitted_orbit_weights_detected": 4,
+      "unaveraged_projection_detected": 4,
+      "degree_three_unique_fixed_pattern_rejected": true
+    },
+    "scope": "finite controls only; universal degree-thirteen claims are proved in Lean"
   },
   "layer_controls": {
-    "energy": 86,
-    "count": "67169169408",
-    "independent_multinomial_count": "67169169408",
-    "small_exhaustive_lengths": [
-      0,
-      1,
-      2,
-      3
-    ]
+    "energy": 80,
+    "count": "5058395136",
+    "independent_multinomial_count": "5058395136",
+    "checked_table_source": "certificates/bilinear.json"
   },
   "lean_axiom_audit": [
     "'HeilbronnSphere.sphere_matching' depends on axioms: [propext, Quot.sound]",
@@ -95,7 +131,12 @@
     "'HeilbronnExactLayer.layer_capacity' does not depend on any axioms",
     "'HeilbronnExactLayer.exact_layer_family' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnExactLayer.bilinear_packing' depends on axioms: [propext, Classical.choice, Quot.sound]",
-    "'HeilbronnExactLayer.bilinear_gain' does not depend on any axioms"
+    "'HeilbronnExactLayer.bilinear_gain' does not depend on any axioms",
+    "'HeilbronnFrobeniusPacking.exact_layer_count' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobeniusPacking.layer_capacity' does not depend on any axioms",
+    "'HeilbronnFrobeniusPacking.exact_layer_family' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobeniusPacking.trace_packing' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobeniusPacking.trace_gain' does not depend on any axioms"
   ],
   "algebra_theorems_audited": 31,
   "patch_applies": true,
@@ -104,8 +145,12 @@
     "lean/Sphere.lean": "a09d087c8083cf526fb82e6b6e2798ddce8eb70655fb925efa927d6d197cebb1",
     "lean/ExactLayerData.lean": "cf204869d28b915031a1cdca45ab0e7c3d04f7b67e9783fc2bc9941640aa5cd8",
     "lean/ExactLayer.lean": "3dd99bbafcab799a976676f5fb727b54034af08214b962b05a126f7e803fab62",
-    "scripts/build_bilinear.py": "fbd4d5123072f23cbb076a8c9c9805ef95a2e80c50f3b2cea95ecca91964dc45",
+    "lean/FrobeniusPacking.lean": "533324a2d6d659c710da79aa0f2ef545a9753f2f2911b3ccc6edabcfae42e250",
+    "scripts/build_frobenius.py": "6ed47c02bbad4588b1685abd2bb0e887202e1f184e7aff2db0989cee692a79cb",
+    "scripts/verify_frobenius.py": "5408d21d60d541cba859a126f5d6a0795b32cb2efbe9c74846f10269c1b0fbe9",
+    "scripts/frobenius_controls.py": "a036afe9b27368a3c8ff5c1bd00ddb92eec3e34769c457419691463fe338ea27",
     "scripts/verify_bilinear.py": "237064de1bf6e7b2bb049b8d7ce10e5540e8f961e29b7039d67a65ce200657aa",
+    "scripts/build_bilinear.py": "fbd4d5123072f23cbb076a8c9c9805ef95a2e80c50f3b2cea95ecca91964dc45",
     "scripts/bilinear_controls.py": "9b3df1cceed065af7d5db5c74dd9c4015b870a39a3f49476804645be28fb150e",
     "scripts/verify_norm.py": "2b95c6575510727cc4a380ad354b35593e06eb85931c6a1f6936428dd6292ef4",
     "scripts/build_norm.py": "70dec710e3f2439c507101bce444b779b5f58b7da2c6d7da9dfaa612421d2377",
@@ -116,10 +161,11 @@
     "scripts/build_sphere.py": "9bc551e814838357b6db0ffd9c558cae5c4672a836429e607fbe323ad861f6b7",
     "scripts/build_slab.py": "e279a61ef11d8dd4cfcb868f103869e1339e14c59869bebbc965d4b9fc74b1f7",
     "scripts/build_tuned.py": "9102e8915e36727f1973c5925b40127f963d02614f6ce38936f8bc4d0c18530a",
+    "certificates/frobenius.json": "1946ae99b3b481aa01374f88a8f6945744432684c2711fdc0f0891361e2fdbcc",
     "certificates/bilinear.json": "8d2b1f61e0221f4118ad03067142776a4a4f453a38162eb94ef95dd353087c09",
     "certificates/norm.json": "27b59a15efb2b8fb4c925d554b4ce628fd5a9f4d5eb1137033578e8a7d6e6b06",
     "certificates/central.json": "41f9889d0b318bcf51e1bc49c87fb76d0fffced60d0aa04ffca13538c5d26cf9",
-    "patches/bilinear-layer.patch": "d6d78f308c20c77e8005dd26a2620e8a92c867d270ff05b36a0f5f560a39cb8a",
+    "patches/frobenius-orbits.patch": "69353b68a4a9771bf58342c0525aff34e70d6a1112cb01e14bf9359fc10a836f",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
     "notes/sphere-packing.tex": "5a482f9bd863f2d2740bdfc03d20840a0b0a546b869ae6438595f1cade732b07",
     "README.md": "242ce88c906157c85a9501b51ad145d4ca30e03585464d66507619ecd7209853",

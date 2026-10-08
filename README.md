@@ -2,23 +2,23 @@
 
 A conditional research draft by **[Ivan Blinov (@littleBro)](https://github.com/littleBro)**, extending [OpenAI math family 191](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026), with OpenAI Codex assistance.
 
-The current version combines a 25-node bilinear descent of the field-norm determinants with an exactly counted sphere layer. With dimension d = 13 and the retained slab scales, it gives the **conditional paper exponent**
+The current version groups the field-norm determinants into Galois orbits before their 25-node bilinear descent. An exactly counted sphere layer and the retained slab scales at d = 13 give the **conditional paper exponent**
 
 $$
 \Delta(n)\ge c\,n^{-2+\eta},\qquad
-\boxed{\eta=\frac{1}{498\cdot27^{11}+7}\approx3.61217890050488\cdot10^{-19}}.
+\boxed{\eta=\frac{1}{498\cdot27^{10}+7}\approx9.75288303136317\cdot10^{-18}}.
 $$
 
 The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. Lean proves the complete new norm decomposition, interpolation descent, homogeneous polynomial coordinates and nonzero residue for distinct labels. It also proves the finite packing and selected scale inequalities. The slab geometry, lattice and probability estimates, and full Heilbronn theorem remain outside the formal proof.
 
-[Proof and review guide](docs/review.md) · [Current certificate](certificates/bilinear.json) · [Lean algebra proof](lean/BilinearNorm.lean) · [Lean packing proof](lean/ExactLayer.lean) · [Reproduction guide](docs/reproducibility.md)
+[Proof and review guide](docs/review.md) · [Current certificate](certificates/frobenius.json) · [Lean algebra proof](lean/FrobeniusPolynomials.lean) · [Lean packing proof](lean/FrobeniusPacking.lean) · [Reproduction guide](docs/reproducibility.md)
 
 Run all retained results with Python 3.11+, Git and the pinned Lean 4.11.0 toolchain:
 
     python scripts/prepare_mathlib.py
     python scripts/verify_all.py
 
-The first command prepares pinned Mathlib dependencies and compiled imports; run it once per fresh checkout. On systems with Make, make verify runs the checks after this setup. Verification also requires all fifteen generated certificates, patches and count-table files to regenerate byte for byte.
+The first command prepares pinned Mathlib dependencies and compiled imports; run it once per fresh checkout. On systems with Make, make verify runs the checks after this setup. Verification also requires all seventeen generated certificates, patches and count-table files to regenerate byte for byte.
 
 | Packing | k | Conditional paper exponent |
 | --- | --- | --- |
@@ -30,10 +30,36 @@ The first command prepares pinned Mathlib dependencies and compiled imports; run
 | Central energy interval, d = 13 | 379^17 | ≈ 2.92350666167202e-47 |
 | Compressed norm, d = 13 | 47^10 | ≈ 3.81761455590365e-20 |
 | Bilinear descent and exact layer, d = 13 | 27^11 | ≈ 3.61217890050488e-19 |
+| Galois-orbit compression, d = 13 | 27^10 | ≈ 9.75288303136317e-18 |
 
-The current exponent is approximately **9.46187428722714 times** the previous 37-node norm-compression exponent. These compare exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
+The current exponent is **almost 27 times** the preceding bilinear-layer exponent (strictly between 26.99 and 27). These compare exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
 
-## Current result: bilinear descent and an exact layer
+## Current result: Galois-orbit compression
+
+The 6^12 normalized determinant terms have a Galois action. Their signed values transform by the corresponding field automorphism. Exactly one pattern is fixed, and every other orbit has size 13, giving (6^12 + 12)/13 = 167,444,796 classes. Lean proves both the action and this count symbolically.
+
+Average the power-basis constant-coordinate functional over the 13 automorphisms. This invariant linear map fixes the base field, so the norm is the sum of one projected representative per class, weighted by the class size. Applying 25-node bilinear descent gives **T = 4,186,119,900** base-field determinants. The singleton also receives 25 nodes. The exact norm identity, homogeneous degree-13 coordinates and distinct-label criterion are all proved in Lean for every prime r >= 37. The general finite-field theorem explicitly excludes characteristic 13, where this averaging would require division by zero.
+
+The energy-80 layer of 10-digit words over 14 digits contains **5,058,395,136** words, with squared centered norm 650. The existing kernel-checked recurrence table supplies this count. It is enough for T and gives k = 27^10 = 205,891,132,094,649, so the exponent is exactly **1/102,533,783,783,135,209**. The slab scales and remaining geometric assumptions are unchanged.
+
+- [Written proof and retained parameter transfer](notes/sphere-packing.tex)
+- [Group action, fixed patterns and exact class count](lean/FrobeniusOrbits.lean)
+- [Signed equivariance and invariant projection](lean/FrobeniusNorm.lean)
+- [Orbit-weighted norm descent](lean/FrobeniusDescent.lean)
+- [Homogeneous coordinates and distinct-label theorem](lean/FrobeniusPolynomials.lean)
+- [Exact layer, complete finite packing and gain](lean/FrobeniusPacking.lean)
+- [Exact certificate](certificates/frobenius.json)
+- [Alternative patch for original manuscript Sections 3–8](patches/frobenius-orbits.patch)
+- [Verification report](artifacts/frobenius-verification.json)
+
+Regenerate and verify:
+
+    python scripts/build_frobenius.py
+    python scripts/verify_frobenius.py
+
+Independent controls enumerate all patterns in degrees 3 and 5, test signed equivariance and orbit-weighted norm sums, and check sampled patterns and all basis vectors in degree 13. Negative controls reject omitted orbit weights and a non-invariant projection; degree 3 correctly has three fixed patterns. The layer is also counted by an independent multinomial sum. The shared algebra audit rebuilds eleven modules and checks 31 exported theorems, with no additional mathematical assumptions admitted. Novelty and unrestricted optimality are not claimed.
+
+## Preserved bilinear descent and exact layer
 
 The determinant expansion still gives 6^12 terms over the extension field. To descend a term to the base field, interpolate the product of its first two rows' representatives, each of degree at most 12. That product has degree at most 24, so 25 nodes suffice. The third row uses the linear functional z -> ell(L_t(theta) z). Expanding the six signed products proves the determinant identity with different linear maps in the rows.
 
@@ -54,7 +80,7 @@ Regenerate and verify:
     python scripts/build_bilinear.py
     python scripts/verify_bilinear.py
 
-The independent checker counts the layer both by a full energy distribution and by a multinomial sum over digit multiplicities. It checks exhaustive products of lengths 0 through 3. Field controls check all basis products and five determinants in each of three extensions of degrees 3, 5 and 13; negative controls detect insufficient nodes, a corrupted interpolation element and an incorrect third-row map. The algebra audit rebuilds seven modules and checks seventeen exported theorems.
+The independent checker counts the layer both by a full energy distribution and by a multinomial sum over digit multiplicities. It checks exhaustive products of lengths 0 through 3. Field controls check all basis products and five determinants in each of three extensions of degrees 3, 5 and 13; negative controls detect insufficient nodes, a corrupted interpolation element and an incorrect third-row map. This checkpoint contributes two algebra modules with seven exported theorems to the shared audit.
 
 The descent uses elementary polynomial interpolation for multiplication, within the classical framework of [bilinear complexity](https://arxiv.org/abs/1107.0336). The chosen packing is a feasible witness; novelty and unrestricted optimality are not claimed.
 
@@ -81,7 +107,7 @@ Regenerate and verify:
     python scripts/build_norm.py
     python scripts/verify_norm.py
 
-The original decomposition occupies five algebra modules with ten exported theorems; the shared checker also rebuilds and audits the two bilinear modules against the pinned Mathlib version. The final theorem uses Mathlib's actual field norm and supplies the power basis, automorphisms and interpolation nodes from finite-field hypotheses. It proves one family of coordinates works for every label triple. The corresponding polynomials are homogeneous of degree 13.
+The original decomposition occupies five algebra modules with ten exported theorems; the shared checker also rebuilds and audits the bilinear and Galois-orbit modules against the pinned Mathlib version. The final theorem uses Mathlib's actual field norm and supplies the power basis, automorphisms and interpolation nodes from finite-field hypotheses. It proves one family of coordinates works for every label triple. The corresponding polynomials are homogeneous of degree 13.
 
 Independent finite controls test the full decomposition on four matrices each over F_(11^3) and F_(17^5), including distinct Vandermonde labels. They check descent on all 37 basis monomials and four matrices over F_(41^13), without enumerating the degree-13 norm expansion. Negative controls detect omitted signs, entrywise projection, insufficient nodes, corrupted weights and the even-degree sign error. These controls supplement the universal Lean proof. No novelty or optimality claim is made.
 
@@ -167,11 +193,11 @@ Regenerate and verify the sphere-only baseline:
 
 **The complete finite sphere packing is now proved in Lean.** This includes the energy-layer bound, a finite pigeonhole theorem, selection of T distinct words from one layer, encoding, bounds, injectivity, and matching. The final theorem also checks T using the falling-factorial quotient definition of binomial coefficients. No sufficiently large sphere is assumed as a precondition, and the enormous set is never enumerated during proof checking.
 
-The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The central-layer checkpoint is central_packing_binomial in Central.lean. The 37-node checkpoint is norm_packing in NormCompression.lean; the current theorem is bilinear_packing in ExactLayer.lean, with the new term-count formula. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
+The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The central-layer checkpoint is central_packing_binomial in Central.lean. The 37-node checkpoint is norm_packing in NormCompression.lean; the bilinear checkpoint is bilinear_packing in ExactLayer.lean. The current theorem is trace_packing in FrobeniusPacking.lean. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
 
 The sphere idea is classical Behrend; stronger progression-free-set constructions are known ([Elsholtz, Hunter, Proske, Sauermann](https://arxiv.org/abs/2406.12290)). We claim neither a new sphere method nor unrestricted optimality. The certificate records a bounded comparison of dimensions 3–284 under its sufficient-capacity criterion.
 
-All seven source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
+All eight source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
 
 ## Preserved ternary baseline
 
@@ -212,7 +238,7 @@ To regenerate the deterministic certificate and patch:
 
 The verifier preserves upstream files, compiles only the local proof, rejects changed source hashes, and checks patch applicability. Its finite tests cover 21 packing sizes, 12 coefficient/carry examples, and six negative controls. Finite coverage is separate from the universal Lean theorem.
 
-The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the earlier sphere proofs check their binomial counts inside Lean. The current packing uses T = 25 * 6^12 with an exactly counted layer. See the respective proof notes for their scopes.
+The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the earlier sphere proofs check their binomial counts inside Lean. The current packing uses T = 25 * (6^12 + 12)/13 with an exactly counted layer. See the respective proof notes for their scopes.
 
 The proof notes are supplied as TeX. The current note, including norm compression, compiled successfully with the built-in Tectonic 0.17.0+20260731 after installing its support bundle from the [official v33 mirror](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map). The source hash and bundle identity are recorded in [the compilation report](artifacts/sphere-latex-status.json). Generated note PDFs are not included. The separate artifacts/latex-status.json retains the earlier ternary-note attempt. Note compilation is separate from the Lean and Python checks.
 

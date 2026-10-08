@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "6a3d4dfccd192121a9bc5994da53ec36de410e8cfffc243312530dfb0de6f24c",
+  "source_sha256": "5a482f9bd863f2d2740bdfc03d20840a0b0a546b869ae6438595f1cade732b07",
   "attempt_date": "2026-10-08",
-  "attempt_scope": "Existing note including 25-node bilinear descent, exact sphere-layer count, and complete Lean packing proof",
+  "attempt_scope": "Existing note including Galois-orbit compression, invariant projection, exact ten-digit layer, and complete Lean algebra and packing proofs",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

@@ -38,9 +38,13 @@
     "NormPolynomials",
     "NormVandermonde",
     "BilinearDescent",
-    "BilinearNorm"
+    "BilinearNorm",
+    "FrobeniusOrbits",
+    "FrobeniusNorm",
+    "FrobeniusDescent",
+    "FrobeniusPolynomials"
   ],
-  "audited_theorems": 17,
+  "audited_theorems": 31,
   "lean_axiom_audit": [
     "'HeilbronnNorm.determinant_product_compression' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnNorm.orbit_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
@@ -58,14 +62,28 @@
     "'HeilbronnNorm.bilinear_norm_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnNorm.finite_field_bilinear_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnNorm.finite_field_bilinear_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]",
-    "'HeilbronnNorm.prime_field_bilinear_labels' depends on axioms: [propext, Classical.choice, Quot.sound]"
+    "'HeilbronnNorm.prime_field_bilinear_labels' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.fixed_pattern' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.orbit_size' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.class_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.invariant_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.patternTerm_rotate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.norm_pattern_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.averagedCoord_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.projected_determinant' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.norm_class_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.trace_term_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.trace_norm_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.finite_field_trace_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.finite_field_trace_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnFrobenius.prime_field_trace_labels' depends on axioms: [propext, Classical.choice, Quot.sound]"
   ],
   "compilation_limits": {
     "threads": 1,
     "memory_mb_per_process": 2048,
     "timeout_seconds_per_module": 120
   },
-  "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial coordinates and nonzero residue exactly for distinct labels; 37-node and 25-node descents, the latter for all primes >= 25.",
+  "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial coordinates and nonzero residue exactly for distinct labels; 37-node and 25-node descents, plus Galois-orbit compression to 4186119900 base-field determinants for every prime >= 37.",
   "not_established": [
     "slab cap geometry",
     "lattice and probability estimates",
@@ -79,10 +97,14 @@
     "lean/NormVandermonde.lean": "b6a40a0f2be7178b557c84ee506c45fbc636908c53e5b66e2eeee53a2c0bc49a",
     "lean/BilinearDescent.lean": "e9004366ced4b7e7d5c406c97b2c621bc0a2654a8825fbe469d01b2de761d335",
     "lean/BilinearNorm.lean": "26dd034b151aa7526ab6c206a24225172d6646d03ffde4fb260113f20df046e4",
-    "lakefile.lean": "5c30958e24f1a24cfbcdcc8fda46eefcdbf895859288b9ad54b42bce98fbb898",
+    "lean/FrobeniusOrbits.lean": "9671ae7d256027adad1be41bffcea419fd3503213fa6618b9db2704dc27ebde7",
+    "lean/FrobeniusNorm.lean": "c42631a2519fe11fb58e457fd1c4af8573d0275dd406c61e0ffe17cbd81bb77e",
+    "lean/FrobeniusDescent.lean": "5be75b6ebb62890dbff596e967dd5887fef0d023326a3472d1b6e3a6fcaf5557",
+    "lean/FrobeniusPolynomials.lean": "0b2f9f7b5c424d92f36cb7c32519b18018c1d853222dcb16a05b9c2af376fb8f",
+    "lakefile.lean": "6f59a22f2e8334bbbb914abf118dfd2b863ed8b880158ab8eb05ddf8730b2a91",
     "lake-manifest.json": "8bd77b3cd6efc5ceb88b72ee2f691cdbff5d768d88817b480b3c0cf547a9d3ad",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
-    "scripts/prepare_mathlib.py": "e92ddfee41c63713ea0743d9a94b43f8f85bc063bba0d05335b3aaf2a59b5409",
-    "scripts/verify_algebra.py": "88cd063bc5d6f49a9536d3e5f38e93ced5175bbee9cbdd30ed95750026d1081e"
+    "scripts/prepare_mathlib.py": "7933e53832bffaec8175e990838e0108f8110db074b3e928d8e69c4c71d1547f",
+    "scripts/verify_algebra.py": "a1f0fc8337906fd57c4dd9bc9a222934bffa438b67c51581c3794d23e45c0641"
   }
 }

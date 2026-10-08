@@ -27,8 +27,10 @@ IMPORTS = [
     "Mathlib/FieldTheory/Finite/GaloisField.lean",
     "Mathlib/RingTheory/MvPolynomial/Homogeneous.lean",
     "Mathlib/LinearAlgebra/Vandermonde.lean",
+    "Mathlib/GroupTheory/GroupAction/Quotient.lean",
     "Mathlib/Tactic/NormNum.lean",
     "Mathlib/Tactic/Ring.lean",
+    "Mathlib/Tactic/Group.lean",
 ]
 
 

@@ -29,7 +29,7 @@ Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
 
 The command first verifies the supplied ternary, sphere, retuned, slab,
-central-layer, norm-compression and bilinear-layer certificates.
+central-layer, norm-compression, bilinear-layer and Frobenius-orbit certificates.
 It checks all saved upstream hashes, compiles the local Lean proofs, audits their
 logical axioms, exercises finite and negative controls, and checks each patch
 against the pinned original manuscript without applying it.
@@ -45,7 +45,7 @@ permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
 NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
 imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
 and a 120-second timeout. The shared algebra checker also rebuilds BilinearDescent and
-BilinearNorm, for seventeen exported theorem audits in total, including the
+BilinearNorm and four Frobenius modules, for 31 exported theorem audits in total, including the
 prime-field specialization and homogeneous polynomial form. Run this part
 alone with python scripts/verify_algebra.py.
 Independent field controls use small explicit quotients; the degree-13 norm
@@ -54,6 +54,10 @@ The bilinear-layer check also rebuilds Sphere, ExactLayerData and ExactLayer.
 Its core Lean proof checks eleven complete histogram transitions, then proves
 the symbolic recurrence, selection and packing; no table entry is trusted as a premise.
 These compilations use the same one-thread, 2048 MB and 120-second limits.
+The Frobenius checkpoint also rebuilds FrobeniusPacking after those core modules.
+It uses the already checked table entry at length 10, energy 80, and independently
+counts that layer by a multinomial sum. Its field controls enumerate the rotation
+classes only in degrees 3 and 5; degree 13 uses sampled patterns and all basis vectors.
 All Lean checks are bounded subprocesses. Proof compilation does not enumerate
 the enormous sphere or produce planar point configurations.
 The scripts run sequentially and need no WSL, container or parallel search.
@@ -88,16 +92,17 @@ that a remote run passed.
 | Central energy interval at d = 13 | scripts/build_central.py | scripts/verify_central.py |
 | Compressed norm at d = 13 | scripts/build_norm.py | scripts/verify_norm.py |
 | Bilinear descent and exact layer | scripts/build_bilinear.py | scripts/verify_bilinear.py |
+| Galois-orbit compression and ten-digit layer | scripts/build_frobenius.py | scripts/verify_frobenius.py |
 
 After intentionally changing a generator, run it, inspect the changed certificate
 and patch, then run the complete verification command.
-The seven source patches are alternatives against the same original manuscript.
+The eight source patches are alternatives against the same original manuscript.
 
 ## Proof notes
 
 The current note is notes/sphere-packing.tex; the earlier ternary argument is
 notes/packing.tex. Neither is needed by the executable proof checks.
-The current note, including bilinear descent and the exact layer, compiled successfully in the desktop editor with
+The current note, including Galois-orbit compression and the ten-digit layer, compiled successfully in the desktop editor with
 Tectonic 0.17.0+20260731. Its source hash and bundle identity are recorded in
 [artifacts/sphere-latex-status.json](../artifacts/sphere-latex-status.json).
 The initial download failure was resolved by using the

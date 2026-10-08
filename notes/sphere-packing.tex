@@ -14,18 +14,18 @@
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-At dimension \(d=13\), regrouping conjugate determinants and using
-bilinear interpolation reduces the number of norm summands to
-\(T=25\cdot6^{12}\). An exact sphere-layer count and the retained slab
+At dimension \(d=13\), grouping signed determinants into Galois orbits
+before bilinear interpolation reduces the number of norm summands to
+\(T=25(6^{12}+12)/13\). An exact sphere-layer count and the retained slab
 scales give the conditional paper exponent
 \[
- k=27^{11},\qquad
- \eta_{\rm bilinear}=\frac{1}{498\cdot27^{11}+7}
-       \approx3.61217890050488\cdot10^{-19}.
+ k=27^{10},\qquad
+ \eta_{\rm Frobenius}=\frac{1}{498\cdot27^{10}+7}
+       \approx9.75288303136317\cdot10^{-18}.
 \]
-This is approximately \(9.46187428722714\) times the previous
-37-node norm-compression exponent. The earlier constructions are retained below.
-Lean proves the complete norm decomposition, bilinear descent,
+This is strictly between 26.99 and 27 times the preceding bilinear-layer
+exponent. The earlier constructions are retained below.
+Lean proves the group action, exact orbit count, norm decomposition, bilinear descent,
 homogeneous degree-13 coordinates and the distinct-label criterion.
 It also proves the exact layer count, complete finite packing and
 inherited integer scale inequalities. The algebra proof uses Mathlib;
@@ -58,6 +58,8 @@ Section~\ref{sec:compression} changes the determinant decomposition
 itself: its \(T\) is no longer the binomial count used by earlier variants.
 Section~\ref{sec:bilinear} reduces the interpolation count further and
 uses an exact sphere layer.
+Section~\ref{sec:frobenius} groups those terms by Galois symmetry and
+reduces the required word length from eleven to ten.
 This is an application of the classical sphere idea of Behrend
 \cite{behrend}, not a new progression-free-set construction.
 Stronger variants are known \cite{ehps}; neither optimality nor
@@ -876,15 +878,115 @@ These are explicit feasible parameters, with no unrestricted
 optimality claim. The geometric conclusion remains conditional on
 the same upstream estimates as the preceding checkpoints.
 
+\section{Galois orbits and invariant projection}\label{sec:frobenius}
+Retain \(d=13\), prime \(r\ge37\), and \(K=\mathbb F_{r^{13}}\).
+Let \(G=\operatorname{Gal}(K/\mathbb F_r)\) and
+\(W=\{w:G\to S_3:w(1)=1\}\). Thus \(|G|=13\) and \(|W|=6^{12}\).
+The terms of \eqref{eq:compressed-extension} can be indexed by \(W\):
+\[
+ F_{i,w}(X)=\prod_{g\in G}g(Z_{w(g)i}(X)),\quad
+ \epsilon_w=\prod_{g\in G}\operatorname{sgn}(w(g)),\quad
+ C_w=\epsilon_w\det(F_{i,w}(X^{(j)}))_{i,j=1}^3.
+\]
+In particular \(\mathcal N=\sum_{w\in W}C_w\).
+
+\begin{lemma}\label{lem:galois-orbits}
+The formula
+\[
+ (a\cdot w)(g)=w(a^{-1}g)w(a^{-1})^{-1}
+\]
+defines an action on \(W\), and \(C_{a\cdot w}=a(C_w)\), with
+automorphisms acting on coefficients. There is exactly one fixed
+pattern, and the number of orbits is
+\[
+ Q=1+\frac{6^{12}-1}{13}=167\,444\,796.
+\]
+\end{lemma}
+\begin{proof}
+Substitution verifies the identity and composition laws. Put
+\(h=w(a^{-1})\); reindexing the product by \(g=ag'\) gives
+\[
+ F_{i,a\cdot w}=a(F_{h^{-1}i,w}),\qquad
+ \epsilon_{a\cdot w}=\epsilon_w\operatorname{sgn}(h)^{13}
+                    =\epsilon_w\operatorname{sgn}(h).
+\]
+The determinant of the row-permuted matrix has a second factor
+\(\operatorname{sgn}(h)\); their product is one. This proves equivariance.
+
+By orbit-stabilizer, every orbit has size one or thirteen. If \(w\)
+is fixed, its invariance implies \(w(uv)=w(v)w(u)\), so
+\(w(g)^{13}=w(g^{13})=w(1)=1\). Every permutation of three letters
+also has sixth power one. Since \(13=2\cdot6+1\), we get \(w(g)=1\).
+The constant identity pattern is indeed fixed. The remaining
+\(6^{12}-1\) patterns form orbits of size thirteen, giving the count.
+\end{proof}
+
+Let \(\ell\) be the constant-coordinate functional in the power basis
+and define its invariant average
+\[
+ L(z)=\frac1{13}\sum_{a\in G}\ell(a(z)).
+\]
+This is well-defined because \(r\ne13\). It is linear, fixes
+\(\mathbb F_r\), and satisfies \(L(a(z))=L(z)\). Extend it
+coefficientwise to polynomials. For representatives \(w_q\) and
+orbit sizes \(n_q\), Lemma~\ref{lem:galois-orbits} gives
+\[
+ \mathcal N=L(\mathcal N)=\sum_{q\in W/G}n_qL(C_{w_q}).
+\]
+Both the invariant average and the orbit weights are necessary;
+using \(\ell\) directly or omitting \(n_q\) is generally false.
+
+Apply Lemma~\ref{lem:bilinear-descent} with this \(L\) and the 25
+nodes \(0,\ldots,24\). With \(c_t=L_t(\vartheta)\) and \(a=(q,t)\), set
+\[
+ f_{1a}=n_q\epsilon_{w_q}\widehat F_{1,w_q}(t,X),\qquad
+ f_{2a}=\widehat F_{2,w_q}(t,X),\qquad
+ f_{3a}=L(c_tF_{3,w_q}(X)).
+\]
+These are homogeneous degree-13 polynomials over \(\mathbb F_r\), and
+\[
+ \mathcal N=\sum_a\det(f_{ia}(X^{(j)})),\qquad
+ T=25Q=4\,186\,119\,900.
+\]
+We retain 25 nodes even for the singleton orbit, including any zero
+terms. This uniform count is used throughout the certificate and
+formal proof. The same family works for every label triple. Its
+evaluation on \((1,\xi,\xi^2)\) is the exact Vandermonde norm, nonzero
+if and only if the three labels are distinct. The downstream interface
+review in Section~\ref{sec:compression} therefore applies unchanged.
+
+For the same digit polynomial \(D(z)\) as in Section~\ref{sec:bilinear},
+the checked recurrence also gives
+\[
+ [z^{80}]D(z)^{10}=5\,058\,395\,136>T.
+\]
+These words have squared centered norm \(10+8\cdot80=650\).
+Selecting \(T\) of them gives the complete sphere packing with
+\[
+ k=27^{10}=205\,891\,132\,094\,649.
+\]
+Proposition~\ref{prop:slab}, with its same upstream assumptions, yields
+\[
+ \Delta(n)\ge c n^{-2+\eta_{\rm Frobenius}},\qquad
+ \eta_{\rm Frobenius}=\frac1{498\cdot27^{10}+7}
+   =\frac1{102\,533\,783\,783\,135\,209}
+\]
+for every sufficiently large \(n\). The exact gain over the preceding
+checkpoint is strictly between 26.99 and 27: if
+\(D=498\cdot27^{10}+7\), its old denominator is \(27D-182\).
+No unrestricted packing optimum or practical finite-size gain is claimed.
+The new algebra and packing are formalized; the slab geometry and full
+asymptotic geometric theorem remain conditional on the written transfer.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the current result, run \texttt{python scripts/build\_bilinear.py},
-then \texttt{python scripts/verify\_bilinear.py}. The ternary,
-sphere-only, retuned, slab, central-layer, compressed-norm and bilinear-layer patches
-are seven alternatives applied
+For the current result, run \texttt{python scripts/build\_frobenius.py},
+then \texttt{python scripts/verify\_frobenius.py}. The ternary,
+sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
+and Frobenius-orbit patches are eight alternatives applied
 directly to the unchanged manuscript, not successive patches.
-The retuned, slab, central, norm and bilinear patches update Sections 3--8, including the full deletion
+The retuned, slab, central, norm, bilinear and Frobenius patches update Sections 3--8, including the full deletion
 and interpolation argument.
 The earlier sphere checks remain available through
 \texttt{python scripts/verify\_sphere.py}.
@@ -1002,8 +1104,9 @@ result also covers the arbitrary label functions allowed in upstream
 Section~4. Mathlib is pinned to commit
 \texttt{20c73142afa995ac9c8fb80a9bb585a55ca38308};
 the dependency lock contains all seven exact revisions.
-\texttt{scripts/verify\_algebra.py} rebuilds these five modules and the
-two bilinear modules below, auditing seventeen exported theorems in total. Their only logical
+\texttt{scripts/verify\_algebra.py} rebuilds these five modules, the
+two bilinear modules and four Frobenius modules below, auditing 31
+exported theorems in total. Their only logical
 axioms are \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}. Each compilation is limited to one thread,
 2048 MB and 120 seconds.
@@ -1039,6 +1142,34 @@ an incorrect third-row map. The layer is independently checked by a
 full energy distribution, the multinomial formula and exhaustive
 products of lengths 0 through 3. Seven corrupted certificates are
 rejected. These checks supplement the universal Lean proofs.
+
+\texttt{FrobeniusOrbits.lean} proves the normalized group action,
+the unique fixed pattern, the exact count of quotient classes and
+the weighted sum of an invariant function over representatives.
+\texttt{FrobeniusNorm.lean} proves signed determinant equivariance,
+identifies their sum with the actual field norm, and constructs the
+invariant projection fixing the base field.
+\texttt{FrobeniusDescent.lean} proves bilinear determinant descent for
+an arbitrary linear functional and the complete orbit-weighted norm
+identity. Its finite-field theorem supplies the basis and nodes.
+\texttt{FrobeniusPolynomials.lean} proves homogeneous coordinates and
+the distinct-label specialization for every prime \(r\ge37\).
+The general theorem includes both a base-field cardinality bound and
+\(13\ne0\) in that field; cardinality alone would not exclude
+characteristic 13. \texttt{FrobeniusPacking.lean} reuses the previously
+checked table to prove the energy-80 count, word selection, packing
+and strict gain enclosure.
+
+Independent finite controls enumerate all normalized patterns in
+degrees 3 and 5, checking signed equivariance and full weighted norm
+sums on two matrices in each field. Degree 3 has three fixed patterns,
+providing a check against an invalid generalization of the orbit count.
+In degree 13, nine patterns per matrix are sampled and all thirteen
+basis vectors are checked for projection invariance; the enormous
+pattern set is not enumerated. Negative controls detect omission of
+orbit weights and replacement of the average by the constant coordinate.
+The new layer is also counted by an independent multinomial sum,
+and nine corrupted certificates are rejected.
 
 The retuned verifier rebuilds the imported sphere proof before checking
 the new file, audits their logical axioms, independently derives the

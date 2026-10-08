@@ -1,4 +1,4 @@
-"""Rebuild every local algebra proof and audit the seventeen exported theorems."""
+"""Rebuild every local algebra proof and audit the exported theorems."""
 from hashlib import sha256
 from pathlib import Path
 import json
@@ -19,6 +19,11 @@ THEOREMS = {
     "BilinearDescent": ["bilinear_interpolation", "bilinear_determinant_descent"],
     "BilinearNorm": ["bilinear_term_card", "bilinear_norm_decomposition", "finite_field_bilinear_norm",
                      "finite_field_bilinear_polynomials", "prime_field_bilinear_labels"],
+    "FrobeniusOrbits": ["fixed_pattern", "orbit_size", "class_card", "invariant_sum"],
+    "FrobeniusNorm": ["patternTerm_rotate", "norm_pattern_sum", "averagedCoord_invariant"],
+    "FrobeniusDescent": ["projected_determinant", "norm_class_sum", "trace_term_card",
+                         "trace_norm_decomposition", "finite_field_trace_norm"],
+    "FrobeniusPolynomials": ["finite_field_trace_polynomials", "prime_field_trace_labels"],
 }
 
 
@@ -44,7 +49,8 @@ def verify_algebra():
         require(result.returncode == 0 and "error:" not in output and "sorryAx" not in output,
                 "Lean failure: " + module + "\n" + output)
         for name in names:
-            matches = re.findall("'HeilbronnNorm\\." + name +
+            namespace = "HeilbronnFrobenius" if module.startswith("Frobenius") else "HeilbronnNorm"
+            matches = re.findall("'" + namespace + r"\." + name +
                                  r"' depends on axioms: \[([^]]*)\]", output)
             require(len(matches) == 1, "missing or duplicate audit: " + name)
             actual = {a.strip() for a in matches[0].split(",") if a.strip()}
@@ -65,7 +71,8 @@ def verify_algebra():
                                "timeout_seconds_per_module": 120},
         "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial "
                  "coordinates and nonzero residue exactly for distinct labels; "
-                 "37-node and 25-node descents, the latter for all primes >= 25.",
+                 "37-node and 25-node descents, plus Galois-orbit compression "
+                 "to 4186119900 base-field determinants for every prime >= 37.",
         "not_established": ["slab cap geometry", "lattice and probability estimates",
                             "full Heilbronn theorem"],
         "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},

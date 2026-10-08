@@ -12,4 +12,5 @@ lean_lib Heilbronn where
   srcDir := "lean"
   roots := #[`NormExpansion, `NormDescent, `NormAlgebra, `NormPolynomials,
     `NormVandermonde, `BilinearDescent, `BilinearNorm, `ExactLayerData,
-    `ExactLayer, `NormCompression, `Slab, `Tuned, `Sphere]
+    `ExactLayer, `FrobeniusOrbits, `FrobeniusNorm, `FrobeniusDescent,
+    `FrobeniusPolynomials, `FrobeniusPacking, `NormCompression, `Slab, `Tuned, `Sphere]

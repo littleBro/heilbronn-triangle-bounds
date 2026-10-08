@@ -1,0 +1,120 @@
+{
+  "schema": "heilbronn-frobenius-orbits-v1",
+  "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "status": "conditional-on-upstream-estimates",
+  "scope": "paper exponent; not the upstream Lean comparator exponent",
+  "previous_certificate": "certificates/bilinear.json",
+  "previous_sha256": "8d2b1f61e0221f4118ad03067142776a4a4f453a38162eb94ef95dd353087c09",
+  "d": 13,
+  "T": "4186119900",
+  "k": "205891132094649",
+  "decomposition": {
+    "normalized_patterns": "2176782336",
+    "fixed_patterns": 1,
+    "nontrivial_orbit_size": 13,
+    "classes": "167444796",
+    "nodes_per_class": 25,
+    "singleton_uses_full_descent": true,
+    "base_characteristic_not": 13,
+    "formal_base_field_minimum": 25,
+    "retained_manuscript_prime_minimum": 37,
+    "projection": "L(z) = sum_a ell(a(z)) / 13",
+    "row_maps": [
+      "orbit_size * epsilon_w * eval_t",
+      "eval_t",
+      "L(c_t * input)"
+    ]
+  },
+  "packing": {
+    "m": 10,
+    "A": 7,
+    "s": 14,
+    "b": 27,
+    "energy_index": 80,
+    "squared_norm": 650,
+    "layer_count": "5058395136",
+    "digit_energies": [
+      0,
+      1,
+      3,
+      6,
+      10,
+      15,
+      21
+    ],
+    "multiplicity": 2,
+    "count_table_source": "certificates/bilinear.json"
+  },
+  "cap": {
+    "set": "{(x,y,x^2-nu*y^2): 0 <= x < w, y in F_q}; nu nonsquare",
+    "width": "w = floor(q/(1000*H^2))",
+    "cardinality": "s = w*q",
+    "density_bound": "s >= q^2/(2000*H^2)",
+    "short_relation_change": "only first-coordinate bounds are required",
+    "proof_status": "written finite-field argument; not formalized in Lean"
+  },
+  "scales": {
+    "L": "400*k^2*r^4",
+    "B": "100*k^2*L^3 < B <= 200*k^2*L^3; B prime",
+    "h": "B^k",
+    "tau": "floor(B^(k-1)/2)",
+    "H": "2*h",
+    "q": "h^6 < q <= 2*h^6; q prime",
+    "N": "(h*q)^4",
+    "n_r": "floor(r^gamma*sqrt(N^3/tau))"
+  },
+  "rho": "102533783783135208",
+  "beta": {
+    "numerator": "8544481981927934",
+    "denominator": "1"
+  },
+  "gamma": {
+    "numerator": "102533783783135208",
+    "denominator": "205067567566270417"
+  },
+  "alpha": {
+    "numerator": "21026353633773441338596531584676944",
+    "denominator": "205067567566270417"
+  },
+  "eta": {
+    "numerator": "1",
+    "denominator": "102533783783135209"
+  },
+  "gain_from_bilinear": {
+    "numerator": "2768412162144650461",
+    "denominator": "102533783783135209"
+  },
+  "constraints": {
+    "zero_case_h_powers": [
+      0,
+      -2,
+      -6
+    ],
+    "collision_r_power": {
+      "numerator": "-1",
+      "denominator": "205067567566270417"
+    },
+    "pair_r_power": {
+      "numerator": "-253329561852690715321742655434088",
+      "denominator": "205067567566270417"
+    }
+  },
+  "formal_scope": {
+    "proved": [
+      "normalized permutation action, unique fixed pattern and exact orbit count",
+      "signed field-norm equivariance and invariant projection fixing the base field",
+      "orbit-weighted degree-13 field-norm identity with homogeneous polynomial coordinates",
+      "nonzero residue exactly for distinct labels for every prime >= 37",
+      "exact energy-80 layer count from the checked recurrence table",
+      "complete finite packing for T = 4186119900 and k = 27^10",
+      "inherited integer scale inequalities and exponent identity",
+      "26.99 < gain from bilinear checkpoint < 27"
+    ],
+    "written_not_formalized": [
+      "slab cap geometry and short-relation exclusion",
+      "lattice, orbit and weighted counting estimates",
+      "probability, asymptotic deletion and interpolation"
+    ]
+  },
+  "parameter_choice": "explicit feasible witness; no optimality claim"
+}
