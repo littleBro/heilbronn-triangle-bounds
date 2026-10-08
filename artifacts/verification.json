@@ -57,8 +57,8 @@
     "certificates/ternary.json": "4595675cbca6c2295e731570b2ce521ca5a72d179329c897a68f68b9073682b8",
     "patches/ternary-packing.patch": "9105e87921afe0248e2729162d1b0700378697360c788534272a33e3de8fbecb",
     "notes/packing.tex": "0eb5f502a4393da4ce7e2e238dc800b1010c4ec3975f27b3d1da742f21aa7d4e",
-    "README.md": "77a394763e5b538b085fa714b690536dbc6b93e30e930158999372a32b85c6ff",
-    "NOTICE": "932f551b17292e140dcd4f73615e1afd2d1f3135f57f461ea1779cd7fe3aa505",
+    "README.md": "f5c6a4418229367fe95010d7a9b1726afbffcffb9f50e2eb9e0eb7627d0306fc",
+    "NOTICE": "2719e7e6d016e0371d7e4a36a2f378d6275a77ba5c0bba9b8e872e4697ae9f1e",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
     ".gitattributes": "2988a084858be818be343beb462bfc68af1f46065bd67f9109dff73f25e4e494",
     "artifacts/latex-status.json": "d0f39d437c0faf8cbfe191a3878358afe17bf3e378fdce3040102672c8577a19"

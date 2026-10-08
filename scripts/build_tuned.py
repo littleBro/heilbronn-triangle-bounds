@@ -16,7 +16,7 @@ def replace_once(text, old, new):
     return text.replace(old, new)
 
 
-def patch_sections():
+def tuned_sections():
     sections = ROOT / "upstream/manuscript/build/sections"
     originals = {p.name: p.read_text(encoding="utf-8")
                  for p in sorted(sections.glob("*.tex")) if p.name[:2] in
@@ -114,6 +114,11 @@ The negative exponent is fixed independently of $r$, although very small.
         "the earlier scales; no unrestricted optimality claim is made.")
     changed[name] = text
 
+    return originals, changed
+
+
+def patch_sections():
+    originals, changed = tuned_sections()
     return "".join("".join(difflib.unified_diff(
         originals[name].splitlines(keepends=True), changed[name].splitlines(keepends=True),
         fromfile="a/build/sections/" + name, tofile="b/build/sections/" + name))

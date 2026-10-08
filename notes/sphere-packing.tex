@@ -14,17 +14,19 @@
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-Retuning the dimension to \(d=13\) and reducing the auxiliary scales
-gives the conditional paper exponent
+Retuning the dimension to \(d=13\), and restricting the auxiliary
+elliptic paraboloid to a slab instead of a cube, gives the conditional
+paper exponent
 \[
  k=403^{17},\qquad
- \eta_{\rm tuned}=\frac{1}{1074\cdot403^{17}+7}
-       \approx4.77320332233169\cdot10^{-48}.
+ \eta_{\rm slab}=\frac{1}{498\cdot403^{17}+7}
+       \approx1.02940168035828\cdot10^{-47}.
 \]
-This is approximately \(3.15045471808690\cdot10^{90}\) times the
-previous sphere exponent. The earlier \(d=41\) construction is retained
-below as a baseline. Lean checks both complete finite packings, their
-binomial counts and capacities, and the new integer scale inequalities.
+This is approximately \(2.15662650602410\) times the previous
+\(d=13\) exponent. The earlier constructions are retained below as
+checkpoints. Lean checks both complete finite packings, their binomial
+counts and capacities, and the new integer scale inequalities.
+The slab's finite-field geometry is proved in writing, not in Lean.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
 
@@ -45,6 +47,7 @@ The original packing has \(k=T^2+1\).
 The first local replacement, preserved separately, has \(k=3^{384}\).
 The baseline transfer and interface review below use \(d=41\).
 Section~\ref{sec:retuned} explicitly changes \(d,T,k\) and the other scales.
+Section~\ref{sec:slab} retains that packing and improves the auxiliary cap.
 This is an application of the classical sphere idea of Behrend
 \cite{behrend}, not a new progression-free-set construction.
 Stronger variants are known \cite{ehps}; neither optimality nor
@@ -150,6 +153,7 @@ Original & \(T^2+1\) & \(3.17571403643291\cdot10^{-236}\)\\
 Ternary & \(3^{384}\) & \(2.68582462243153\cdot10^{-188}\)\\
 Sphere & \(40011^{29}\) & \(1.51508393214748\cdot10^{-138}\)\\
 Retuned, \(d=13\) & \(403^{17}\) & \(4.77320332233169\cdot10^{-48}\)\\
+Slab cap, \(d=13\) & \(403^{17}\) & \(1.02940168035828\cdot10^{-47}\)\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -439,12 +443,136 @@ In particular the collision decay exponent
 \(-1/(2\rho+1)\) is very small: constants and thresholds are not
 controlled for practical point counts. No optimality or priority is claimed.
 
+\section{A slab cap and a smaller auxiliary prime}\label{sec:slab}
+The small-coordinate argument in upstream Section 5 uses only the
+first coordinate. Restricting the other two coordinates loses points
+without strengthening that argument. We replace the cap by an explicit
+subset of the same elliptic paraboloid.
+
+\begin{lemma}\label{lem:slab}
+Let \(q\) be an odd prime and \(1\le w\le q\). There is a cap
+\[
+ S\subset\{0,\ldots,w-1\}\times\mathbb F_q^2,\qquad |S|=wq,
+\]
+where a cap means that no affine line contains three distinct points.
+\end{lemma}
+\begin{proof}
+Choose a nonsquare \(\nu\in\mathbb F_q\) and set
+\[
+ Q(x,y)=x^2-\nu y^2,\quad
+ \Gamma=\{(x,y,Q(x,y)):x,y\in\mathbb F_q\},\quad
+ S=\{(x,y,Q(x,y)):0\le x<w,\ y\in\mathbb F_q\}.
+\]
+The form \(Q\) vanishes only at zero. A line whose first two direction
+coordinates are not both zero meets \(\Gamma\) in at most two points:
+substitution gives a quadratic with nonzero leading coefficient.
+A line with vertical direction meets it in one point. Thus \(S\),
+as a subset of \(\Gamma\), is a cap. The first two coordinates
+distinguish exactly \(wq\) points.
+\end{proof}
+
+Retain \(H=2h\), but choose
+\[
+ h^6<q\le2h^6,\qquad
+ w=\left\lfloor\frac{q}{1000H^2}\right\rfloor,
+ \qquad s_{\rm aux}=|S|=wq.
+\]
+For \(h\ge10\), we have \(q>h^6\ge8000h^2=2000H^2\).
+In particular \(w\ge q/(2000H^2)\ge1\), and hence
+\begin{equation}\label{eq:slab-size}
+ s_{\rm aux}\ge\frac{q^2}{2000H^2},\qquad
+ q^3/s_{\rm aux}\le2000qH^2.
+\end{equation}
+Keep the allowed shifts and random map from upstream Section 5:
+\[
+ \mathcal A=\{a\in\mathbb F_q^3:
+     \|ma_1\|_q>3Hw\text{ for every }1\le m\le3H\},
+ \qquad V=G_q(a+S).
+\]
+Here \(a\) is uniform in \(\mathcal A\), independently of uniform
+\(G_q\in\operatorname{GL}_3(\mathbb F_q)\).
+The same union bound gives
+\(\Pr(a\notin\mathcal A)\le18/1000+3/(2000H)<1/2\).
+Thus the restriction still costs at most a factor two in any inclusion
+probability. If \(a+v=0\), its first coordinate contradicts the
+condition at \(m=1\), so zero is excluded.
+
+For a nonzero integer relation \(\sum_i x_i u^{(i)}=0\),
+\(|x_i|\le H\), put \(m=\sum_i x_i\). When \(m\ne0\),
+applying \(G_q^{-1}\) and taking first coordinates gives
+\[
+ ma_1=-\sum_i x_i v^{(i)}_1,\qquad
+ \left|\sum_i x_i v^{(i)}_1\right|\le3H(w-1).
+\]
+This contradicts the allowed-shift condition. No representative bound
+on the second or third coordinate is used. When \(m=0\), the cap
+property excludes a relation among three distinct points; its
+coefficients are not all zero modulo \(q\), because \(H<q\).
+Consequently the support and all three weight estimates of the auxiliary
+weight proposition in upstream Section 5 hold for this new \(S\).
+Their proof uses only the cap
+property, exclusion of zero, cardinality, and the shift probability;
+the two freed coordinates do not enter it.
+
+\begin{proposition}\label{prop:slab}
+Assume the upstream field-norm, lattice, orbit, and counting estimates
+used in Proposition~\ref{prop:tuned}, with the auxiliary cap replaced
+by Lemma~\ref{lem:slab} and the estimates just proved. Then, for all
+sufficiently large \(n\),
+\[
+ \Delta(n)\ge c n^{-2+\eta_{\rm slab}},\qquad
+ \eta_{\rm slab}=\frac1{498\cdot403^{17}+7}.
+\]
+\end{proposition}
+\begin{proof}
+The packing, \(d=13\), \(L=400k^2r^4\), and the conditional digit
+moment bound are unchanged. The affine-residue shells still satisfy
+\(R>H/2=h\). Using \eqref{eq:slab-size}, the other losses become
+\[
+\begin{array}{ll}
+ \text{equal pair, extra equation}
+   &h^2q^{-3}(q^3/s_{\rm aux})^2\ll h^6/q,\\
+ \text{exceptional normal, rank at least two}
+   &h^2q^{-2}(q^3/s_{\rm aux})\ll h^4/q,\\
+ \text{exceptional normal, rank at most one}
+   &h^2q^{-4}(q^3/s_{\rm aux})^2\ll h^6/q^2.
+\end{array}
+\]
+All are bounded with \(q>h^6\); decay is not needed here. In the
+nonzero determinant case, \(\tau<h<q\) still ensures rank three
+modulo \(q\). Thus the same weighted-count and sampling estimates apply.
+Take \(N=(hq)^4\), \(\rho=498k+6\),
+\(\gamma=\rho/(2\rho+1)\), and
+\(n_r=\lfloor r^\gamma\sqrt{N^3/\tau}\rfloor\).
+The pair-deletion bound is still
+\(O_k(r^{\gamma-6(k-1)})=o(1)\), and the triple-deletion bound
+is \(O_k((\log r)^2r^{2\gamma-1})=o(1)\).
+Now \(q\asymp h^6\) gives
+\[
+ \beta=6(1+6)k-\frac{k-1}{2}=\frac{83k+1}{2},\qquad
+ \alpha=12\beta+\gamma=\rho+\gamma.
+\]
+The deletion and interpolation proof of Proposition~\ref{prop:tuned}
+therefore gives \(\eta=2\gamma/\alpha=1/(\rho+1)\), as claimed.
+\end{proof}
+
+Exactly,
+\[
+ \frac{\eta_{\rm slab}}{\eta_{\rm tuned}}
+ =\frac{1074\cdot403^{17}+7}{498\cdot403^{17}+7}
+ \in(2.15,2.16).
+\]
+The slab geometry above is a written proof. Lean certifies the width
+and cardinality inequalities, the revised modulus and zero-case
+bounds, the deletion arithmetic, and this exact gain interval.
+This does not remove the upstream assumptions or establish novelty.
+
 \section{Verification and remaining boundary}
-For the current result, run \texttt{python scripts/build\_tuned.py},
-then \texttt{python scripts/verify\_tuned.py}. The ternary,
-sphere-only, and retuned patches are three alternatives applied
+For the current result, run \texttt{python scripts/build\_slab.py},
+then \texttt{python scripts/verify\_slab.py}. The ternary,
+sphere-only, retuned, and slab patches are four alternatives applied
 directly to the unchanged manuscript, not successive patches.
-The retuned patch updates Sections 3--8, including the full deletion
+The retuned and slab patches update Sections 3--8, including the full deletion
 and interpolation argument.
 The earlier sphere checks remain available through
 \texttt{python scripts/verify\_sphere.py}.
@@ -501,6 +629,16 @@ Cleared-denominator inequalities certify the two negative deletion
 powers and the identity for \(\eta_{\rm tuned}\); an exact numerical
 theorem bounds the gain. These integer facts do not constitute
 formal proofs of the probability estimates or limits.
+
+\texttt{lean/Slab.lean} imports \texttt{Tuned} and proves the new
+width and cardinality lower bounds, the cap-modulus condition for
+\(h\ge10\), the three revised zero-case inequalities, the deletion
+constraints, the new exponent identity, and the gain interval.
+The slab verifier checks five small caps and two complete sets of
+allowed first-coordinate shifts with bounded coefficient boxes.
+It detects a square choice of \(\nu\), a missing cap point, and the
+failure of zero exclusion if the first coordinate is also freed.
+These finite checks do not replace the written finite-field proof.
 
 The retuned verifier rebuilds the imported sphere proof before checking
 the new file, audits their logical axioms, independently derives the

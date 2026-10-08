@@ -18,6 +18,9 @@ Behrend's sphere method is attributed in notes/sphere-packing.tex.
 The finite sphere counting, selection, and complete packing are formalized.
 The retuned d=13 packing, integer scale inequalities, and exact exponent
 arithmetic are also formalized; the six-section patch remains unapplied.
+The slab-cap variant restricts the classical elliptic paraboloid used
+in upstream Section 5 to a slab, with a written finite-field proof.
+Its revised integer scale inequalities are formalized in lean/Slab.lean.
 The geometric transfer remains a written conditional argument.
 No priority or unrestricted optimality claim is made.
 

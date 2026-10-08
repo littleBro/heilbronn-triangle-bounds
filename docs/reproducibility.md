@@ -17,7 +17,7 @@ Then run the same command on Windows, Linux or macOS:
 Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
 
-The command first verifies the supplied ternary, sphere and retuned certificates.
+The command first verifies the supplied ternary, sphere, retuned and slab certificates.
 It checks all saved upstream hashes, compiles the local Lean proofs, audits their
 logical axioms, exercises finite and negative controls, and checks each patch
 against the pinned original manuscript without applying it.
@@ -26,6 +26,7 @@ with the supplied files. Generated text uses UTF-8 with LF line endings.
 A regeneration mismatch is a failure even when the resulting certificate would pass.
 
 The tuned check rebuilds Sphere.olean from its source before importing it.
+The slab check rebuilds both Sphere.olean and Tuned.olean before importing them.
 All Lean checks are bounded subprocesses. Proof compilation does not enumerate
 the enormous sphere or produce planar point configurations.
 The scripts run sequentially and need no WSL, container or parallel search.
@@ -55,10 +56,11 @@ that a remote run passed.
 | Ternary baseline | scripts/build_certificate.py and scripts/build_patch.py | scripts/verify.py |
 | Sphere at d = 41 | scripts/build_sphere.py | scripts/verify_sphere.py |
 | Retuned scales at d = 13 | scripts/build_tuned.py | scripts/verify_tuned.py |
+| Slab cap at d = 13 | scripts/build_slab.py | scripts/verify_slab.py |
 
 After intentionally changing a generator, run it, inspect the changed certificate
 and patch, then run the complete verification command.
-The three source patches are alternatives against the same original manuscript.
+The four source patches are alternatives against the same original manuscript.
 
 ## Proof notes
 

@@ -2,22 +2,22 @@
 
 A conditional research draft by **[Ivan Blinov (@littleBro)](https://github.com/littleBro)**, extending [OpenAI math family 191](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026), with OpenAI Codex assistance.
 
-The current version combines centered-sphere packing with dimension d = 13 and smaller auxiliary scales. It gives the **conditional paper exponent**
+The current version combines centered-sphere packing with dimension d = 13 and an auxiliary cap restricted to a slab. It gives the **conditional paper exponent**
 
 $$
 \Delta(n)\ge c\,n^{-2+\eta},\qquad
-\boxed{\eta=\frac{1}{1074\cdot403^{17}+7}\approx4.77320332233169\cdot10^{-48}}.
+\boxed{\eta=\frac{1}{498\cdot403^{17}+7}\approx1.02940168035828\cdot10^{-47}}.
 $$
 
-The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. The complete finite packing and selected scale inequalities are proved in Lean; the full geometric theorem is not.
+The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. The complete finite packing and selected scale inequalities are proved in Lean. The new slab cap has a written finite-field proof; that geometry and the full Heilbronn theorem are not formalized in Lean.
 
-[Proof and review guide](docs/review.md) · [Current certificate](certificates/tuned.json) · [Lean proof](lean/Tuned.lean) · [Reproduction guide](docs/reproducibility.md)
+[Proof and review guide](docs/review.md) · [Current certificate](certificates/slab.json) · [Lean scale proofs](lean/Slab.lean) · [Reproduction guide](docs/reproducibility.md)
 
 Run all retained results with Python 3.11+, Git and the pinned Lean 4.11.0 toolchain:
 
     python scripts/verify_all.py
 
-On systems with Make, make verify runs the same checks. The command also requires all six certificates and patches to regenerate byte for byte.
+On systems with Make, make verify runs the same checks. The command also requires all eight certificates and patches to regenerate byte for byte.
 
 | Packing | k | Conditional paper exponent |
 | --- | --- | --- |
@@ -25,12 +25,36 @@ On systems with Make, make verify runs the same checks. The command also require
 | Preserved ternary baseline | 3^384 | ≈ 2.68582462243153e-188 |
 | Centered sphere | 40011^29 | ≈ 1.51508393214748e-138 |
 | Retuned scales, d = 13 | 403^17 | ≈ 4.77320332233169e-48 |
+| Slab cap, d = 13 | 403^17 | ≈ 1.02940168035828e-47 |
 
-The retuned exponent is approximately 3.15045471808690e90 times the previous sphere exponent, and 1.50303310297206e188 times the pinned manuscript exponent. These are comparisons of exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
+The slab exponent is approximately 2.15662650602410 times the published retuned exponent. The retuned checkpoint was approximately 3.15045471808690e90 times the previous sphere exponent, and 1.50303310297206e188 times the pinned manuscript exponent. These are comparisons of exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
 
 The current construction selects words of length 17 over 202 digits with the same centered squared norm, then encodes them in base 403. There are at most 85,851 energies, and Lean proves that one class contains at least the required T = binom(binom(51,13),3) words. The actual sphere is not enumerated.
 
-## Current result: retuned scales
+## Current result: a slab cap
+
+The short-relation exclusion in upstream Section 5 only bounds the first coordinate. Take
+
+    S = {(x, y, x² − νy²): 0 <= x < w, y in F_q},
+
+where ν is a nonsquare and w = floor(q/(1000 H²)). This is a subset of the same elliptic paraboloid, with no three collinear points and exactly wq points. The allowed shifts and inclusion-probability argument still apply. Thus s >= q²/(2000 H²), improving the previous q²/(2000³ H⁶) bound.
+
+With H = 2h, the three degenerate losses become h⁶/q, h⁴/q and h⁶/q². They stay bounded for h⁶ < q <= 2h⁶. Keeping the packing, digit scale and N = (hq)⁴ gives rho = 498k + 6 and the exponent displayed above.
+
+- [Written cap proof and full parameter transfer](notes/sphere-packing.tex)
+- [Lean proofs of the new integer inequalities](lean/Slab.lean)
+- [Exact certificate, referencing the retained packing](certificates/slab.json)
+- [Patch for original manuscript Sections 3–8](patches/slab-cap.patch)
+- [Verification report](artifacts/slab-verification.json)
+
+Regenerate and verify:
+
+    python scripts/build_slab.py
+    python scripts/verify_slab.py
+
+The checker independently derives the rational exponent, checks small caps and allowed shifts, rejects corrupted certificates and invalid scale choices, rebuilds the Lean dependencies and checks the patch against the original sources. Lean proves the floor-width and cardinality bounds, the modulus and zero-case inequalities, the deletion arithmetic, and an exact gain between 2.15 and 2.16. The cap geometry itself is a written proof, with finite checks as supporting evidence.
+
+## Preserved retuned scales, d = 13
 
 - [Proof and parameter transfer in the existing note](notes/sphere-packing.tex)
 - [Lean proof of the new packing and integer scale inequalities](lean/Tuned.lean)
@@ -43,7 +67,7 @@ Regenerate and verify:
     python scripts/build_tuned.py
     python scripts/verify_tuned.py
 
-The main changes are L = 400 k² r⁴, H = 2h, q between h¹⁴ and 2h¹⁴, and N = (hq)⁴. The conditional digit moment remains at most 2. All three degenerate zero-determinant cases still have bounded contributions. Taking rho = 1074k + 6 and sample growth r^gamma with gamma = rho/(2rho + 1) permits d = 13 and yields the displayed exponent.
+The checkpoint changes are L = 400 k² r⁴, H = 2h, q between h¹⁴ and 2h¹⁴, and N = (hq)⁴. The conditional digit moment remains at most 2. All three degenerate zero-determinant cases have bounded contributions. Taking rho = 1074k + 6 and sample growth r^gamma with gamma = rho/(2rho + 1) permits d = 13 and yields the retained exponent 1/(1074k + 7).
 
 Lean checks the complete new finite packing, the binomial formula for T, the capacity inequality, integer scale bounds, cleared-denominator deletion constraints, the exponent identity, and the gain enclosure. The verifier rebuilds the imported sphere proof, checks source hashes and patch applicability, and rejects four corrupted certificates and five parameter changes that break the stated sufficient bounds.
 
@@ -68,7 +92,7 @@ The baseline theorem is paper_packing_binomial in Sphere.lean; the current speci
 
 The sphere idea is classical Behrend; stronger progression-free-set constructions are known ([Elsholtz, Hunter, Proske, Sauermann](https://arxiv.org/abs/2406.12290)). We claim neither a new sphere method nor unrestricted optimality. The certificate records a bounded comparison of dimensions 3–284 under its sufficient-capacity criterion.
 
-All three source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
+All four source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
 
 ## Preserved ternary baseline
 
