@@ -14,18 +14,18 @@
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-Retuning the dimension to \(d=13\), and restricting the auxiliary
-elliptic paraboloid to a slab instead of a cube, gives the conditional
-paper exponent
+Retuning the dimension to \(d=13\), restricting the auxiliary elliptic
+paraboloid to a slab, and counting words in a central energy interval
+by their second moment gives the conditional paper exponent
 \[
- k=403^{17},\qquad
- \eta_{\rm slab}=\frac{1}{498\cdot403^{17}+7}
-       \approx1.02940168035828\cdot10^{-47}.
+ k=379^{17},\qquad
+ \eta_{\rm central}=\frac{1}{498\cdot379^{17}+7}
+       \approx2.92350666167202\cdot10^{-47}.
 \]
-This is approximately \(2.15662650602410\) times the previous
-\(d=13\) exponent. The earlier constructions are retained below as
-checkpoints. Lean checks both complete finite packings, their binomial
-counts and capacities, and the new integer scale inequalities.
+This is approximately \(2.84000572124043\) times the previous slab-cap
+exponent. The earlier constructions are retained below as checkpoints.
+Lean proves the new moment estimate, layer selection and complete finite
+packing, its binomial count, and the inherited integer scale inequalities.
 The slab's finite-field geometry is proved in writing, not in Lean.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
@@ -48,6 +48,8 @@ The first local replacement, preserved separately, has \(k=3^{384}\).
 The baseline transfer and interface review below use \(d=41\).
 Section~\ref{sec:retuned} explicitly changes \(d,T,k\) and the other scales.
 Section~\ref{sec:slab} retains that packing and improves the auxiliary cap.
+Section~\ref{sec:central} then reduces the alphabet from 202 to 190 digits
+by a second-moment count, while retaining the slab scales.
 This is an application of the classical sphere idea of Behrend
 \cite{behrend}, not a new progression-free-set construction.
 Stronger variants are known \cite{ehps}; neither optimality nor
@@ -154,6 +156,7 @@ Ternary & \(3^{384}\) & \(2.68582462243153\cdot10^{-188}\)\\
 Sphere & \(40011^{29}\) & \(1.51508393214748\cdot10^{-138}\)\\
 Retuned, \(d=13\) & \(403^{17}\) & \(4.77320332233169\cdot10^{-48}\)\\
 Slab cap, \(d=13\) & \(403^{17}\) & \(1.02940168035828\cdot10^{-47}\)\\
+Central layer, \(d=13\) & \(379^{17}\) & \(2.92350666167202\cdot10^{-47}\)\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -567,12 +570,82 @@ and cardinality inequalities, the revised modulus and zero-case
 bounds, the deletion arithmetic, and this exact gain interval.
 This does not remove the upstream assumptions or establish novelty.
 
+\section{Counting a central energy interval}\label{sec:central}
+The full-range pigeonhole bound discards information about the energy
+distribution. A second-moment bound suffices to reduce the alphabet.
+Keep \(d=13\), \(M=\binom{51}{13}\) and
+\(T=\binom M3=18004519550937520342031694999844900\), but now take
+\[
+ m=17,\quad A=95,\quad s=190,\quad b=379,\quad k=379^{17}.
+\]
+For a digit \(t\in\{0,\ldots,189\}\), define
+\[
+ j(t)=\frac{(2t-189)^2-1}{8},\qquad g(t)=j(t)-1504.
+\]
+Each triangular number \(a(a+1)/2\), \(0\le a<95\), occurs twice
+among the values of \(j\). Direct finite sums give
+\[
+ \sum_t g(t)=0,\qquad \sum_t g(t)^2=343855008.
+\]
+For a word \(x\), put \(J(x)=\sum_v j(x_v)\) and
+\(Z(x)=J(x)-25568\). Its squared norm is \(17+8J(x)\).
+Writing \(N_0=190^{17}\), expansion of the square gives
+\begin{align*}
+ V:=\sum_x Z(x)^2
+   &=17\cdot190^{16}\cdot343855008\\
+   &=16860944176870366476166331396160000000000000000.
+\end{align*}
+Indeed, the diagonal terms give the displayed expression and every
+cross term contains \(\sum_t g(t)=0\). Equivalently, the first moment
+vanishes in every dimension and the second moments satisfy
+\(V_0=0\), \(V_{a+1}=190V_a+190^a\cdot343855008\).
+
+\begin{lemma}\label{lem:central}
+At least \(20001T\) words have \(15568\le J(x)\le35568\).
+Consequently there are \(T\) distinct words of one squared norm.
+\end{lemma}
+\begin{proof}
+Outside the stated interval the integer \(Z(x)\) has absolute value
+at least \(10001\). Summing its square bounds the number of such words
+by \(\lfloor V/10001^2\rfloor\). The exact integer comparison
+\[
+ V+20001T\cdot10001^2\le190^{17}\cdot10001^2
+\]
+therefore gives the required lower bound. More explicitly,
+\begin{align*}
+ N_0-\lfloor V/10001^2\rfloor
+   &=379462960840521394976548392533409392788,\\
+ 20001T&=360108395538301344360975931691897844900.
+\end{align*}
+The interval contains exactly \(20001\) integers. Pigeonhole selection
+gives a layer with at least \(T\) words, all of the same squared norm.
+\end{proof}
+
+Apply the encoding and rigidity argument in the proof of
+Lemma~\ref{lem:sphere} to this selected family with base \(379\).
+This uses the layer supplied by Lemma~\ref{lem:central}; it does not
+require the earlier full-range capacity hypothesis. The resulting
+positions have the same bounds, injections and matching identity.
+All estimates in the proof of Proposition~\ref{prop:slab} are uniform
+in the fixed packing parameter \(k\). Replacing it by \(379^{17}\)
+therefore gives, subject to the same upstream assumptions and for
+every sufficiently large \(n\),
+\[
+ \Delta(n)\ge c n^{-2+\eta_{\rm central}},\qquad
+ \eta_{\rm central}=\frac{1}{498\cdot379^{17}+7}.
+\]
+Its ratio to \(\eta_{\rm slab}\) lies strictly between \(2.84\) and
+\(2.85\). This is an explicit feasible parameter choice, with no
+optimality claim. It uses the classical sphere construction and an
+elementary second-moment count; no new progression-free-set method
+is claimed. Constants and the threshold for \(n\) remain unspecified.
+
 \section{Verification and remaining boundary}
-For the current result, run \texttt{python scripts/build\_slab.py},
-then \texttt{python scripts/verify\_slab.py}. The ternary,
-sphere-only, retuned, and slab patches are four alternatives applied
+For the current result, run \texttt{python scripts/build\_central.py},
+then \texttt{python scripts/verify\_central.py}. The ternary,
+sphere-only, retuned, slab and central-layer patches are five alternatives applied
 directly to the unchanged manuscript, not successive patches.
-The retuned and slab patches update Sections 3--8, including the full deletion
+The retuned, slab and central patches update Sections 3--8, including the full deletion
 and interpolation argument.
 The earlier sphere checks remain available through
 \texttt{python scripts/verify\_sphere.py}.
@@ -639,6 +712,21 @@ allowed first-coordinate shifts with bounded coefficient boxes.
 It detects a square choice of \(\nu\), a missing cap point, and the
 failure of zero exclusion if the first coordinate is also freed.
 These finite checks do not replace the written finite-field proof.
+
+\texttt{lean/Central.lean} symbolically constructs the Cartesian product
+of the digit list and proves its length and nonduplication by induction.
+It proves the zero first moment, the second-moment recurrence, and the
+relation between the score and energy. The tail inequality and exact
+capacity then imply a sufficiently large central layer; generic list
+selection proves distinctness. The existing sphere rigidity and encoding
+lemmas yield \texttt{central\_packing\_binomial}, including both row
+injections and the matching equivalence at \(k=379^{17}\).
+Only the 190 digit scores and 17 recurrence steps are evaluated;
+the enormous list of words is never evaluated during proof checking.
+The checker independently computes digit energies from their squared
+coordinates, propagates the moments, checks six small Cartesian products
+and rejects six corruptions of the certificate. It rebuilds all Lean
+dependencies and audits the final theorem's logical axioms.
 
 The retuned verifier rebuilds the imported sphere proof before checking
 the new file, audits their logical axioms, independently derives the

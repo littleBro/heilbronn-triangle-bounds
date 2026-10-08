@@ -4,101 +4,60 @@
   "lean": "Lean (version 4.11.0, x86_64-w64-windows-gnu, commit ec3042d94bd1, Release)",
   "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
   "source_files_verified": 16,
-  "eta_approx": "1.02940168035828E-47",
-  "gain_from_tuned_approx": "2.15662650602410E+0",
-  "scale_negative_controls": [
+  "eta_approx": "2.92350666167202E-47",
+  "gain_from_slab_approx": "2.84000572124043E+0",
+  "arithmetic_negative_controls": 6,
+  "finite_controls": [
     {
-      "d": 13,
-      "cap_h_power": 2,
-      "q_power": 5,
-      "n_power": 4,
-      "reason": "zero-case growth"
+      "A": 2,
+      "m": 2,
+      "words": 16,
+      "radius": 4,
+      "central_words": 16,
+      "lower_bound": 16
     },
     {
-      "d": 13,
-      "cap_h_power": 6,
-      "q_power": 6,
-      "n_power": 4,
-      "reason": "zero-case growth"
+      "A": 2,
+      "m": 4,
+      "words": 256,
+      "radius": 8,
+      "central_words": 256,
+      "lower_bound": 253
     },
     {
-      "d": 11,
-      "cap_h_power": 2,
-      "q_power": 6,
-      "n_power": 4,
-      "reason": "collision deletion"
+      "A": 5,
+      "m": 1,
+      "words": 10,
+      "radius": 5,
+      "central_words": 8,
+      "lower_bound": 7
     },
     {
-      "d": 13,
-      "cap_h_power": 2,
-      "q_power": 6,
-      "n_power": 3,
-      "reason": "pair deletion"
+      "A": 5,
+      "m": 2,
+      "words": 100,
+      "radius": 10,
+      "central_words": 96,
+      "lower_bound": 79
+    },
+    {
+      "A": 5,
+      "m": 3,
+      "words": 1000,
+      "radius": 15,
+      "central_words": 992,
+      "lower_bound": 846
+    },
+    {
+      "A": 7,
+      "m": 2,
+      "words": 196,
+      "radius": 14,
+      "central_words": 164,
+      "lower_bound": 106
     }
   ],
-  "negative_control_scope": "failure of stated sufficient bounds, not impossibility",
-  "arithmetic_negative_controls": 4,
-  "finite_controls": {
-    "caps": [
-      {
-        "q": 5,
-        "w": 1,
-        "nu": 2,
-        "points": 5,
-        "triples_checked": 10
-      },
-      {
-        "q": 5,
-        "w": 3,
-        "nu": 2,
-        "points": 15,
-        "triples_checked": 455
-      },
-      {
-        "q": 7,
-        "w": 2,
-        "nu": 3,
-        "points": 14,
-        "triples_checked": 364
-      },
-      {
-        "q": 11,
-        "w": 3,
-        "nu": 2,
-        "points": 33,
-        "triples_checked": 5456
-      },
-      {
-        "q": 13,
-        "w": 4,
-        "nu": 2,
-        "points": 52,
-        "triples_checked": 22100
-      }
-    ],
-    "shifts": [
-      {
-        "q": 2003,
-        "H": 1,
-        "w": 2,
-        "allowed_first_coordinates": 1976,
-        "relation_membership_checks": 11856
-      },
-      {
-        "q": 8009,
-        "H": 2,
-        "w": 2,
-        "allowed_first_coordinates": 7916,
-        "relation_membership_checks": 94992
-      }
-    ],
-    "negative_controls": [
-      "square nu",
-      "missing cap point",
-      "unrestricted first coordinate"
-    ],
-    "scope": "finite sanity checks; not a universal finite-field proof"
-  },
+  "finite_control_scope": "small Cartesian products; universal result proved in Lean",
   "lean_axiom_audit": [
     "'HeilbronnSphere.sphere_matching' depends on axioms: [propext, Quot.sound]",
     "'HeilbronnSphere.position_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
@@ -128,30 +87,50 @@
     "'HeilbronnSlab.zero_case_bounds' depends on axioms: [propext, Quot.sound]",
     "'HeilbronnSlab.alteration_constraints' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnSlab.exponent_identity' depends on axioms: [propext, Quot.sound]",
-    "'HeilbronnSlab.slab_gain' does not depend on any axioms"
+    "'HeilbronnSlab.slab_gain' does not depend on any axioms",
+    "'HeilbronnCentral.digits_nodup' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnCentral.digit_mean' does not depend on any axioms",
+    "'HeilbronnCentral.digit_square' does not depend on any axioms",
+    "'HeilbronnCentral.words_length' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnCentral.words_nodup' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnCentral.words_mean' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnCentral.words_square' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnCentral.score_energy' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnCentral.central_count_bound' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnCentral.central_capacity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnCentral.central_family' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnCentral.central_packing' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnCentral.central_packing_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnCentral.moment_value' does not depend on any axioms",
+    "'HeilbronnCentral.capacity_arithmetic' does not depend on any axioms",
+    "'HeilbronnCentral.central_gain' does not depend on any axioms"
   ],
   "patch_applies": true,
   "patched_sections": 6,
   "evidence_sha256": {
+    "lean/Central.lean": "8b048bcf4bae0857f7b4fbde914aec83775013e8deb8de1a00c02b89e5c547c8",
     "lean/Sphere.lean": "a09d087c8083cf526fb82e6b6e2798ddce8eb70655fb925efa927d6d197cebb1",
     "lean/Tuned.lean": "a69ce34e27d56494bc416ca805b0ed367258835f47823580a5113d9a4ad88392",
     "lean/Slab.lean": "f8e56fdb5daa368c9eea87b403bd280be368b3162ee45e0b51e97bb6def8f3de",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
+    "scripts/build_central.py": "9e429cbf0e9fe78f41eef72995cba58490dcf6e873986c816a9f45ea55d71b28",
+    "scripts/verify_central.py": "53aa6d8ce644f187591a49204db272bf9b6ff393603446d02d5cf9fe92f34280",
     "scripts/build_slab.py": "e279a61ef11d8dd4cfcb868f103869e1339e14c59869bebbc965d4b9fc74b1f7",
     "scripts/verify_slab.py": "e1c203687df6b55a360ae7fff06a074a8c70f46614cb8ddb5ca3fae0eca28ce9",
     "scripts/build_tuned.py": "9102e8915e36727f1973c5925b40127f963d02614f6ce38936f8bc4d0c18530a",
     "scripts/verify_tuned.py": "88d3c847fdfab8008ffee30e8b516dcc06735c7acf9a4adb495cc7479150db5f",
     "scripts/build_sphere.py": "9bc551e814838357b6db0ffd9c558cae5c4672a836429e607fbe323ad861f6b7",
+    "scripts/verify_sphere.py": "7c1177b2db18418653d063768675d441db8e3976ebcfe60baad8b5d89e5c69cd",
     "scripts/build_patch.py": "fb6792ff41bf1b2d16535210d38f93a33320ef72ae1c5fc41b38e8a48ea65079",
     "scripts/verify.py": "cf70186da5027bca1a6e01cf93802bf18724ec1a144be37675f00cfe8226b769",
-    "scripts/verify_sphere.py": "7c1177b2db18418653d063768675d441db8e3976ebcfe60baad8b5d89e5c69cd",
-    "certificates/tuned.json": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
+    "certificates/central.json": "41f9889d0b318bcf51e1bc49c87fb76d0fffced60d0aa04ffca13538c5d26cf9",
     "certificates/slab.json": "df7a70005c8a734cff376de212aa49c4dae4413c2c68a17dc1069adf80a0d819",
-    "patches/slab-cap.patch": "3e274f138968cc77f37c0e334fb7c1728b6346db06a7c22e89f92696c217e9a6",
+    "certificates/tuned.json": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
+    "patches/central-sphere.patch": "e6d6b0691f43fc2f4dc770e2563b016389174005d317fb94eb6602b718b8ea78",
+    "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
     "notes/sphere-packing.tex": "2591e07b3ec0cae2773fc7bb69b6e34b837cd24d2f1a6b4d7a4bf34142aba162",
     "README.md": "52a45ae3797b89d57c3dc8b6fc9b016246fedc8fa787c74c20f5ddd99457bec9",
     "docs/review.md": "b2b31620a793704f4b391959097257e03889077e41eec8393627ca1253ab6e38",
-    "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
     "artifacts/sphere-latex-status.json": "530ba1932d586fdf44c312f995cc7965f7739703e05a1f1ea1268286e9a272fa"
   },
   "not_established": [

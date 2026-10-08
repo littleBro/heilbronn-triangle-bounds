@@ -11,7 +11,7 @@ from build_tuned import replace_once, tuned_sections
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def patch_sections():
+def slab_sections():
     originals, changed = tuned_sections()
     name = "05-auxiliary-cap.tex"
     text = replace_once(changed[name], r"$h\ge 3$", r"$h\ge 10$")
@@ -51,6 +51,11 @@ third coordinates need no small integer representatives.
         r"\beta=90k-\frac{k-1}{2}=\frac{179k+1}{2}",
         r"\beta=42k-\frac{k-1}{2}=\frac{83k+1}{2}")
 
+    return originals, changed
+
+
+def patch_sections():
+    originals, changed = slab_sections()
     return "".join("".join(difflib.unified_diff(
         originals[name].splitlines(keepends=True), changed[name].splitlines(keepends=True),
         fromfile="a/build/sections/" + name, tofile="b/build/sections/" + name))

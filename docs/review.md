@@ -3,11 +3,11 @@
 The current target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 403^17 + 7) ≈ 1.02940168035828e-47.
+    eta = 1 / (498 * 379^17 + 7) ≈ 2.92350666167202e-47.
 
 This is a conditional refinement of the pinned OpenAI family 191 argument.
-Read the retuning and slab-cap sections of [the note](../notes/sphere-packing.tex)
-together with the [six-section source patch](../patches/slab-cap.patch).
+Read the retuning, slab-cap and central-energy sections of [the note](../notes/sphere-packing.tex)
+together with the [six-section source patch](../patches/central-sphere.patch).
 The original manuscript and comparator are retained in upstream/ at commit
 fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
@@ -15,22 +15,29 @@ fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
 | Claim | Evidence | Boundary |
 | --- | --- | --- |
-| Enough distinct equal-energy words | Sphere.sphere_family and finite pigeonhole proof | Fully proved in Lean; no enumerated giant sphere |
-| Positions, row injections and exact matching | Tuned.tuned_packing, importing Sphere.packing_exists | Fully proved in Lean for T = binom(binom(51,13),3), k = 403^17 |
-| The exact T, capacity and gain | Tuned.lean, Slab.slab_gain and independent integer arithmetic | Local falling-factorial definition of binomial coefficients |
-| Digit and auxiliary scale inequalities | Tuned.lean, Slab.lean, certificates/slab.json | Integer inequalities; probability and lattice arguments are separate |
+| Enough distinct equal-energy words | Central.words_square, central_count_bound, central_capacity and central_family | Fully proved in Lean by symbolic moments and finite pigeonhole; no enumerated giant sphere |
+| Positions, row injections and exact matching | Central.central_packing_binomial, using the Sphere encoding and rigidity lemmas | Fully proved in Lean for T = binom(binom(51,13),3), k = 379^17 |
+| The exact T, capacity and gain | Central.lean, Tuned.tunedT_binomial and independent integer arithmetic | Local falling-factorial definition of binomial coefficients |
+| Digit and auxiliary scale inequalities | Tuned.lean, Slab.lean, certificates/central.json | Integer inequalities uniform in k; probability and lattice arguments are separate |
 | Slab cap size and short-relation exclusion | New written lemma and proof in the note and patched Section 5 | Finite-field geometry is not in Lean; small cases are independently checked |
 | Field norm and determinant summands for odd d = 13 | Pinned Section 3 and the written transfer | Not formalized here |
 | Lattice, orbit and weighted counts | Pinned Sections 2 and 4–7, with the slab lemma and changed scale checks | Relied upon; no complete independent theorem audit |
 | Deletion and all sufficiently large cardinalities | Written note and patched Section 8 | The asymptotic and geometric proof is not in Lean |
-| Bounded choice of sphere parameters | Independent comparison for dimensions 3–284 | Sufficient-capacity criterion only; no global optimality |
+| Current sphere parameters | Explicit A = 95, m = 17, central radius 10000 | Feasible witness only; the earlier dimension search used a different criterion |
 | Fresh reproduction | artifacts/repository-verification.json and its linked reports | Evidence is specific to the recorded sources and environment |
 
-Lean declarations use the namespaces HeilbronnSphere, HeilbronnTuned and HeilbronnSlab.
+Lean declarations use the namespaces HeilbronnSphere, HeilbronnTuned,
+HeilbronnSlab and HeilbronnCentral.
 Only the standard logical axioms propext, Classical.choice and Quot.sound are
 permitted in these local proofs. Pure numerical comparisons use no axioms.
 
 ## The steps most useful to review
+
+The new finite step is the central-window count: the digit scores have zero
+sum and squared sum 343855008, so the word second moment is
+V = 17 * 190^16 * 343855008. Check the integer tail distance 10001 and
+V + 20001 T * 10001^2 <= 190^17 * 10001^2. The final Lean packing theorem
+depends on this count and does not assume a sufficiently large layer.
 
 1. The conditional digit moment only needs theta <= 1/2. With
    L = 400 k^2 r^4, B is of order r^12 with fixed k-dependent constants.
@@ -54,10 +61,11 @@ independent peer review or unrestricted optimality.
 
 ## Previous results and attribution
 
-The ternary, d = 41 sphere and previous d = 13 retuning retain their own
+The ternary, d = 41 sphere, previous d = 13 retuning and slab variants retain their own
 certificates, Lean files, patches and checkers. They are useful checkpoints and
-do not describe the current auxiliary cap. The sphere method is classical Behrend;
-the slab is a subset of the classical elliptic paraboloid already used upstream.
+use their own parameters. The sphere method is classical Behrend, the moment
+count is elementary, and the slab is a subset of the classical elliptic
+paraboloid already used upstream.
 
 The repository format was informed by
 [Swapnil Jain's integer-mult-kappa](https://github.com/Swapnil-jain/integer-mult-kappa)

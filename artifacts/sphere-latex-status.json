@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "02a092bc527eb3a58e63bbf9c8bab82b55587b3e82b2bc49690efc80c9bd1f36",
+  "source_sha256": "2591e07b3ec0cae2773fc7bb69b6e34b837cd24d2f1a6b4d7a4bf34142aba162",
   "attempt_date": "2026-10-08",
-  "attempt_scope": "Existing slab-cap note after installing the TeX support bundle",
+  "attempt_scope": "Existing note including the central energy interval and second-moment proof",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",
