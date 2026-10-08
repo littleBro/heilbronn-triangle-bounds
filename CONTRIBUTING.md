@@ -9,6 +9,10 @@ locally or approving their CI runs. Workflow changes need human review even when
 their checks pass. Report sensitive security issues as described in
 [SECURITY.md](SECURITY.md).
 
+Submit changes through a pull request targeting main. The secrets and verify
+checks must pass on an up-to-date branch, and review conversations must be
+resolved before merging. Fork workflow runs require maintainer approval.
+
 For an improvement, give the exact integer or rational parameters, the proof of
 the affected steps, and all downstream changes needed by the geometric argument.
 Update the certificate generator, independent checker, Lean statements and note

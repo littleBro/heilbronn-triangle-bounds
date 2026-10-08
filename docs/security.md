@@ -1,6 +1,6 @@
 # Repository security and publication
 
-The repository remains private. The following controls were checked through
+The repository is public. The following controls were checked through
 GitHub's API on 2026-10-08; settings can change independently of this file.
 
 ## Configured controls
@@ -14,10 +14,16 @@ GitHub's API on 2026-10-08; settings can change independently of this file.
   does not persist credentials.
 - Only GitHub-hosted Ubuntu runners are used. There are no repository Actions
   secrets, variables, environments, self-hosted runners, deploy keys or webhooks.
-  The owner is the only collaborator. External workflows cannot access this
-  private repository's actions or reusable workflows.
-- Private-fork pull-request workflows are disabled. Sending write tokens or
-  secrets and variables to those workflows is disabled as well.
+  The owner is the only collaborator; public source files are readable by anyone.
+- GitHub requires maintainer approval for fork pull-request workflows from
+  **all external contributors**. Review the code before granting that approval.
+- Main requires a pull request, successful secrets and verify checks from the
+  GitHub Actions app, an up-to-date branch, and resolved review conversations.
+  Protection also applies to administrators. Force pushes and branch deletion
+  are blocked. With one maintainer, a second person's approval is not required;
+  the owner remains responsible for reviewing external contributions.
+- GitHub secret scanning and push protection are enabled for supported secret
+  patterns. Private vulnerability reporting is enabled; see [SECURITY.md](../SECURITY.md).
 - New logs and artifacts are retained for 14 days. The workflow also sets a
   14-day artifact lifetime. Earlier artifacts keep their original expiry.
 - Superseded runs for the same pull request or ref are cancelled. The secret
@@ -62,29 +68,26 @@ Keep this boundary when changing CI. A passing check does not make a changed
 workflow trustworthy: review the submitted workflow and all files it executes.
 CODEOWNERS routes review to @littleBro; it does not enforce review by itself.
 
-## Remaining publication steps
+## Publication and ongoing checks
 
-GitHub currently rejects branch protection and rulesets for this private
-repository on its account plan. It also rejects the public-fork approval setting
-while the repository is private. These controls are not yet enforced.
+The owner made the repository public on 2026-10-08. Branch protection and the
+external-contributor approval policy, previously unavailable for this private
+repository, are now enabled. Actions were briefly disabled while the public
+controls were configured and then re-enabled with the original action allowlist,
+SHA requirement and read-only token permissions. Effective policies were read
+back through GitHub's API; the workflow file alone does not establish them.
 
-When the owner explicitly authorizes publication:
+For future updates:
 
-1. Recheck secrets, Git history, commit metadata, Actions logs and artifacts on
-   the exact revision to publish. Disable Actions briefly during the transition.
-2. Change visibility to public. Enable approval for **all external contributors**
-   before re-enabling Actions; do not allow unreviewed fork runs automatically.
-3. Protect main: require a pull request, require successful secrets and verify
-   checks from GitHub Actions on an up-to-date branch, require resolved review
-   conversations, and block force pushes and deletion. Apply protection to the
-   owner as well. With one maintainer, do not require an unavailable second
-   person's approval; human review of external changes remains the owner's job.
-4. Verify GitHub secret scanning and push protection, and enable private
-   vulnerability reporting. Do not assume visibility changes enabled every
-   setting. Read back each effective policy and re-enable Actions only after
-   the intended restrictions are confirmed.
-5. Confirm account two-factor authentication or a passkey and retain recovery
-   codes securely. Repository APIs did not establish the account's 2FA status.
+1. Submit changes through a pull request and wait for both required checks on
+   the revision to merge. Inspect workflow changes and the files they execute.
+2. Recheck Git history, commit metadata, Actions logs and artifacts before
+   announcing a new revision. Secret scanners do not identify every kind of
+   confidential information.
+3. Review Dependabot updates and separately review downloaded tool versions
+   and checksums. Do not enable automatic merging or add CI secrets casually.
+4. Maintain account two-factor authentication or a passkey, and store recovery
+   codes securely. Account protection is separate from repository settings.
 
 Public commits, logs and forks may be copied. Making a repository private later
 does not recall those copies. Visibility is therefore a separate owner decision.
