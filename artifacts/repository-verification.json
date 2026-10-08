@@ -20,7 +20,7 @@
     "artifacts/tuned-verification.json": "4eac1ed50297bd49fdb615c6bf916ecf5de791d663217a0cfd76e67c25a0f512",
     "scripts/verify_all.py": "2a2b6e3726601bd4f8655283beb91cea2b903cbe40150c5d1288ec0119e72bac",
     "Makefile": "dc12ed61bc1c17be7694f7c0b714931600ea2fa29e72c1ebd2be50fd25fb9d3f",
-    ".github/workflows/verify.yml": "c9037e9fd7a2721f550eee7f59af8a4a5955deee247f8eaa84d6113dbdaa4316",
+    ".github/workflows/verify.yml": "f52b848f056fc4be0796b75fea2861f29805d252e6fd41c9cca8de7b1c97bab8",
     "README.md": "926250236415f53b6b0fa2fa9fe1a0cd90d9e02e4b46bff1e4dbad29bd034be8",
     "CONTRIBUTING.md": "51dd76e299f7251e550bbf5b2ea326a86cfeef9150a228d7685a95a9284577c7",
     "CITATION.cff": "3c8a0946c6ed468d0a451fb5fbc7b20eb8f7297132e9e57d451e6b59253345e9",
