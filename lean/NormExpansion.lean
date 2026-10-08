@@ -1,5 +1,6 @@
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 /-! Symbolic regrouping of thirteen determinants; no enumeration of the
     `6 ^ 12` summands is involved in this proof. -/

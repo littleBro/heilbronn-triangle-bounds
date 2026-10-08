@@ -63,7 +63,7 @@
     "full Heilbronn theorem"
   ],
   "evidence_sha256": {
-    "lean/NormExpansion.lean": "0a6a4b3fa3bfb32fc25a17f89ab99434985c8863b3fc2b9de22237849ddd9d7d",
+    "lean/NormExpansion.lean": "713d3bc94714a006ea0fe3b29fda382deb777b63014fd27d084a2824ed8f4e0b",
     "lean/NormDescent.lean": "1fe8045a3bfcff2f7116c697cfc55c4b1b094244b09c3beed467e2def5b5466e",
     "lean/NormAlgebra.lean": "018e9199ac2d5f0797f69d24422495865de2f4511636b60e26307bc36f4bcebc",
     "lean/NormPolynomials.lean": "ac665bb9700618299fef003a81f5c08b3f213fe1d8d3d04d6b88eb0b0fa8dbda",
@@ -71,7 +71,7 @@
     "lakefile.lean": "20cdc43adc4d64564040ea03a903bd43ce3dac23bf9afb1090d296b382426752",
     "lake-manifest.json": "8bd77b3cd6efc5ceb88b72ee2f691cdbff5d768d88817b480b3c0cf547a9d3ad",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
-    "scripts/prepare_mathlib.py": "070c44ad2d91b70f88d88e03bb3bda40b9c05d286cfed0d9dece8d76b3d153a6",
+    "scripts/prepare_mathlib.py": "e92ddfee41c63713ea0743d9a94b43f8f85bc063bba0d05335b3aaf2a59b5409",
     "scripts/verify_algebra.py": "dc30c234e9705236e167cd38c6b5420c8ecbb71320bed131679d7cb4712841bb"
   }
 }
