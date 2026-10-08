@@ -59,7 +59,7 @@
     "certificates/tuned.json": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
     "patches/tuned-parameters.patch": "6ee76644779395b51c91f64b45bcf7c3a30f5bce6aeb362e4b56681779a9b85d",
     "notes/sphere-packing.tex": "25e1c266cfb5f22bd9f56d6ef966ecdf592c30f1ece3581f992f0d7d735f55a6",
-    "README.md": "926250236415f53b6b0fa2fa9fe1a0cd90d9e02e4b46bff1e4dbad29bd034be8",
+    "README.md": "77a394763e5b538b085fa714b690536dbc6b93e30e930158999372a32b85c6ff",
     "NOTICE": "932f551b17292e140dcd4f73615e1afd2d1f3135f57f461ea1779cd7fe3aa505",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
     "artifacts/sphere-latex-status.json": "a80e6d76eb249e806a322c6f78b6dc1717f4134783251d100db511d31482895c"

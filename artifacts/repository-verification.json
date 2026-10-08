@@ -15,23 +15,23 @@
   ],
   "environment": "local invocation; see individual reports for runtime versions",
   "evidence_sha256": {
-    "artifacts/verification.json": "c5a5a75be396760d60605b4d85bcea0bcc6626a0598971cdf2f495cd0787d9c3",
-    "artifacts/sphere-verification.json": "0e1965a626a0f7d5569f2d25f1158f3a3a6f3ea340f65d3ad9d3aaa9bd17a016",
-    "artifacts/tuned-verification.json": "4eac1ed50297bd49fdb615c6bf916ecf5de791d663217a0cfd76e67c25a0f512",
+    "artifacts/verification.json": "cb39bcf8ebdd330a75516a7752f948723d612ec53075fcf49d609d177685890a",
+    "artifacts/sphere-verification.json": "e805555c403e05a67372cadf4fb6772e9768a06a1fb95afdd139e71ef5a43f5c",
+    "artifacts/tuned-verification.json": "4ca70757fa6586f0fab25e9300774cf3b69d804af183865ff93579252501c77e",
     "scripts/verify_all.py": "2a2b6e3726601bd4f8655283beb91cea2b903cbe40150c5d1288ec0119e72bac",
     "Makefile": "dc12ed61bc1c17be7694f7c0b714931600ea2fa29e72c1ebd2be50fd25fb9d3f",
     ".github/workflows/verify.yml": "3a663c041a201e5d680ff48abf9df7c198dfbaee5d7ae968acc662d3886f1fa2",
-    "README.md": "926250236415f53b6b0fa2fa9fe1a0cd90d9e02e4b46bff1e4dbad29bd034be8",
-    "CONTRIBUTING.md": "51dd76e299f7251e550bbf5b2ea326a86cfeef9150a228d7685a95a9284577c7",
+    "README.md": "77a394763e5b538b085fa714b690536dbc6b93e30e930158999372a32b85c6ff",
+    "CONTRIBUTING.md": "6c1b77fd3a8a82c6a2b77c2be5357ff390225d71fd165d7f2fe2ff38aafebaf6",
     "CITATION.cff": "3c8a0946c6ed468d0a451fb5fbc7b20eb8f7297132e9e57d451e6b59253345e9",
     "NOTICE": "932f551b17292e140dcd4f73615e1afd2d1f3135f57f461ea1779cd7fe3aa505",
     "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
     "docs/reproducibility.md": "bfc91cf0a6f43b9108a2237eda6a214b1420684d62a4b8ba0cac81fbb1bb782f",
     "docs/review.md": "8a00546839c4849a726edebf5bb67f24e27a27ecfe851effaa405bd7f14c245a",
-    "docs/security.md": "1b2b53fc33d350eacffd00b1248c68774bac5fd0cd84ddc66f0a64075e302aa3",
-    "SECURITY.md": "37fbc96ae9996d495210a0d68ffea06dbcf7db4b8ad93ef46c0cc4a5d406e544",
+    "docs/security.md": "506ce6df057b5f3cc5b260be7ca3832ad203924405aa2948ac4aad730428146c",
+    "SECURITY.md": "dda7c4efe00215ae4f6f6e481707ea451dda3fc0c23e332efe35c8d1f07eb870",
     ".github/dependabot.yml": "a7c09a87e843df2ffed0a27b0f30af6238f0232722c9a5680b70be5624d35c49",
-    ".github/CODEOWNERS": "9206acd7c6c5fcbf5502858364f463aa34c8275535aa95043926c96af84f9dc5"
+    ".github/CODEOWNERS": "8c92d81465316bde8779ebec7fe528ea3e552806797178a5fc0ecf8691ad126f"
   },
   "scope": "Local proofs, exact certificates, finite controls and source patches; the full geometric theorem remains conditional."
 }

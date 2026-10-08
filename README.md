@@ -126,4 +126,4 @@ Author: Ivan Blinov (@littleBro). Research, implementation and drafting used sub
 
 The repository format was informed by [Swapnil Jain's integer-mult-kappa](https://github.com/Swapnil-jain/integer-mult-kappa) and [CrocSwap's integer-mult-bounds](https://github.com/CrocSwap/integer-mult-bounds). Their integer-multiplication results are not mathematical dependencies of this project.
 
-Licensed under [Apache-2.0](LICENSE). This draft has no independent peer review, priority claim or OpenAI endorsement. The GitHub repository is initially private.
+Licensed under [Apache-2.0](LICENSE). This draft has no independent peer review, priority claim or OpenAI endorsement.
