@@ -1,11 +1,15 @@
 {
   "source": "notes/sphere-packing.tex",
+  "source_sha256": "02a092bc527eb3a58e63bbf9c8bab82b55587b3e82b2bc49690efc80c9bd1f36",
   "attempt_date": "2026-10-08",
-  "attempt_scope": "Slab cap proof and revised exponent in the existing open document",
+  "attempt_scope": "Existing slab-cap note after installing the TeX support bundle",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
-  "status": "environment-failure",
-  "reason": "Required TeX bundle was not cached and its download failed.",
-  "bundle_url": "https://relay.fullyjustified.net/default_bundle_v33.tar.index.gz",
-  "source_diagnostics_available": false,
-  "pdf_generated": false
+  "compiler_version": "Tectonic 0.17.0+20260731",
+  "status": "success",
+  "compiler_result": "The current source compiled successfully with the desktop editor's compiler.",
+  "bundle_url": "https://data1b.fullyjustified.net/tlextras-2022.0r0.tar",
+  "bundle_digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c",
+  "bundle_source": "Official v33 redirect target from tectonic-typesetting/tectonic-relay-service",
+  "pdf_generated": true,
+  "pdf_exported": false
 }

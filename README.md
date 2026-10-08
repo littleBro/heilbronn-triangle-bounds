@@ -134,7 +134,7 @@ The verifier preserves upstream files, compiles only the local proof, rejects ch
 
 The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the current sphere proof additionally checks its binomial formula inside Lean. See the respective proof notes for their scopes.
 
-The proof notes are supplied as TeX. The local Codex compiler could not download its missing TeX bundle for either note, so compiled PDFs are not included. The environment failures are recorded in the two LaTeX status files under artifacts. They did not affect the Lean or Python checks.
+The proof notes are supplied as TeX. The current sphere/slab note compiled successfully with the built-in Tectonic 0.17.0+20260731 after installing its support bundle from the [official v33 mirror](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map). The source hash and bundle identity are recorded in [the compilation report](artifacts/sphere-latex-status.json). Generated note PDFs are not included. The separate artifacts/latex-status.json retains the earlier ternary-note attempt. Note compilation is separate from the Lean and Python checks.
 
 The [GitHub Actions workflow](.github/workflows/verify.yml) runs the same checks on Ubuntu and saves verification reports. See [Actions](https://github.com/littleBro/heilbronn-triangle-bounds/actions/workflows/verify.yml) for the result on a particular commit. Local reports and remote runs record their own environments.
 

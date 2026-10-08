@@ -66,7 +66,14 @@ The four source patches are alternatives against the same original manuscript.
 
 The current note is notes/sphere-packing.tex; the earlier ternary argument is
 notes/packing.tex. Neither is needed by the executable proof checks.
-The local built-in document compiler could not download its missing TeX bundle,
-so this draft does not include freshly compiled note PDFs.
-The two LaTeX status files record that environment limitation.
+The current sphere/slab note compiled successfully in the desktop editor with
+Tectonic 0.17.0+20260731. Its source hash and bundle identity are recorded in
+[artifacts/sphere-latex-status.json](../artifacts/sphere-latex-status.json).
+The initial download failure was resolved by using the
+[official v33 redirect target](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map),
+https://data1b.fullyjustified.net/tlextras-2022.0r0.tar, as the user-level default
+bundle. Support files are cached locally. No compiler binaries or bundles are
+stored in this repository, and generated note PDFs are not included.
+The separate artifacts/latex-status.json is the historical ternary-note attempt.
+Document compilation is not part of verify_all.py or the current CI workflow.
 The PDF under upstream/ is the unchanged original manuscript.
