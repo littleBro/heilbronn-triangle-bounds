@@ -1,0 +1,79 @@
+{
+  "schema": "heilbronn-slab-cap-v1",
+  "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "status": "conditional-on-upstream-estimates",
+  "scope": "paper exponent; not the upstream Lean comparator exponent",
+  "packing_certificate": "certificates/tuned.json",
+  "packing_sha256": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
+  "d": 13,
+  "k": "195067889127125536409155163057028999943162963",
+  "cap": {
+    "set": "{(x,y,x^2-nu*y^2): 0 <= x < w, y in F_q}; nu nonsquare",
+    "width": "w = floor(q/(1000*H^2))",
+    "cardinality": "s = w*q",
+    "density_bound": "s >= q^2/(2000*H^2)",
+    "short_relation_change": "only first-coordinate bounds are required",
+    "proof_status": "written finite-field argument; not formalized in Lean"
+  },
+  "scales": {
+    "L": "400*k^2*r^4",
+    "B": "100*k^2*L^3 < B <= 200*k^2*L^3; B prime",
+    "h": "B^k",
+    "tau": "floor(B^(k-1)/2)",
+    "H": "2*h",
+    "q": "h^6 < q <= 2*h^6; q prime",
+    "N": "(h*q)^4",
+    "n_r": "floor(r^gamma*sqrt(N^3/tau))"
+  },
+  "rho": "97143808785308517131759271202400441971695155580",
+  "beta": {
+    "numerator": "8095317398775709760979939266866703497641262965",
+    "denominator": "1"
+  },
+  "gamma": {
+    "numerator": "97143808785308517131759271202400441971695155580",
+    "denominator": "194287617570617034263518542404800883943390311161"
+  },
+  "alpha": {
+    "numerator": "18873839170633168469468267534988960206606585308290217415032219628748123178610194759224200583960",
+    "denominator": "194287617570617034263518542404800883943390311161"
+  },
+  "eta": {
+    "numerator": "1",
+    "denominator": "97143808785308517131759271202400441971695155581"
+  },
+  "gain_from_tuned": {
+    "numerator": "209502912922532826103432645123249145938957022269",
+    "denominator": "97143808785308517131759271202400441971695155581"
+  },
+  "constraints": {
+    "cap_condition": "h >= 10 implies 2000*(2*h)^2 <= h^6 < q",
+    "zero_case_h_powers": [
+      0,
+      -2,
+      -6
+    ],
+    "collision_r_power": {
+      "numerator": "-1",
+      "denominator": "194287617570617034263518542404800883943390311161"
+    },
+    "pair_r_power": {
+      "numerator": "-227395652658230945415280331746854942248272110869990099053919505070686735248059182242567357712",
+      "denominator": "194287617570617034263518542404800883943390311161"
+    }
+  },
+  "formal_scope": {
+    "proved": [
+      "existing finite packing and digit-moment inequalities via Tuned",
+      "floor-width and slab-cardinality lower-bound arithmetic",
+      "cap modulus and three zero-case inequalities",
+      "cleared-denominator deletion inequalities and exponent identity",
+      "215/100 < gain from tuned < 216/100"
+    ],
+    "written_not_formalized": [
+      "slab cap geometry and short-relation exclusion",
+      "field norm, lattice, orbit and weighted counting estimates",
+      "probability, asymptotic deletion and interpolation"
+    ]
+  }
+}

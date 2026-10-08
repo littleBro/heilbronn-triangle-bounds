@@ -4,21 +4,100 @@
   "lean": "Lean (version 4.11.0, x86_64-w64-windows-gnu, commit ec3042d94bd1, Release)",
   "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
   "source_files_verified": 16,
-  "eta_approx": "4.77320332233169E-48",
-  "gain_from_previous_sphere_approx": "3.15045471808690E+90",
-  "gain_from_original_approx": "1.50303310297206E+188",
+  "eta_approx": "1.02940168035828E-47",
+  "gain_from_tuned_approx": "2.15662650602410E+0",
   "scale_negative_controls": [
-    "collision deletion",
-    "zero-case growth",
-    "unchanged shell moment range",
-    "pair deletion",
-    "claimed moment bound"
+    {
+      "d": 13,
+      "cap_h_power": 2,
+      "q_power": 5,
+      "n_power": 4,
+      "reason": "zero-case growth"
+    },
+    {
+      "d": 13,
+      "cap_h_power": 6,
+      "q_power": 6,
+      "n_power": 4,
+      "reason": "zero-case growth"
+    },
+    {
+      "d": 11,
+      "cap_h_power": 2,
+      "q_power": 6,
+      "n_power": 4,
+      "reason": "collision deletion"
+    },
+    {
+      "d": 13,
+      "cap_h_power": 2,
+      "q_power": 6,
+      "n_power": 3,
+      "reason": "pair deletion"
+    }
   ],
-  "negative_control_scope": "failure of the stated sufficient bounds, not impossibility",
+  "negative_control_scope": "failure of stated sufficient bounds, not impossibility",
   "arithmetic_negative_controls": 4,
-  "parameter_comparison": {
-    "dimensions_checked": 282,
-    "claim": "bounded comparison only"
+  "finite_controls": {
+    "caps": [
+      {
+        "q": 5,
+        "w": 1,
+        "nu": 2,
+        "points": 5,
+        "triples_checked": 10
+      },
+      {
+        "q": 5,
+        "w": 3,
+        "nu": 2,
+        "points": 15,
+        "triples_checked": 455
+      },
+      {
+        "q": 7,
+        "w": 2,
+        "nu": 3,
+        "points": 14,
+        "triples_checked": 364
+      },
+      {
+        "q": 11,
+        "w": 3,
+        "nu": 2,
+        "points": 33,
+        "triples_checked": 5456
+      },
+      {
+        "q": 13,
+        "w": 4,
+        "nu": 2,
+        "points": 52,
+        "triples_checked": 22100
+      }
+    ],
+    "shifts": [
+      {
+        "q": 2003,
+        "H": 1,
+        "w": 2,
+        "allowed_first_coordinates": 1976,
+        "relation_membership_checks": 11856
+      },
+      {
+        "q": 8009,
+        "H": 2,
+        "w": 2,
+        "allowed_first_coordinates": 7916,
+        "relation_membership_checks": 94992
+      }
+    ],
+    "negative_controls": [
+      "square nu",
+      "missing cap point",
+      "unrestricted first coordinate"
+    ],
+    "scope": "finite sanity checks; not a universal finite-field proof"
   },
   "lean_axiom_audit": [
     "'HeilbronnSphere.sphere_matching' depends on axioms: [propext, Quot.sound]",
@@ -42,33 +121,43 @@
     "'HeilbronnTuned.zero_case_bounds' depends on axioms: [propext, Quot.sound]",
     "'HeilbronnTuned.alteration_constraints' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnTuned.exponent_identity' depends on axioms: [propext, Quot.sound]",
-    "'HeilbronnTuned.tuned_gain' does not depend on any axioms"
+    "'HeilbronnTuned.tuned_gain' does not depend on any axioms",
+    "'HeilbronnSlab.slab_width_bound' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSlab.slab_size_bound' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSlab.cap_modulus' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSlab.zero_case_bounds' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSlab.alteration_constraints' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSlab.exponent_identity' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSlab.slab_gain' does not depend on any axioms"
   ],
   "patch_applies": true,
   "patched_sections": 6,
   "evidence_sha256": {
     "lean/Sphere.lean": "a09d087c8083cf526fb82e6b6e2798ddce8eb70655fb925efa927d6d197cebb1",
     "lean/Tuned.lean": "a69ce34e27d56494bc416ca805b0ed367258835f47823580a5113d9a4ad88392",
+    "lean/Slab.lean": "f8e56fdb5daa368c9eea87b403bd280be368b3162ee45e0b51e97bb6def8f3de",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
+    "scripts/build_slab.py": "a9f2e7b01eb9d335d8a496a5096cf03be3f15631ecbce242d3fc9b36c3216711",
+    "scripts/verify_slab.py": "e1c203687df6b55a360ae7fff06a074a8c70f46614cb8ddb5ca3fae0eca28ce9",
     "scripts/build_tuned.py": "9102e8915e36727f1973c5925b40127f963d02614f6ce38936f8bc4d0c18530a",
     "scripts/verify_tuned.py": "88d3c847fdfab8008ffee30e8b516dcc06735c7acf9a4adb495cc7479150db5f",
     "scripts/build_sphere.py": "9bc551e814838357b6db0ffd9c558cae5c4672a836429e607fbe323ad861f6b7",
-    "scripts/verify_sphere.py": "7c1177b2db18418653d063768675d441db8e3976ebcfe60baad8b5d89e5c69cd",
-    "scripts/verify.py": "cf70186da5027bca1a6e01cf93802bf18724ec1a144be37675f00cfe8226b769",
     "scripts/build_patch.py": "fb6792ff41bf1b2d16535210d38f93a33320ef72ae1c5fc41b38e8a48ea65079",
+    "scripts/verify.py": "cf70186da5027bca1a6e01cf93802bf18724ec1a144be37675f00cfe8226b769",
+    "scripts/verify_sphere.py": "7c1177b2db18418653d063768675d441db8e3976ebcfe60baad8b5d89e5c69cd",
     "certificates/tuned.json": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
-    "patches/tuned-parameters.patch": "6ee76644779395b51c91f64b45bcf7c3a30f5bce6aeb362e4b56681779a9b85d",
+    "certificates/slab.json": "df7a70005c8a734cff376de212aa49c4dae4413c2c68a17dc1069adf80a0d819",
+    "patches/slab-cap.patch": "3e274f138968cc77f37c0e334fb7c1728b6346db06a7c22e89f92696c217e9a6",
     "notes/sphere-packing.tex": "02a092bc527eb3a58e63bbf9c8bab82b55587b3e82b2bc49690efc80c9bd1f36",
     "README.md": "b8774e58845aeaa116767832e3c10c64e0cfad39a0ed9745e39ba654d49e8f9d",
-    "NOTICE": "2719e7e6d016e0371d7e4a36a2f378d6275a77ba5c0bba9b8e872e4697ae9f1e",
+    "docs/review.md": "1f900ef1e7bc5d4f5dad230d7135d2e32bd5ad76528ee9e2a7b32844afe313de",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
     "artifacts/sphere-latex-status.json": "7265a7d9cfbbbe089f61278af90786adcbdd41c7c8eb7a40c2a9daf0f358b395"
   },
   "not_established": [
-    "complete independent proof or Lean formalization of the geometric theorem",
-    "formal asymptotic, probability, field-norm or lattice proofs",
-    "formal or unrestricted parameter optimality",
-    "practical construction of the full sphere or planar point set",
-    "novelty, priority or independent review"
+    "Lean proof of the slab cap geometry or full geometric theorem",
+    "complete independent audit of upstream estimates",
+    "practical finite-n improvement",
+    "novelty, priority or global optimality"
   ]
 }
