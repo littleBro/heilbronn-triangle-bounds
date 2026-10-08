@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "2591e07b3ec0cae2773fc7bb69b6e34b837cd24d2f1a6b4d7a4bf34142aba162",
+  "source_sha256": "cad9d6e98f1a6da73d63c802bd073580aec0c29c5838f8c963e20e2e83d0fe62",
   "attempt_date": "2026-10-08",
-  "attempt_scope": "Existing note including the central energy interval and second-moment proof",
+  "attempt_scope": "Existing note including norm compression, interpolation descent and the retained constructions",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

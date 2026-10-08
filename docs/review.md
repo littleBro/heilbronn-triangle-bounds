@@ -3,11 +3,12 @@
 The current target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 379^17 + 7) ≈ 2.92350666167202e-47.
+    eta = 1 / (498 * 47^10 + 7) ≈ 3.81761455590365e-20.
 
 This is a conditional refinement of the pinned OpenAI family 191 argument.
-Read the retuning, slab-cap and central-energy sections of [the note](../notes/sphere-packing.tex)
-together with the [six-section source patch](../patches/central-sphere.patch).
+Read the norm-compression section of [the note](../notes/sphere-packing.tex)
+and its retained slab transfer, together with the
+[six-section source patch](../patches/norm-compression.patch).
 The original manuscript and comparator are retained in upstream/ at commit
 fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
@@ -15,29 +16,43 @@ fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
 | Claim | Evidence | Boundary |
 | --- | --- | --- |
-| Enough distinct equal-energy words | Central.words_square, central_count_bound, central_capacity and central_family | Fully proved in Lean by symbolic moments and finite pigeonhole; no enumerated giant sphere |
-| Positions, row injections and exact matching | Central.central_packing_binomial, using the Sphere encoding and rigidity lemmas | Fully proved in Lean for T = binom(binom(51,13),3), k = 379^17 |
-| The exact T, capacity and gain | Central.lean, Tuned.tunedT_binomial and independent integer arithmetic | Local falling-factorial definition of binomial coefficients |
-| Digit and auxiliary scale inequalities | Tuned.lean, Slab.lean, certificates/central.json | Integer inequalities uniform in k; probability and lattice arguments are separate |
+| Norm decomposition with T = 37 * 6^12 | New written lemma, two-stage proof and patched Section 3 | Permutation normalization and signs in Lean; determinant expansion and field descent are not fully formalized |
+| Interpolation descent using 37 nodes | Written degree bound and Lagrange identity; finite field controls | Universal written proof; no universal Lean interpolation theorem |
+| Enough distinct equal-energy words | NormCompression.norm_capacity and Sphere.sphere_family | Fully proved in Lean by the full-range bound and finite pigeonhole |
+| Positions, row injections and exact matching | NormCompression.norm_packing, using Sphere.packing_exists | Fully proved in Lean for T = 37 * 6^12, k = 47^10 |
+| The exact T formula, capacity and gain | NormCompression.lean and independent integer arithmetic | The count formula is numerical; its field-algebra justification is written |
+| Digit and auxiliary scale inequalities | Tuned.lean, Slab.lean, certificates/norm.json | Integer inequalities uniform in k; probability and lattice arguments are separate |
 | Slab cap size and short-relation exclusion | New written lemma and proof in the note and patched Section 5 | Finite-field geometry is not in Lean; small cases are independently checked |
-| Field norm and determinant summands for odd d = 13 | Pinned Section 3 and the written transfer | Not formalized here |
+| Nonzero norm for distinct labels at d = 13 | Pinned Vandermonde identity and new exact norm decomposition | Written field-algebra argument; not fully formalized here |
 | Lattice, orbit and weighted counts | Pinned Sections 2 and 4–7, with the slab lemma and changed scale checks | Relied upon; no complete independent theorem audit |
 | Deletion and all sufficiently large cardinalities | Written note and patched Section 8 | The asymptotic and geometric proof is not in Lean |
-| Current sphere parameters | Explicit A = 95, m = 17, central radius 10000 | Feasible witness only; the earlier dimension search used a different criterion |
+| Current sphere parameters | Explicit A = 12, m = 10, Q = 661 | Feasible witness only; no parameter optimality claim |
 | Fresh reproduction | artifacts/repository-verification.json and its linked reports | Evidence is specific to the recorded sources and environment |
 
 Lean declarations use the namespaces HeilbronnSphere, HeilbronnTuned,
-HeilbronnSlab and HeilbronnCentral.
+HeilbronnSlab, HeilbronnCentral and HeilbronnNormCompression.
 Only the standard logical axioms propext, Classical.choice and Quot.sound are
 permitted in these local proofs. Pure numerical comparisons use no axioms.
 
 ## The steps most useful to review
 
-The new finite step is the central-window count: the digit scores have zero
-sum and squared sum 343855008, so the word second moment is
-V = 17 * 190^16 * 343855008. Check the integer tail distance 10001 and
-V + 20001 T * 10001^2 <= 190^17 * 10001^2. The final Lean packing theorem
-depends on this count and does not assume a sufficiently large layer.
+The new algebraic step deserves review before the retained scale argument:
+
+- In the product expansion, normalize pi_v = rho_v tau with rho_0 = id.
+  Odd d makes the common sign (sgn tau)^d equal to sgn tau, leaving
+  6^(d-1) determinants over K. No division by 6 is used.
+- Reduce each coefficient in a power basis. Each representative has degree
+  at most d-1, so its 3-by-3 determinant has degree at most 3d-3.
+  Interpolate at 3d-2 distinct nodes, possible for r >= 37.
+- Apply a linear projection fixing the base field to the entire interpolated
+  determinant. Entrywise projection does not preserve a determinant; the
+  checker includes counterexamples to that incorrect shortcut.
+- The resulting polynomials remain homogeneous of degree d over F_r and
+  give the exact original norm. The distinct-label obstruction is unchanged.
+  Section 4's conditional digit lemma explicitly allows arbitrary label functions.
+
+The new packing then uses 24^10 >= 661 * (37 * 6^12). Its Lean proof
+includes the existence of the layer and does not take that as a hypothesis.
 
 1. The conditional digit moment only needs theta <= 1/2. With
    L = 400 k^2 r^4, B is of order r^12 with fixed k-dependent constants.
@@ -61,11 +76,12 @@ independent peer review or unrestricted optimality.
 
 ## Previous results and attribution
 
-The ternary, d = 41 sphere, previous d = 13 retuning and slab variants retain their own
+The ternary, d = 41 sphere, d = 13 retuning, slab and central-layer variants retain their own
 certificates, Lean files, patches and checkers. They are useful checkpoints and
 use their own parameters. The sphere method is classical Behrend, the moment
 count is elementary, and the slab is a subset of the classical elliptic
-paraboloid already used upstream.
+paraboloid already used upstream. The norm regrouping and interpolation use
+elementary algebra; novelty of this application is not established.
 
 The repository format was informed by
 [Swapnil Jain's integer-mult-kappa](https://github.com/Swapnil-jain/integer-mult-kappa)

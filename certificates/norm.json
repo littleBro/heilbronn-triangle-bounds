@@ -1,0 +1,100 @@
+{
+  "schema": "heilbronn-norm-compression-v1",
+  "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "status": "conditional-on-upstream-estimates",
+  "scope": "paper exponent; not the upstream Lean comparator exponent",
+  "previous_certificate": "certificates/central.json",
+  "previous_sha256": "41f9889d0b318bcf51e1bc49c87fb76d0fffced60d0aa04ffca13538c5d26cf9",
+  "d": 13,
+  "T": "80540946432",
+  "decomposition": {
+    "extension_field_terms": "2176782336",
+    "representative_degree_max": 12,
+    "determinant_degree_max": 36,
+    "interpolation_nodes": 37,
+    "prime_minimum": 37,
+    "preserved_interface": "homogeneous degree-d polynomials over F_r; exact norm identity",
+    "proof_status": "written algebraic proof; permutation normalization and signs in Lean"
+  },
+  "packing": {
+    "m": 10,
+    "A": 12,
+    "s": 24,
+    "b": 47,
+    "layers": 661,
+    "word_count": "63403380965376",
+    "required_words": "53237565591552"
+  },
+  "k": "52599132235830049",
+  "cap": {
+    "set": "{(x,y,x^2-nu*y^2): 0 <= x < w, y in F_q}; nu nonsquare",
+    "width": "w = floor(q/(1000*H^2))",
+    "cardinality": "s = w*q",
+    "density_bound": "s >= q^2/(2000*H^2)",
+    "short_relation_change": "only first-coordinate bounds are required",
+    "proof_status": "written finite-field argument; not formalized in Lean"
+  },
+  "scales": {
+    "L": "400*k^2*r^4",
+    "B": "100*k^2*L^3 < B <= 200*k^2*L^3; B prime",
+    "h": "B^k",
+    "tau": "floor(B^(k-1)/2)",
+    "H": "2*h",
+    "q": "h^6 < q <= 2*h^6; q prime",
+    "N": "(h*q)^4",
+    "n_r": "floor(r^gamma*sqrt(N^3/tau))"
+  },
+  "rho": "26194367853443364408",
+  "beta": {
+    "numerator": "2182863987786947034",
+    "denominator": "1"
+  },
+  "gamma": {
+    "numerator": "26194367853443364408",
+    "denominator": "52388735706886728817"
+  },
+  "alpha": {
+    "numerator": "1372289814483014260855100183799449109744",
+    "denominator": "52388735706886728817"
+  },
+  "eta": {
+    "numerator": "1",
+    "denominator": "26194367853443364409"
+  },
+  "gain_from_central": {
+    "numerator": "34205497565997536328508421755136848953882173389",
+    "denominator": "26194367853443364409"
+  },
+  "constraints": {
+    "zero_case_h_powers": [
+      0,
+      -2,
+      -6
+    ],
+    "collision_r_power": {
+      "numerator": "-1",
+      "denominator": "52388735706886728817"
+    },
+    "pair_r_power": {
+      "numerator": "-16533612222686918460853620335413194888",
+      "denominator": "52388735706886728817"
+    }
+  },
+  "formal_scope": {
+    "proved": [
+      "permutation composition, exhaustive list, signs and normalization bijection",
+      "sign identity for 13 determinant factors",
+      "complete finite packing for T = 37*6^12, k = 47^10",
+      "inherited integer scale inequalities and exponent identity",
+      "10^27 < gain from central < 2*10^27"
+    ],
+    "written_not_formalized": [
+      "norm expansion as determinants over the extension field",
+      "polynomial interpolation and descent to the base field",
+      "slab cap geometry and short-relation exclusion",
+      "lattice, orbit and weighted counting estimates",
+      "probability, asymptotic deletion and interpolation"
+    ]
+  },
+  "parameter_choice": "explicit feasible witness; no optimality claim"
+}

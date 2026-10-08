@@ -8,9 +8,10 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 GENERATED = [
     "certificates/ternary.json", "certificates/sphere.json", "certificates/tuned.json",
-    "certificates/slab.json", "certificates/central.json",
+    "certificates/slab.json", "certificates/central.json", "certificates/norm.json",
     "patches/ternary-packing.patch", "patches/sphere-packing.patch",
     "patches/tuned-parameters.patch", "patches/slab-cap.patch", "patches/central-sphere.patch",
+    "patches/norm-compression.patch",
 ]
 
 
@@ -26,10 +27,10 @@ def main():
     saved = {name: (ROOT / name).read_bytes() for name in GENERATED}
     # Validate supplied certificates before allowing their generators to write.
     for script in ["verify.py", "verify_sphere.py", "verify_tuned.py", "verify_slab.py",
-                   "verify_central.py"]:
+                   "verify_central.py", "verify_norm.py"]:
         run(script)
     for script in ["build_certificate.py", "build_patch.py", "build_sphere.py", "build_tuned.py",
-                   "build_slab.py", "build_central.py"]:
+                   "build_slab.py", "build_central.py", "build_norm.py"]:
         run(script)
     changed = [name for name, before in saved.items() if (ROOT / name).read_bytes() != before]
     if changed:
@@ -37,7 +38,7 @@ def main():
                          "\n".join(changed))
     reports = ["artifacts/verification.json", "artifacts/sphere-verification.json",
                "artifacts/tuned-verification.json", "artifacts/slab-verification.json",
-               "artifacts/central-verification.json"]
+               "artifacts/central-verification.json", "artifacts/norm-verification.json"]
     for name in reports:
         report = json.loads((ROOT / name).read_text(encoding="utf-8"))
         if report["status"] != "pass":
@@ -53,7 +54,7 @@ def main():
     ]
     summary = {
         "status": "pass",
-        "checked_results": ["ternary", "sphere", "tuned", "slab", "central"],
+        "checked_results": ["ternary", "sphere", "tuned", "slab", "central", "norm"],
         "generated_files_unchanged": GENERATED,
         "environment": "local invocation; see individual reports for runtime versions",
         "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},
@@ -62,7 +63,7 @@ def main():
     }
     (ROOT / "artifacts/repository-verification.json").write_text(
         json.dumps(summary, indent=2) + "\n", encoding="utf-8", newline="\n")
-    print("PASS: all five results checked; all ten generated files reproduced exactly.")
+    print("PASS: all six results checked; all twelve generated files reproduced exactly.")
 
 
 if __name__ == "__main__":

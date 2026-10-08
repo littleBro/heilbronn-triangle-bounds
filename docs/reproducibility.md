@@ -17,7 +17,8 @@ Then run the same command on Windows, Linux or macOS:
 Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
 
-The command first verifies the supplied ternary, sphere, retuned, slab and central-layer certificates.
+The command first verifies the supplied ternary, sphere, retuned, slab,
+central-layer and norm-compression certificates.
 It checks all saved upstream hashes, compiles the local Lean proofs, audits their
 logical axioms, exercises finite and negative controls, and checks each patch
 against the pinned original manuscript without applying it.
@@ -28,6 +29,9 @@ A regeneration mismatch is a failure even when the resulting certificate would p
 The tuned check rebuilds Sphere.olean from its source before importing it.
 The slab check rebuilds both Sphere.olean and Tuned.olean before importing them.
 The central-layer check rebuilds Sphere.olean, Tuned.olean and Slab.olean.
+The norm-compression check rebuilds the same three dependencies before its
+permutation and packing proofs. Its field checks use small explicit quotients;
+the degree-13 norm expansion is not enumerated.
 All Lean checks are bounded subprocesses. Proof compilation does not enumerate
 the enormous sphere or produce planar point configurations.
 The scripts run sequentially and need no WSL, container or parallel search.
@@ -59,16 +63,17 @@ that a remote run passed.
 | Retuned scales at d = 13 | scripts/build_tuned.py | scripts/verify_tuned.py |
 | Slab cap at d = 13 | scripts/build_slab.py | scripts/verify_slab.py |
 | Central energy interval at d = 13 | scripts/build_central.py | scripts/verify_central.py |
+| Compressed norm at d = 13 | scripts/build_norm.py | scripts/verify_norm.py |
 
 After intentionally changing a generator, run it, inspect the changed certificate
 and patch, then run the complete verification command.
-The five source patches are alternatives against the same original manuscript.
+The six source patches are alternatives against the same original manuscript.
 
 ## Proof notes
 
 The current note is notes/sphere-packing.tex; the earlier ternary argument is
 notes/packing.tex. Neither is needed by the executable proof checks.
-The current sphere/slab/central-layer note compiled successfully in the desktop editor with
+The current note, including norm compression, compiled successfully in the desktop editor with
 Tectonic 0.17.0+20260731. Its source hash and bundle identity are recorded in
 [artifacts/sphere-latex-status.json](../artifacts/sphere-latex-status.json).
 The initial download failure was resolved by using the

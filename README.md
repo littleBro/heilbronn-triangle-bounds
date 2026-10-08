@@ -2,22 +2,22 @@
 
 A conditional research draft by **[Ivan Blinov (@littleBro)](https://github.com/littleBro)**, extending [OpenAI math family 191](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026), with OpenAI Codex assistance.
 
-The current version counts a central energy interval in the centered-sphere packing, with dimension d = 13 and an auxiliary cap restricted to a slab. It gives the **conditional paper exponent**
+The current version compresses the field-norm determinant decomposition before packing its summands. With dimension d = 13 and the retained slab scales, it gives the **conditional paper exponent**
 
 $$
 \Delta(n)\ge c\,n^{-2+\eta},\qquad
-\boxed{\eta=\frac{1}{498\cdot379^{17}+7}\approx2.92350666167202\cdot10^{-47}}.
+\boxed{\eta=\frac{1}{498\cdot47^{10}+7}\approx3.81761455590365\cdot10^{-20}}.
 $$
 
-The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. The second-moment bound, layer selection, complete finite packing and selected scale inequalities are proved in Lean. The slab cap has a written finite-field proof; that geometry and the full Heilbronn theorem are not formalized in Lean.
+The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. The new norm decomposition and interpolation descent have a written algebraic proof and finite controls. Lean checks the permutation normalization and signs, the complete new finite packing and selected scale inequalities. The field-algebra argument, slab geometry and full Heilbronn theorem are not completely formalized in Lean.
 
-[Proof and review guide](docs/review.md) · [Current certificate](certificates/central.json) · [Lean packing proof](lean/Central.lean) · [Reproduction guide](docs/reproducibility.md)
+[Proof and review guide](docs/review.md) · [Current certificate](certificates/norm.json) · [Lean packing proof](lean/NormCompression.lean) · [Reproduction guide](docs/reproducibility.md)
 
 Run all retained results with Python 3.11+, Git and the pinned Lean 4.11.0 toolchain:
 
     python scripts/verify_all.py
 
-On systems with Make, make verify runs the same checks. The command also requires all ten certificates and patches to regenerate byte for byte.
+On systems with Make, make verify runs the same checks. The command also requires all twelve certificates and patches to regenerate byte for byte.
 
 | Packing | k | Conditional paper exponent |
 | --- | --- | --- |
@@ -27,12 +27,34 @@ On systems with Make, make verify runs the same checks. The command also require
 | Retuned scales, d = 13 | 403^17 | ≈ 4.77320332233169e-48 |
 | Slab cap, d = 13 | 403^17 | ≈ 1.02940168035828e-47 |
 | Central energy interval, d = 13 | 379^17 | ≈ 2.92350666167202e-47 |
+| Compressed norm, d = 13 | 47^10 | ≈ 3.81761455590365e-20 |
 
-The current exponent is approximately 2.84000572124043 times the previous slab exponent. That checkpoint was approximately 2.15662650602410 times the retuned exponent. These are comparisons of exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
+The current exponent is approximately 1.30583405399879e27 times the previous central-layer exponent. That checkpoint was approximately 2.84000572124043 times the slab exponent. These are comparisons of exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
 
-The current construction selects words of length 17 over 190 digits with the same centered squared norm, then encodes them in base 379. Lean proves that a central interval of 20,001 energies contains at least 20,001 T words, where T = binom(binom(51,13),3). It then selects T distinct words from one layer. The actual sphere is not enumerated.
+The new term bound is T = 37 * 6^12 = 80,540,946,432, replacing binom(binom(51,13),3) ≈ 1.8e34. For this smaller T, the full-range sphere bound suffices: words of length 10 over 24 digits, encoded in base 47, have at most 661 energies and 24^10 >= 661 T. Lean selects the needed distinct words from one layer and proves the packing. The enormous sphere is not enumerated.
 
-## Current result: a second-moment count
+## Current result: compress the norm expansion
+
+The norm polynomial is a product of d conjugate 3-by-3 determinants. In its permutation expansion, normalize the first permutation to the identity. Because d = 13 is odd, each group of six terms is a determinant, leaving 6^12 determinants over the extension field.
+
+To express them over the base field, represent coefficients in a power basis of degree 13. Each resulting determinant is a polynomial of degree at most 36 in the basis variable. Interpolation at 37 distinct base-field nodes, followed by a linear projection fixing the base field, expresses it as at most 37 base-field determinants. This projects the whole determinant, rather than assuming that entrywise projection preserves it. It requires only primes r >= 37.
+
+The result is the same exact norm identity with T = 37 * 6^12 homogeneous polynomials per row. The distinct-label obstruction and the conditional digit estimate retain their original interfaces; the latter already permits arbitrary functions of the labels. With the existing slab scales, eta remains 1/(498k + 7), now at k = 47^10.
+
+- [Written algebraic proof and downstream interface review](notes/sphere-packing.tex)
+- [Lean permutation bookkeeping and complete finite packing](lean/NormCompression.lean)
+- [Exact certificate](certificates/norm.json)
+- [Alternative patch for original manuscript Sections 3–8](patches/norm-compression.patch)
+- [Verification report](artifacts/norm-verification.json)
+
+Regenerate and verify:
+
+    python scripts/build_norm.py
+    python scripts/verify_norm.py
+
+The checker tests the full decomposition on four matrices each over F_(11^3) and F_(17^5), including distinct Vandermonde labels. It checks descent on all 37 basis monomials and four matrices over F_(41^13), without enumerating the degree-13 norm expansion. Negative controls detect omitted signs, entrywise projection, insufficient nodes, corrupted weights and the even-degree sign error. The general field-algebra proof is written; these finite controls do not replace it. No novelty or optimality claim is made.
+
+## Preserved second-moment count
 
 For each digit t, put j(t) = ((2t − 189)² − 1)/8. Its mean is 1504, so the energy index J of a word has mean 25,568. The sum of squared centered digit scores is 343,855,008. Over all 190^17 words, the second moment is
 
@@ -114,11 +136,11 @@ Regenerate and verify the sphere-only baseline:
 
 **The complete finite sphere packing is now proved in Lean.** This includes the energy-layer bound, a finite pigeonhole theorem, selection of T distinct words from one layer, encoding, bounds, injectivity, and matching. The final theorem also checks T using the falling-factorial quotient definition of binomial coefficients. No sufficiently large sphere is assumed as a precondition, and the enormous set is never enumerated during proof checking.
 
-The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The current theorem is central_packing_binomial in Central.lean. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
+The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The central-layer checkpoint is central_packing_binomial in Central.lean. The current theorem is norm_packing in NormCompression.lean, with the new term-count formula. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
 
 The sphere idea is classical Behrend; stronger progression-free-set constructions are known ([Elsholtz, Hunter, Proske, Sauermann](https://arxiv.org/abs/2406.12290)). We claim neither a new sphere method nor unrestricted optimality. The certificate records a bounded comparison of dimensions 3–284 under its sufficient-capacity criterion.
 
-All five source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
+All six source patches apply directly to the original manuscript and are alternatives; do not apply them cumulatively.
 
 ## Preserved ternary baseline
 
@@ -158,9 +180,9 @@ To regenerate the deterministic certificate and patch:
 
 The verifier preserves upstream files, compiles only the local proof, rejects changed source hashes, and checks patch applicability. Its finite tests cover 21 packing sizes, 12 coefficient/carry examples, and six negative controls. Finite coverage is separate from the universal Lean theorem.
 
-The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the current sphere proof additionally checks its binomial formula inside Lean. See the respective proof notes for their scopes.
+The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the earlier sphere proofs check their binomial counts inside Lean. The current packing uses the new formula T = 37 * 6^12. See the respective proof notes for their scopes.
 
-The proof notes are supplied as TeX. The current sphere/slab/central-layer note compiled successfully with the built-in Tectonic 0.17.0+20260731 after installing its support bundle from the [official v33 mirror](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map). The source hash and bundle identity are recorded in [the compilation report](artifacts/sphere-latex-status.json). Generated note PDFs are not included. The separate artifacts/latex-status.json retains the earlier ternary-note attempt. Note compilation is separate from the Lean and Python checks.
+The proof notes are supplied as TeX. The current note, including norm compression, compiled successfully with the built-in Tectonic 0.17.0+20260731 after installing its support bundle from the [official v33 mirror](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map). The source hash and bundle identity are recorded in [the compilation report](artifacts/sphere-latex-status.json). Generated note PDFs are not included. The separate artifacts/latex-status.json retains the earlier ternary-note attempt. Note compilation is separate from the Lean and Python checks.
 
 The [GitHub Actions workflow](.github/workflows/verify.yml) runs the same checks on Ubuntu and saves verification reports. See [Actions](https://github.com/littleBro/heilbronn-triangle-bounds/actions/workflows/verify.yml) for the result on a particular commit. Local reports and remote runs record their own environments.
 
