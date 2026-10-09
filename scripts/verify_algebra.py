@@ -1,5 +1,6 @@
 """Rebuild every local algebra proof and audit the exported theorems."""
 from hashlib import sha256
+from functools import cache
 from pathlib import Path
 import json
 import os
@@ -24,9 +25,15 @@ THEOREMS = {
     "FrobeniusDescent": ["projected_determinant", "norm_class_sum", "trace_term_card",
                          "trace_norm_decomposition", "finite_field_trace_norm"],
     "FrobeniusPolynomials": ["finite_field_trace_polynomials", "prime_field_trace_labels"],
+    "RankFiveExpansion": ["rank_five", "antisymmetrized_product"],
+    "RankFiveOrbits": ["fixed_pattern", "orbit_size", "class_card", "invariant_sum"],
+    "RankFiveNorm": ["patternTerm_rotate", "norm_pattern_sum", "norm_class_sum", "trace_term_card",
+                     "trace_norm_decomposition", "finite_field_trace_norm"],
+    "RankFivePolynomials": ["finite_field_trace_polynomials", "prime_field_trace_labels"],
 }
 
 
+@cache
 def verify_algebra():
     check_dependencies()
     env = {**os.environ, "LEAN_NUM_THREADS": "1"}
@@ -49,7 +56,8 @@ def verify_algebra():
         require(result.returncode == 0 and "error:" not in output and "sorryAx" not in output,
                 "Lean failure: " + module + "\n" + output)
         for name in names:
-            namespace = "HeilbronnFrobenius" if module.startswith("Frobenius") else "HeilbronnNorm"
+            namespace = ("HeilbronnRankFive" if module.startswith("RankFive") else
+                         "HeilbronnFrobenius" if module.startswith("Frobenius") else "HeilbronnNorm")
             matches = re.findall("'" + namespace + r"\." + name +
                                  r"' depends on axioms: \[([^]]*)\]", output)
             require(len(matches) == 1, "missing or duplicate audit: " + name)
@@ -72,7 +80,8 @@ def verify_algebra():
         "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial "
                  "coordinates and nonzero residue exactly for distinct labels; "
                  "37-node and 25-node descents, plus Galois-orbit compression "
-                 "to 4186119900 base-field determinants for every prime >= 37.",
+                 "and the five-term tensor formula, giving 2347506125 base-field "
+                 "determinants for every prime >= 37.",
         "not_established": ["slab cap geometry", "lattice and probability estimates",
                             "full Heilbronn theorem"],
         "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},

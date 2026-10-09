@@ -42,9 +42,13 @@
     "FrobeniusOrbits",
     "FrobeniusNorm",
     "FrobeniusDescent",
-    "FrobeniusPolynomials"
+    "FrobeniusPolynomials",
+    "RankFiveExpansion",
+    "RankFiveOrbits",
+    "RankFiveNorm",
+    "RankFivePolynomials"
   ],
-  "audited_theorems": 31,
+  "audited_theorems": 45,
   "lean_axiom_audit": [
     "'HeilbronnNorm.determinant_product_compression' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnNorm.orbit_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
@@ -76,14 +80,33 @@
     "'HeilbronnFrobenius.trace_norm_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnFrobenius.finite_field_trace_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnFrobenius.finite_field_trace_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]",
-    "'HeilbronnFrobenius.prime_field_trace_labels' depends on axioms: [propext, Classical.choice, Quot.sound]"
+    "'HeilbronnFrobenius.prime_field_trace_labels' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.rank_five' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.antisymmetrized_product' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "lean/RankFiveOrbits.lean:92:0: warning: automatically included section variable(s) unused in theorem 'HeilbronnRankFive.constantClasses_card':",
+    "  [Fintype G]",
+    "consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:",
+    "  omit [Fintype G] in theorem ...",
+    "note: this linter can be disabled with `set_option linter.unusedSectionVars false`",
+    "'HeilbronnRankFive.fixed_pattern' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnRankFive.orbit_size' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.class_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.invariant_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.patternTerm_rotate' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.norm_pattern_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.norm_class_sum' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.trace_term_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.trace_norm_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.finite_field_trace_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.finite_field_trace_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnRankFive.prime_field_trace_labels' depends on axioms: [propext, Classical.choice, Quot.sound]"
   ],
   "compilation_limits": {
     "threads": 1,
     "memory_mb_per_process": 2048,
     "timeout_seconds_per_module": 120
   },
-  "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial coordinates and nonzero residue exactly for distinct labels; 37-node and 25-node descents, plus Galois-orbit compression to 4186119900 base-field determinants for every prime >= 37.",
+  "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial coordinates and nonzero residue exactly for distinct labels; 37-node and 25-node descents, plus Galois-orbit compression and the five-term tensor formula, giving 2347506125 base-field determinants for every prime >= 37.",
   "not_established": [
     "slab cap geometry",
     "lattice and probability estimates",
@@ -101,10 +124,14 @@
     "lean/FrobeniusNorm.lean": "c42631a2519fe11fb58e457fd1c4af8573d0275dd406c61e0ffe17cbd81bb77e",
     "lean/FrobeniusDescent.lean": "5be75b6ebb62890dbff596e967dd5887fef0d023326a3472d1b6e3a6fcaf5557",
     "lean/FrobeniusPolynomials.lean": "0b2f9f7b5c424d92f36cb7c32519b18018c1d853222dcb16a05b9c2af376fb8f",
-    "lakefile.lean": "6f59a22f2e8334bbbb914abf118dfd2b863ed8b880158ab8eb05ddf8730b2a91",
+    "lean/RankFiveExpansion.lean": "8fe8ca04654874c5d975053730f0c33695c855cbd6e0de5c3ddb0eff948207ca",
+    "lean/RankFiveOrbits.lean": "9aef7899c7323a22df85bfef4db9691026680709c680f10d7147b180ea34d2a1",
+    "lean/RankFiveNorm.lean": "04e23a6825b7b3792ebede9ccd22d687ad1d59e7a6c916a7b1fd714273751292",
+    "lean/RankFivePolynomials.lean": "b1a954ae436f68fd4c13a51e94a910b4e04726e5fc432d387c5f090a0676eeaf",
+    "lakefile.lean": "11b5f84dbf5b4ae75f08eccab4a4625d467476a07d6b064aa6f18ce539e4042f",
     "lake-manifest.json": "8bd77b3cd6efc5ceb88b72ee2f691cdbff5d768d88817b480b3c0cf547a9d3ad",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
     "scripts/prepare_mathlib.py": "7933e53832bffaec8175e990838e0108f8110db074b3e928d8e69c4c71d1547f",
-    "scripts/verify_algebra.py": "a1f0fc8337906fd57c4dd9bc9a222934bffa438b67c51581c3794d23e45c0641"
+    "scripts/verify_algebra.py": "6064126edd844476b83c9cffbbc64128f6b66b8b2b84996814230dcb0219ecd2"
   }
 }

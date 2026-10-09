@@ -3,85 +3,64 @@
 The current target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 27^10 + 7) ≈ 9.75288303136317e-18.
+    eta = 1 / (498 * 39 * 35^8 + 7) = 1 / 43735923836718757.
 
 This is a conditional refinement of the pinned OpenAI family 191 argument.
-Read the Galois-orbit and invariant-projection section of [the note](../notes/sphere-packing.tex)
-and its retained slab transfer, together with the
-[six-section source patch](../patches/frobenius-orbits.patch).
-The original manuscript and comparator are retained in upstream/ at commit
-fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+Read the five-term determinant and mixed-radix section of [the note](../notes/sphere-packing.tex)
+and the [six-section source patch](../patches/rank-five.patch).
+All original manuscript files remain pinned at fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
 ## Evidence for each claim
 
 | Claim | Evidence | Boundary |
 | --- | --- | --- |
-| Galois action and 167,444,796 classes | FrobeniusOrbits.fixed_pattern, orbit_size and class_card | Exactly one fixed pattern; all other orbits have size 13 |
-| Signed equivariance and invariant projection | FrobeniusNorm.patternTerm_rotate and averagedCoord_invariant | Row-permutation signs cancel; the average fixes the base field when 13 is invertible |
-| Norm decomposition with T = 4,186,119,900 | FrobeniusDescent.finite_field_trace_norm | Degree-13 finite extension, at least 25 base-field elements, characteristic different from 13; uses Mathlib's field norm |
-| Bilinear descent using 25 nodes | FrobeniusDescent.projected_determinant | Arbitrary linear functional L; applies L(c_t z) in the third row |
-| Homogeneous degree-13 base-field polynomials | FrobeniusPolynomials.finite_field_trace_polynomials | Fully proved homogeneity and exact norm identity for all coordinate triples; supplies basis and nodes |
-| Exact number of words at energy index 80 | FrobeniusPacking.exact_layer_count | Uses the existing kernel-checked recurrence table; 5,058,395,136 words |
-| Positions, row injections and exact matching | FrobeniusPacking.trace_packing | Fully proved for T = 4,186,119,900 and k = 27^10, including selection of distinct equal-energy words |
-| Count and gain | FrobeniusDescent.trace_term_card and FrobeniusPacking.trace_gain | Exact term count and 26.99 < gain over the bilinear checkpoint < 27 |
-| Digit and auxiliary scale inequalities | Tuned.lean, Slab.lean, certificates/frobenius.json | Integer inequalities uniform in k; probability and lattice arguments are separate |
-| Slab cap size and short-relation exclusion | New written lemma and proof in the note and patched Section 5 | Finite-field geometry is not in Lean; small cases are independently checked |
-| Nonzero norm for distinct labels at d = 13 | FrobeniusPolynomials.prime_field_trace_labels | Fully proved for every prime r >= 37; nonzero if and only if the three labels are distinct |
-| Lattice, orbit and weighted counts | Pinned Sections 2 and 4–7, with the slab lemma and changed scale checks | Relied upon; no complete independent theorem audit |
-| Deletion and all sufficiently large cardinalities | Written note and patched Section 8 | The asymptotic and geometric proof is not in Lean |
-| Current sphere parameters | Explicit A = 7, m = 10, energy index 80 | Feasible witness only; no parameter optimality claim |
-| Fresh reproduction | artifacts/repository-verification.json and its linked reports | Evidence is specific to the recorded sources and environment |
+| Integral five-term formula | RankFiveExpansion.rank_five | Known Krishna--Makam identity; proved over any commutative ring |
+| Antisymmetrized product is six times the norm | RankFiveExpansion.antisymmetrized_product and RankFiveNorm.norm_pattern_sum | Odd degree 13 is essential; the factor six is retained |
+| Five fixed words and 93,900,245 orbits | RankFiveOrbits.fixed_pattern, orbit_size, class_card | Plain rotation of five-letter words indexed by a group of order 13 |
+| T = 2,347,506,125 norm determinants | RankFiveNorm.finite_field_trace_norm | Degree 13, at least 25 base-field elements, characteristics 2, 3 and 13 excluded |
+| Homogeneous coordinates and distinct-label criterion | RankFivePolynomials.finite_field_trace_polynomials and prime_field_trace_labels | Proved for every prime r >= 37, using the actual Mathlib field norm |
+| Exact energy-119 coefficient 2,365,025,280 | MixedLayer.exact_layer_count | Nine kernel-checked histogram transitions tied to symbolic counting |
+| Mixed-radix rigidity and bounds | MixedSphere.sphere_matching and position_bounds | Radix 4A-1 separately in each coordinate |
+| Selection, injections and matching | RankFivePacking.trace_packing | T specified above, k = 39 * 35^8; layer capacity is proved |
+| Gain greater than 2.34 | RankFivePacking.trace_gain | Exact integer comparison against the preceding Frobenius checkpoint |
+| Scale inequalities | Tuned.lean, Slab.lean, certificates/rankfive.json | Uniform integer bounds; lattice and probability arguments remain separate |
+| Slab geometry and weighted counts | Written note, pinned manuscript Sections 2 and 4--7 | Not formalized in Lean; no complete independent audit of all upstream estimates |
+| Deletion and all sufficiently large n | Written transfer and patched Section 8 | Conditional geometric consequence; no practical threshold |
+| Reproduction | artifacts/repository-verification.json and linked reports | Specific to the recorded sources and environment |
 
-Lean declarations use the namespaces HeilbronnSphere, HeilbronnTuned,
-HeilbronnSlab, HeilbronnCentral, HeilbronnNormCompression, HeilbronnExactLayer,
-HeilbronnNorm, HeilbronnFrobenius and HeilbronnFrobeniusPacking. The algebra
-audit covers eleven Mathlib-based modules and 31 exported theorems.
-Only the standard logical axioms propext, Classical.choice and Quot.sound are
-permitted in these local proofs. Pure numerical comparisons use no axioms.
-
-The algebra theorem assumes fields, a degree-13 finite extension, and at least
-25 base-field elements, and characteristic different from 13. It does not assume a compressed norm identity or a
-descent theorem. Its final prime-field specialization constructs the extension
-as GaloisField r 13. The polynomial theorem proves homogeneity and a universally
-quantified evaluation identity; the functional theorem applies to arbitrary
-one-label functions, the interface permitted by upstream Section 4.
+New declarations use HeilbronnRankFive, HeilbronnMixedSphere,
+HeilbronnMixedLayer and HeilbronnRankFivePacking. The shared algebra audit
+covers fifteen Mathlib-based modules and 45 exported theorems. Only propext,
+Classical.choice and Quot.sound are permitted; no mathematical assumptions
+are introduced to stand in for the claimed norm or packing identities.
 
 ## The steps most useful to review
 
-The new algebraic step deserves review before the retained scale argument:
+- Check the five explicit products against the determinant. The formula is
+  from [Krishna and Makam, Section 3.1](https://arxiv.org/abs/1801.00496).
+- Expand the thirteen conjugates, then antisymmetrize columns. Odd degree
+  makes each signed permuted norm equal to the original norm, giving six
+  copies. Division by six is required and is covered by a negative control.
+- Rotate w by (a.w)(g) = w(a^-1 g). The determinant value transforms by a.
+  Exactly five words are constant; every other orbit has size thirteen.
+- Use the invariant projection L(z) = sum_a ell(a(z))/13 and weight each
+  representative by its orbit size divided by six. The general field theorem
+  explicitly assumes 6 and 13 nonzero. Cardinality alone would not imply this.
+- Reuse 25-node interpolation of the first two power-basis representatives,
+  followed by L(c_t z) in the third row. All five singleton classes also use
+  25 nodes. Coefficientwise linear maps retain degree-thirteen homogeneity.
+- Count the coefficient of z^119 in
+  (2 sum_{j=0}^9 z^(j(j+1)/2)) * (2 sum_{j=0}^8 z^(j(j+1)/2))^8.
+  Truncation above 119 is valid because every digit energy is nonnegative.
+  The independent multinomial calculation gives the same integer.
+- With half-alphabets [10,9,9,9,9,9,9,9,9], use radices [39,35,35,35,35,35,35,35,35].
+  Each digit sum stays below its own radix. Equal norms then force equality
+  of all three words. Selection and injectivity are proved, not assumed.
 
-- In the product expansion, normalize pi_v = rho_v tau with rho_0 = id.
-  Odd d makes the common sign (sgn tau)^d equal to sgn tau, leaving
-  6^(d-1) determinants over K. No division by 6 is used.
-- On normalized patterns, use (a.w)(g) = w(a^-1 g) w(a^-1)^-1. Check the
-  row-permutation sign against the product of the 13 permutation signs.
-  Together they give C_(a.w) = a(C_w).
-- Orbit-stabilizer gives sizes 1 or 13. A fixed pattern is an antihomomorphism
-  to S_3, and its values have both sixth and thirteenth power equal to one.
-  Thus only the constant identity pattern is fixed. The same conclusion
-  would be false in degree 3.
-- Replace ell by its invariant average L(z) = sum_a ell(a(z))/13. A cardinality
-  bound on a general base field does not suffice: explicitly exclude characteristic 13.
-  Group the invariant sum with the orbit sizes as weights.
-- The product of two power-basis representatives has degree at most 2d-2.
-  Interpolate it at 2d-1 nodes and evaluate the identity at the basis generator.
-  Multiplying by the third factor and applying a linear projection gives
-  L(xyz) = sum_t eval_t(x) eval_t(y) L(c_t z).
-- Apply the same three row maps to all six signed determinant terms. The third
-  row must use L(c_t z); using the old third-row evaluation map with only
-  25 nodes is incorrect and is rejected by explicit negative controls.
-- Coefficientwise linear maps preserve degree-d homogeneity. The exact norm
-  and the distinct-label obstruction are unchanged. Section 4's conditional
-  digit lemma explicitly allows arbitrary label functions.
-- For the sphere layer, count the coefficient of z^80 in
-  [2(1+z+z^3+z^6+z^10+z^15+z^21)]^10. The Lean table is linked to the actual
-  symbolic word list by induction, with no assumed layer capacity. Truncating
-  counts above 86 is valid because digit energies are nonnegative.
+The mixed sphere has squared norm 961 and enough words for T. Its parameters
+are an explicit feasible witness, without a global optimality claim.
 
-The count exceeds 25 * (6^12 + 12)/13. All classes, including the singleton,
-receive 25 nodes. The formal proof then selects distinct words
-and reuses sphere rigidity and carry-free encoding. The independent checker
-also computes the count by a multinomial sum. The slab transfer is unchanged:
+The retained slab transfer is unchanged:
 
 1. The conditional digit moment only needs theta <= 1/2. With
    L = 400 k^2 r^4, B is of order r^12 with fixed k-dependent constants.

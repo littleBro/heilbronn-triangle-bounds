@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "5a482f9bd863f2d2740bdfc03d20840a0b0a546b869ae6438595f1cade732b07",
+  "source_sha256": "faeef4533d980bb3cd0dd224804a7979fec03e74a958b08ff19b8c4545921fd0",
   "attempt_date": "2026-10-08",
-  "attempt_scope": "Existing note including Galois-orbit compression, invariant projection, exact ten-digit layer, and complete Lean algebra and packing proofs",
+  "attempt_scope": "Existing note including the five-term determinant formula, antisymmetrization, Galois averaging and mixed-radix sphere, with complete Lean algebra and finite packing proofs",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

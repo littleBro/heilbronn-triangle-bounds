@@ -14,17 +14,17 @@
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-At dimension \(d=13\), grouping signed determinants into Galois orbits
-before bilinear interpolation reduces the number of norm summands to
-\(T=25(6^{12}+12)/13\). An exact sphere-layer count and the retained slab
-scales give the conditional paper exponent
+At dimension \(d=13\), the classical five-term determinant formula,
+Galois-orbit averaging and bilinear interpolation reduce the number of
+norm summands to \(T=25(5^{13}+60)/13\). An exactly counted mixed-radix
+sphere and the retained slab scales give the conditional paper exponent
 \[
- k=27^{10},\qquad
- \eta_{\rm Frobenius}=\frac{1}{498\cdot27^{10}+7}
-       \approx9.75288303136317\cdot10^{-18}.
+ k=39\cdot35^8,\qquad
+ \eta_{\rm rank\,5}=\frac{1}{498\cdot39\cdot35^8+7}
+       \approx2.28644993011544\cdot10^{-17}.
 \]
-This is strictly between 26.99 and 27 times the preceding bilinear-layer
-exponent. The earlier constructions are retained below.
+This is about 2.344 times the preceding Galois-orbit exponent.
+The earlier constructions are retained below.
 Lean proves the group action, exact orbit count, norm decomposition, bilinear descent,
 homogeneous degree-13 coordinates and the distinct-label criterion.
 It also proves the exact layer count, complete finite packing and
@@ -60,6 +60,8 @@ Section~\ref{sec:bilinear} reduces the interpolation count further and
 uses an exact sphere layer.
 Section~\ref{sec:frobenius} groups those terms by Galois symmetry and
 reduces the required word length from eleven to ten.
+Section~\ref{sec:rankfive} uses the known five-term determinant formula
+\cite{krishna-makam} and a mixed-radix sphere to improve it again.
 This is an application of the classical sphere idea of Behrend
 \cite{behrend}, not a new progression-free-set construction.
 Stronger variants are known \cite{ehps}; neither optimality nor
@@ -978,13 +980,129 @@ No unrestricted packing optimum or practical finite-size gain is claimed.
 The new algebra and packing are formalized; the slab geometry and full
 asymptotic geometric theorem remain conditional on the written transfer.
 
+\section{Five-term determinant and mixed-radix sphere}\label{sec:rankfive}
+The determinant formula used here is due to Krishna--Makam
+\cite{krishna-makam}; no novelty for that formula is claimed.
+We apply it to the degree-thirteen norm and retain every scale and
+geometric assumption of Section~\ref{sec:slab}.
+
+\begin{lemma}\label{rankfive:decomposition}
+For $d=13$ there exist homogeneous degree-$d$ polynomials
+$f_{ia}\in\mathbb F_r[X]$ (allowing zero), for $1\le i\le3$ and
+$0\le a<T=25(5^{13}+60)/13=2\,347\,506\,125$, such that
+\begin{equation}\label{rankfive:determinant-sum}
+ \mathcal N(X^{(1)},X^{(2)},X^{(3)})
+ =\sum_{a=0}^{T-1}\det\bigl(f_{ia}(X^{(j)})\bigr)_{1\le i,j\le3}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Use the integral five-term determinant formula of Krishna--Makam,
+\emph{On the tensor rank of $3\times3$ permanent and determinant},
+arXiv:1801.00496, Section 3.1. Write its three linear forms as rows:
+\[
+\begin{array}{c|ccc}
+t&l_{t1}(Z)&l_{t2}(Z)&l_{t3}(Z)\\\hline
+0&Z_2+Z_3&Z_1&Z_2\\
+1&-Z_1-Z_3&Z_2&Z_1\\
+2&-Z_2&Z_1+Z_3&Z_2+Z_3\\
+3&Z_2-Z_1&Z_3&Z_1+Z_2+Z_3\\
+4&Z_1&Z_2+Z_3&Z_1+Z_3
+\end{array}
+\]
+Then $\det(Z^{(1)},Z^{(2)},Z^{(3)})
+=\sum_{t=0}^4\prod_{i=1}^3 l_{ti}(Z^{(i)})$.
+Let $G=\operatorname{Gal}(K/\mathbb F_r)$ and $W=\{0,\ldots,4\}^G$.
+Put $H_{i,w}(X)=\prod_{g\in G}g(l_{w(g),i}(Z(X)))$.
+Expand the product of the thirteen conjugate determinants with the
+five-term formula, and antisymmetrize the three columns. Since $13$
+is odd, the norm changes by the sign of the column permutation.
+Consequently the exact identity is
+\[
+ 6\mathcal N=\sum_{w\in W}D_w,\qquad
+ D_w=\det(H_{i,w}(X^{(j)}))_{i,j=1}^3.
+\]
+The factor $6$ is essential. All divisions below are valid for prime
+$r\ge37$. Rotate words by $(a\cdot w)(g)=w(a^{-1}g)$.
+Reindexing the product gives $D_{a\cdot w}=a(D_w)$.
+A fixed word is constant. Thus exactly five words are fixed, and
+every other orbit has size $13$, giving
+\[
+ Q=5+\frac{5^{13}-5}{13}=93\,900\,245.
+\]
+For the constant-coordinate functional $\ell$ of a power basis,
+$L(z)=13^{-1}\sum_{a\in G}\ell(a(z))$ fixes the base field and is
+$G$-invariant. With representatives $w_q$ and orbit sizes $n_q$,
+\[
+ \mathcal N=\sum_q \frac{n_q}{6}L(D_{w_q}).
+\]
+Let $\widehat x(Y)$ be the degree-less-than-$13$ representative of
+$x\in K=\mathbb F_r[\vartheta]$. Interpolation at the $25$ distinct
+nodes $t=0,\ldots,24$, with $c_t=L_t(\vartheta)$, gives
+$xy=\sum_t\widehat x(t)\widehat y(t)c_t$.
+Hence $L(xyz)=\sum_t\widehat x(t)\widehat y(t)L(c_tz)$.
+Apply this to the six products in each determinant. For each $(q,t)$,
+the coordinate rows are
+\[
+ \frac{n_q}{6}\widehat H_{1,w_q}(t,X),\qquad
+ \widehat H_{2,w_q}(t,X),\qquad L(c_tH_{3,w_q}(X)).
+\]
+Every coordinate is homogeneous of degree $13$. All $Q$ classes,
+including the five singletons, receive $25$ nodes, proving the claim.
+\end{proof}
+
+Use a sphere with nine coordinates: one has alphabet
+$\{0,\ldots,19\}$ and radix $39$, and eight have alphabet
+$\{0,\ldots,17\}$ and radix $35$. For half-alphabets
+$(A_0,\ldots,A_8)=(10,9,\ldots,9)$, set
+\[
+ b_j=4A_j-1,\quad u(x)=\sum_{j=0}^8 x_j\prod_{h<j}b_h,
+ \quad k=\prod_j b_j=39\cdot35^8=87\,823\,140\,234\,375.
+\]
+Center the coordinates as $y_j=2x_j-(2A_j-1)$ and let
+$J(x)=\sum_j (y_j^2-1)/8$. The exact coefficient is
+\[
+ [z^{119}]\left(2\sum_{a=0}^9z^{a(a+1)/2}\right)
+ \left(2\sum_{a=0}^8z^{a(a+1)/2}\right)^8
+ =2\,365\,025\,280>T.
+\]
+This is checked by the recurrence $C_{A::S}(e)=
+2\sum_{a=0}^{A-1}C_S(e-a(a+1)/2)$, with negative indices zero
+and $C_{[]}(e)=\mathbf1_{e=0}$. Nine transitions of a table with
+$0\le e\le119$ are checked by the Lean kernel. Select any $T$ distinct
+words in the layer $J=119$, whose common squared norm is $9+8\cdot119=961$.
+For each selected word put $v(x)=k-1-2u(x)$. Then
+$0\le u(x),v(x)<k$, both maps are injective, and
+\[
+ u(x)+u(y)+v(z)=k-1\quad\Longleftrightarrow\quad x=y=z.
+\]
+Indeed, the left side gives $u(x)+u(y)=2u(z)$. Reduction modulo the
+first radix, then division and induction, gives coordinatewise
+$x_j+y_j=2z_j$, since both digit sums are less than $b_j$.
+Equal squared norms imply $x=y=z$ by strict convexity. The bound
+$2u(x)+1\le k$ and injectivity follow by the same radix induction.
+All these finite packing claims, including selection from the exact
+layer count, are proved in Lean. Enumerate the selected words by
+$0\le a<T$ and write their two positions as $u_a,v_a$.
+
+The full finite packing, polynomial norm decomposition and distinct-label
+criterion for every prime \(r\ge37\) are proved in Lean. In the general
+finite-field theorem the characteristic must differ from \(2,3,13\):
+base-field cardinality alone does not justify division by six or thirteen.
+Substitution into the unchanged slab transfer gives
+\[
+ \eta_{\rm rank\,5}=\frac{1}{43\,735\,923\,836\,718\,757},\qquad
+ 2.34<\frac{\eta_{\rm rank\,5}}{\eta_{\rm Frobenius}}<2.35.
+\]
+These are comparisons of asymptotic exponents. No practical threshold,
+point configuration or global optimality is claimed.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the current result, run \texttt{python scripts/build\_frobenius.py},
-then \texttt{python scripts/verify\_frobenius.py}. The ternary,
+For the current result, run \texttt{python scripts/build\_rankfive.py},
+then \texttt{python scripts/verify\_rankfive.py}. The ternary,
 sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
-and Frobenius-orbit patches are eight alternatives applied
+Frobenius-orbit and rank-five patches are nine alternatives applied
 directly to the unchanged manuscript, not successive patches.
 The retuned, slab, central, norm, bilinear and Frobenius patches update Sections 3--8, including the full deletion
 and interpolation argument.
@@ -1105,7 +1223,7 @@ Section~4. Mathlib is pinned to commit
 \texttt{20c73142afa995ac9c8fb80a9bb585a55ca38308};
 the dependency lock contains all seven exact revisions.
 \texttt{scripts/verify\_algebra.py} rebuilds these five modules, the
-two bilinear modules and four Frobenius modules below, auditing 31
+two bilinear modules, four Frobenius modules and four rank-five modules, auditing 45
 exported theorems in total. Their only logical
 axioms are \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}. Each compilation is limited to one thread,
@@ -1181,6 +1299,36 @@ to \(399\) while still asserting \(\theta\le1/2\).
 These controls show failures of the chosen bounds, not impossibility
 of those parameters under a different argument.
 
+
+\texttt{RankFiveExpansion.lean} proves the integral five-term identity
+and its thirteen-factor antisymmetrization. \texttt{RankFiveOrbits.lean}
+proves the plain rotation action, five fixed patterns and exact class count.
+\texttt{RankFiveNorm.lean} combines the actual field norm with orbit weights
+and the required factor \(1/6\). \texttt{RankFivePolynomials.lean} proves
+homogeneity and the distinct-label specialization. The shared algebra
+rebuild is run once within the complete verification process; standalone
+checks still perform a fresh rebuild.
+
+\texttt{MixedSphere.lean} proves sphere rigidity and mixed-radix matching
+for a list of half-alphabets. \texttt{MixedLayerCounting.lean} connects
+symbolic word enumeration to the counting recurrence. The nine checked
+transitions of the 120-entry histogram are divided into three modules to
+keep each compilation within the stated limits. \texttt{MixedLayer.lean}
+identifies the exact coefficient, and \texttt{RankFivePacking.lean}
+proves word selection, the complete packing and the lower gain bound.
+No table entry or capacity premise is assumed.
+
+Independent checks enumerate all five-letter patterns in degrees three
+and five, sample degree thirteen, and test the integral determinant
+formula in characteristics two, three, five and forty-one. Negative
+controls reject a missing factor \(1/6\), missing orbit weights and a
+non-invariant projection. A full histogram and a separate multinomial
+calculation agree on the packing count. Exhaustive small mixed spheres
+pass matching checks. In contrast, the equal-norm words
+\((0,6),(13,6),(0,7)\) in the fourteen-digit alphabet encode in radix
+26 as \(156,169,182\), a nonconstant arithmetic progression: simply
+allowing carries is invalid. Eight corrupted certificates are rejected.
+
 The complete geometric theorem, practical point generation, novelty,
 priority, and unrestricted optimality remain outside the established
 scope. The unchanged upstream Lean comparator uses exponent
@@ -1202,5 +1350,8 @@ progressions in integers and over finite fields}, 2024.
 \emph{Bilinear complexity of algebras and the Chudnovsky--Chudnovsky
 interpolation method}, 2012.
 \url{https://arxiv.org/abs/1107.0336}.
+\bibitem{krishna-makam} S. Krishna and V. Makam,
+\emph{On the tensor rank of $3\times3$ permanent and determinant}, 2018,
+Section 3.1. \url{https://arxiv.org/abs/1801.00496}.
 \end{thebibliography}
 \end{document}

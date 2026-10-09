@@ -2,6 +2,7 @@
 from hashlib import sha256
 from pathlib import Path
 import json
+import importlib
 import subprocess
 import sys
 
@@ -14,14 +15,18 @@ GENERATED = [
     "patches/norm-compression.patch",
     "certificates/bilinear.json", "patches/bilinear-layer.patch", "lean/ExactLayerData.lean",
     "certificates/frobenius.json", "patches/frobenius-orbits.patch",
+    "certificates/rankfive.json", "patches/rank-five.patch", "lean/MixedLayerData.lean",
 ]
 
 
 def run(script):
     print(f"Checking {script}", flush=True)
+    if script in ("verify_norm.py", "verify_bilinear.py", "verify_frobenius.py", "verify_rankfive.py"):
+        # One process shares one fresh algebra rebuild; no disk cache is trusted.
+        importlib.import_module(Path(script).stem).main()
+        return
     subprocess.run([sys.executable, str(ROOT / "scripts" / script)],
-                   cwd=ROOT, check=True, timeout=1020 if script in
-                   ("verify_norm.py", "verify_bilinear.py", "verify_frobenius.py") else 60)
+                   cwd=ROOT, check=True, timeout=60)
 
 
 def main():
@@ -30,21 +35,27 @@ def main():
     saved = {name: (ROOT / name).read_bytes() for name in GENERATED}
     # Validate supplied certificates before allowing their generators to write.
     for script in ["verify.py", "verify_sphere.py", "verify_tuned.py", "verify_slab.py",
-                   "verify_central.py", "verify_norm.py", "verify_bilinear.py", "verify_frobenius.py"]:
+                   "verify_central.py", "verify_norm.py", "verify_bilinear.py", "verify_frobenius.py",
+                   "verify_rankfive.py"]:
         run(script)
     for script in ["build_certificate.py", "build_patch.py", "build_sphere.py", "build_tuned.py",
                    "build_slab.py", "build_central.py", "build_norm.py", "build_bilinear.py",
-                   "build_frobenius.py"]:
+                   "build_frobenius.py", "build_rankfive.py"]:
         run(script)
     changed = [name for name, before in saved.items() if (ROOT / name).read_bytes() != before]
     if changed:
         raise SystemExit("Regeneration changed these files; review them and rerun:\n" +
                          "\n".join(changed))
+    verify_reports()
+
+
+def verify_reports():
+    """Validate report evidence and record the aggregate after all checks."""
     reports = ["artifacts/verification.json", "artifacts/sphere-verification.json",
                "artifacts/tuned-verification.json", "artifacts/slab-verification.json",
                "artifacts/central-verification.json", "artifacts/norm-verification.json",
                "artifacts/algebra-verification.json", "artifacts/bilinear-verification.json",
-               "artifacts/frobenius-verification.json"]
+               "artifacts/frobenius-verification.json", "artifacts/rankfive-verification.json"]
     for name in reports:
         report = json.loads((ROOT / name).read_text(encoding="utf-8"))
         if report["status"] != "pass":
@@ -60,7 +71,7 @@ def main():
     ]
     summary = {
         "status": "pass",
-        "checked_results": ["ternary", "sphere", "tuned", "slab", "central", "norm", "bilinear", "frobenius"],
+        "checked_results": ["ternary", "sphere", "tuned", "slab", "central", "norm", "bilinear", "frobenius", "rankfive"],
         "generated_files_unchanged": GENERATED,
         "environment": "local invocation; see individual reports for runtime versions",
         "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},
@@ -69,7 +80,7 @@ def main():
     }
     (ROOT / "artifacts/repository-verification.json").write_text(
         json.dumps(summary, indent=2) + "\n", encoding="utf-8", newline="\n")
-    print("PASS: all eight results checked; all seventeen generated files reproduced exactly.")
+    print("PASS: all nine results checked; all twenty generated files reproduced exactly.")
 
 
 if __name__ == "__main__":

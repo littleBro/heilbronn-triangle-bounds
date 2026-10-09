@@ -29,11 +29,11 @@ Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
 
 The command first verifies the supplied ternary, sphere, retuned, slab,
-central-layer, norm-compression, bilinear-layer and Frobenius-orbit certificates.
+central-layer, norm-compression, bilinear-layer, Frobenius-orbit and rank-five certificates.
 It checks all saved upstream hashes, compiles the local Lean proofs, audits their
 logical axioms, exercises finite and negative controls, and checks each patch
 against the pinned original manuscript without applying it.
-It then regenerates all certificates, patches and the Lean count table and requires exact byte equality
+It then regenerates all certificates, patches and both Lean count tables and requires exact byte equality
 with the supplied files. Generated text uses UTF-8 with LF line endings.
 A regeneration mismatch is a failure even when the resulting certificate would pass.
 
@@ -45,9 +45,12 @@ permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
 NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
 imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
 and a 120-second timeout. The shared algebra checker also rebuilds BilinearDescent and
-BilinearNorm and four Frobenius modules, for 31 exported theorem audits in total, including the
+BilinearNorm, four Frobenius modules and four rank-five modules, for 45 exported theorem audits in total, including the
 prime-field specialization and homogeneous polynomial form. Run this part
 alone with python scripts/verify_algebra.py.
+The complete verifier runs its algebra-dependent checkers in one process,
+sharing one fresh algebra rebuild. Standalone checkers still rebuild algebra;
+no saved verification report or compiled local proof is trusted as a cache.
 Independent field controls use small explicit quotients; the degree-13 norm
 expansion is proved symbolically and is not enumerated.
 The bilinear-layer check also rebuilds Sphere, ExactLayerData and ExactLayer.
@@ -61,6 +64,14 @@ classes only in degrees 3 and 5; degree 13 uses sampled patterns and all basis v
 All Lean checks are bounded subprocesses. Proof compilation does not enumerate
 the enormous sphere or produce planar point configurations.
 The scripts run sequentially and need no WSL, container or parallel search.
+
+The rank-five checkpoint adds the general mixed-radix sphere proof and a
+120-entry table. Nine kernel-checked transitions are divided across three
+small modules to stay within the same per-process limits. The symbolic
+recurrence connects the table to actual word counting before selection and
+packing. Independent convolution and multinomial counts agree. Degree-3 and
+degree-5 norm expansions are enumerated; degree 13 remains a symbolic Lean proof
+with sampled finite controls. The factor 1/6 is covered by a negative control.
 
 Successful runs refresh the reports under artifacts/, including
 repository-verification.json. These contain runtime details and hashes of
@@ -93,16 +104,17 @@ that a remote run passed.
 | Compressed norm at d = 13 | scripts/build_norm.py | scripts/verify_norm.py |
 | Bilinear descent and exact layer | scripts/build_bilinear.py | scripts/verify_bilinear.py |
 | Galois-orbit compression and ten-digit layer | scripts/build_frobenius.py | scripts/verify_frobenius.py |
+| Five-term determinant and mixed sphere | scripts/build_rankfive.py | scripts/verify_rankfive.py |
 
 After intentionally changing a generator, run it, inspect the changed certificate
 and patch, then run the complete verification command.
-The eight source patches are alternatives against the same original manuscript.
+The nine source patches are alternatives against the same original manuscript.
 
 ## Proof notes
 
 The current note is notes/sphere-packing.tex; the earlier ternary argument is
 notes/packing.tex. Neither is needed by the executable proof checks.
-The current note, including Galois-orbit compression and the ten-digit layer, compiled successfully in the desktop editor with
+The current note, including the five-term determinant formula and mixed-radix layer, compiled successfully in the desktop editor with
 Tectonic 0.17.0+20260731. Its source hash and bundle identity are recorded in
 [artifacts/sphere-latex-status.json](../artifacts/sphere-latex-status.json).
 The initial download failure was resolved by using the

@@ -13,4 +13,7 @@ lean_lib Heilbronn where
   roots := #[`NormExpansion, `NormDescent, `NormAlgebra, `NormPolynomials,
     `NormVandermonde, `BilinearDescent, `BilinearNorm, `ExactLayerData,
     `ExactLayer, `FrobeniusOrbits, `FrobeniusNorm, `FrobeniusDescent,
-    `FrobeniusPolynomials, `FrobeniusPacking, `NormCompression, `Slab, `Tuned, `Sphere]
+    `FrobeniusPolynomials, `FrobeniusPacking, `RankFiveExpansion, `RankFiveOrbits,
+    `RankFiveNorm, `RankFivePolynomials, `MixedSphere, `MixedLayerData,
+    `MixedLayerCounting, `MixedLayerRows0, `MixedLayerRows1, `MixedLayerRows2,
+    `MixedLayer, `RankFivePacking, `NormCompression, `Slab, `Tuned, `Sphere]
