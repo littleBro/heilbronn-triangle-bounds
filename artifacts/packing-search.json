@@ -1,0 +1,183 @@
+{
+  "scope": "exact search only in the listed finite families; no global optimality claim",
+  "previous_term_count_search": {
+    "target": "2347506125",
+    "initial_k": "87823140234375",
+    "domains_dimension_min_max": [
+      [
+        8,
+        10,
+        19
+      ],
+      [
+        9,
+        6,
+        13
+      ],
+      [
+        10,
+        4,
+        10
+      ],
+      [
+        11,
+        3,
+        8
+      ],
+      [
+        12,
+        3,
+        7
+      ]
+    ],
+    "size_multiplier": 2,
+    "histograms_evaluated": 19639,
+    "best_improvement": {
+      "k": "83994539790375",
+      "digit_sizes": [
+        8,
+        8,
+        8,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        12,
+        12
+      ],
+      "quarter_norm_index": 84,
+      "layer_count": "2362423296"
+    }
+  },
+  "paired_term_count_search": {
+    "target": "1600000000",
+    "initial_k": "87823140234375",
+    "domains_dimension_min_max": [
+      [
+        8,
+        10,
+        19
+      ],
+      [
+        9,
+        6,
+        13
+      ],
+      [
+        10,
+        4,
+        10
+      ],
+      [
+        11,
+        3,
+        8
+      ],
+      [
+        12,
+        3,
+        7
+      ]
+    ],
+    "size_multiplier": 2,
+    "histograms_evaluated": 16104,
+    "best_improvement": {
+      "k": "48631121859501",
+      "digit_sizes": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        14
+      ],
+      "quarter_norm_index": 118,
+      "layer_count": "1641775104"
+    }
+  },
+  "odd_and_even_alphabet_search": {
+    "target": "1600000000",
+    "initial_k": "48631121859501",
+    "domains_dimension_min_max": [
+      [
+        8,
+        24,
+        34
+      ],
+      [
+        9,
+        15,
+        23
+      ],
+      [
+        10,
+        10,
+        17
+      ],
+      [
+        11,
+        7,
+        13
+      ],
+      [
+        12,
+        6,
+        11
+      ],
+      [
+        13,
+        4,
+        9
+      ],
+      [
+        14,
+        4,
+        7
+      ]
+    ],
+    "size_multiplier": 1,
+    "histograms_evaluated": 11133,
+    "best_improvement": null
+  },
+  "weighted_sphere_search": {
+    "digit_sizes": [
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      14
+    ],
+    "positive_weights": [
+      1,
+      2,
+      3
+    ],
+    "primitive_weight_vectors_evaluated": 163,
+    "largest_coefficient": "1641775104",
+    "weights": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "quarter_norm_index": 118
+  },
+  "proof_boundary": "The witness has separate Lean proofs; the search procedure is not formalized."
+}

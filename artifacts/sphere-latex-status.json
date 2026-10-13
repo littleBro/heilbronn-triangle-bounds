@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "faeef4533d980bb3cd0dd224804a7979fec03e74a958b08ff19b8c4545921fd0",
-  "attempt_date": "2026-10-08",
-  "attempt_scope": "Existing note including the five-term determinant formula, antisymmetrization, Galois averaging and mixed-radix sphere, with complete Lean algebra and finite packing proofs",
+  "source_sha256": "6aa01e68fd5ca1e6f2d2a8b08637a4308a94f5edf4db51ea4009b90a82e1fc46",
+  "attempt_date": "2026-10-13",
+  "attempt_scope": "Existing note including the 20-term paired determinant identity, complete field-norm descent, homogeneous coordinates and exact energy-59 mixed sphere",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

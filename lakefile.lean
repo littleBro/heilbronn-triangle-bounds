@@ -16,4 +16,6 @@ lean_lib Heilbronn where
     `FrobeniusPolynomials, `FrobeniusPacking, `RankFiveExpansion, `RankFiveOrbits,
     `RankFiveNorm, `RankFivePolynomials, `MixedSphere, `MixedLayerData,
     `MixedLayerCounting, `MixedLayerRows0, `MixedLayerRows1, `MixedLayerRows2,
-    `MixedLayer, `RankFivePacking, `NormCompression, `Slab, `Tuned, `Sphere]
+    `MixedLayer, `RankFivePacking, `PairedExpansion, `PairedNorm, `PairedPolynomials,
+    `PairedLayerData, `PairedLayerCounting, `PairedLayerRows0, `PairedLayerRows1,
+    `PairedLayer, `PairedPacking, `NormCompression, `Slab, `Tuned, `Sphere]

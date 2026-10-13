@@ -3,62 +3,54 @@
 The current target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 39 * 35^8 + 7) = 1 / 43735923836718757.
+    eta = 1 / (498 * 27 * 23^9 + 7) = 1 / 24218298686031505.
 
 This is a conditional refinement of the pinned OpenAI family 191 argument.
-Read the five-term determinant and mixed-radix section of [the note](../notes/sphere-packing.tex)
-and the [six-section source patch](../patches/rank-five.patch).
+Read the paired-determinant section of [the note](../notes/sphere-packing.tex)
+and the [six-section source patch](../patches/paired-norm.patch).
 All original manuscript files remain pinned at fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
 ## Evidence for each claim
 
 | Claim | Evidence | Boundary |
 | --- | --- | --- |
-| Integral five-term formula | RankFiveExpansion.rank_five | Known Krishna--Makam identity; proved over any commutative ring |
-| Antisymmetrized product is six times the norm | RankFiveExpansion.antisymmetrized_product and RankFiveNorm.norm_pattern_sum | Odd degree 13 is essential; the factor six is retained |
-| Five fixed words and 93,900,245 orbits | RankFiveOrbits.fixed_pattern, orbit_size, class_card | Plain rotation of five-letter words indexed by a group of order 13 |
-| T = 2,347,506,125 norm determinants | RankFiveNorm.finite_field_trace_norm | Degree 13, at least 25 base-field elements, characteristics 2, 3 and 13 excluded |
-| Homogeneous coordinates and distinct-label criterion | RankFivePolynomials.finite_field_trace_polynomials and prime_field_trace_labels | Proved for every prime r >= 37, using the actual Mathlib field norm |
-| Exact energy-119 coefficient 2,365,025,280 | MixedLayer.exact_layer_count | Nine kernel-checked histogram transitions tied to symbolic counting |
-| Mixed-radix rigidity and bounds | MixedSphere.sphere_matching and position_bounds | Radix 4A-1 separately in each coordinate |
-| Selection, injections and matching | RankFivePacking.trace_packing | T specified above, k = 39 * 35^8; layer capacity is proved |
-| Gain greater than 2.34 | RankFivePacking.trace_gain | Exact integer comparison against the preceding Frobenius checkpoint |
-| Scale inequalities | Tuned.lean, Slab.lean, certificates/rankfive.json | Uniform integer bounds; lattice and probability arguments remain separate |
-| Slab geometry and weighted counts | Written note, pinned manuscript Sections 2 and 4--7 | Not formalized in Lean; no complete independent audit of all upstream estimates |
-| Deletion and all sufficiently large n | Written transfer and patched Section 8 | Conditional geometric consequence; no practical threshold |
-| Reproduction | artifacts/repository-verification.json and linked reports | Specific to the recorded sources and environment |
+| Twenty symmetric products for a determinant pair | PairedExpansion.pair_identity | Integral identity over every commutative ring, from the classical five-term formula and polarization |
+| Six pairs with one unpaired determinant | PairedExpansion.paired_product, PairedNorm.norm_expansion | Normalization 4^6; no extra factor five for the singleton |
+| T = 25 * 20^6 = 1,600,000,000 base-field terms | PairedNorm.finite_field_norm | Degree 13, at least 25 base-field elements, characteristic two excluded |
+| Homogeneous degree-13 coordinates | PairedPolynomials.finite_field_polynomials | Coefficientwise descent preserves degree |
+| Nonzero residue precisely for distinct labels | PairedPolynomials.prime_field_labels | Actual Mathlib field norm; every prime r >= 37 |
+| Exact energy-59 count 1,641,775,104 | PairedLayer.exact_layer_count | Ten kernel-checked histogram transitions tied to symbolic counting |
+| Selection, bounds, injections and matching | PairedPacking.trace_packing | k = 27 * 23^9; uses the general MixedSphere proof |
+| Gain greater than 1.80 | PairedPacking.trace_gain | Exact integer comparison against the preserved rank-five checkpoint |
+| Scale inequalities | Tuned.lean, Slab.lean, certificates/paired.json | Uniform arithmetic; geometric estimates remain separate |
+| Slab, lattice, probability and deletion estimates | Written note and pinned manuscript | Not all formalized; no practical threshold or complete independent upstream audit |
+| Reproduction | artifacts/repository-verification.json and individual reports | Applies to the recorded sources and environment |
 
-New declarations use HeilbronnRankFive, HeilbronnMixedSphere,
-HeilbronnMixedLayer and HeilbronnRankFivePacking. The shared algebra audit
-covers fifteen Mathlib-based modules and 45 exported theorems. Only propext,
-Classical.choice and Quot.sound are permitted; no mathematical assumptions
-are introduced to stand in for the claimed norm or packing identities.
+The shared algebra audit covers eighteen Mathlib-based modules and 53 exported
+theorems. Only propext, Classical.choice and Quot.sound are permitted. No
+assumption stands in for a claimed norm or finite packing identity.
 
 ## The steps most useful to review
 
-- Check the five explicit products against the determinant. The formula is
-  from [Krishna and Makam, Section 3.1](https://arxiv.org/abs/1801.00496).
-- Expand the thirteen conjugates, then antisymmetrize columns. Odd degree
-  makes each signed permuted norm equal to the original norm, giving six
-  copies. Division by six is required and is covered by a negative control.
-- Rotate w by (a.w)(g) = w(a^-1 g). The determinant value transforms by a.
-  Exactly five words are constant; every other orbit has size thirteen.
-- Use the invariant projection L(z) = sum_a ell(a(z))/13 and weight each
-  representative by its orbit size divided by six. The general field theorem
-  explicitly assumes 6 and 13 nonzero. Cardinality alone would not imply this.
-- Reuse 25-node interpolation of the first two power-basis representatives,
-  followed by L(c_t z) in the third row. All five singleton classes also use
-  25 nodes. Coefficientwise linear maps retain degree-thirteen homogeneity.
-- Count the coefficient of z^119 in
-  (2 sum_{j=0}^9 z^(j(j+1)/2)) * (2 sum_{j=0}^8 z^(j(j+1)/2))^8.
-  Truncation above 119 is valid because every digit energy is nonnegative.
-  The independent multinomial calculation gives the same integer.
-- With half-alphabets [10,9,9,9,9,9,9,9,9], use radices [39,35,35,35,35,35,35,35,35].
-  Each digit sum stays below its own radix. Equal norms then force equality
-  of all three words. Selection and injectivity are proved, not assumed.
+- Expand the 20 bilinear forms using the coefficient arrays of the
+  [Krishna–Makam formula](https://arxiv.org/abs/1801.00496).
+  Check that the same form is used in all three columns and that the
+  normalization is four, not six.
+- Enumerate the automorphisms by one singleton and six disjoint pairs.
+  Every conjugate occurs once. A common factor in each column scales the
+  unpaired determinant directly; it need not be expanded into five products.
+- Apply the constant-coordinate functional, which fixes the base field,
+  and 25-node interpolation of the first two rows. The third row is
+  constantCoord(c_t * input). Include the factor 4^(-6) in one row only.
+- Count the coefficient of z^59 in
+  (2 sum_{j=0}^6 z^(j(j+1)/2)) * (2 sum_{j=0}^5 z^(j(j+1)/2))^9.
+  The full digit histogram and a separate multinomial calculation agree.
+- With half-alphabets [7,6,6,6,6,6,6,6,6,6], use radices [27,23,23,23,23,23,23,23,23,23].
+  Each digit sum is below its radix; equal norm 482 forces midpoint rigidity.
+  Selection, both injections and matching are proved in Lean.
 
-The mixed sphere has squared norm 961 and enough words for T. Its parameters
-are an explicit feasible witness, without a global optimality claim.
+The bounded search in artifacts/packing-search.json is not an optimality proof.
+The proof checker validates the chosen witness independently of that search.
 
 The retained slab transfer is unchanged:
 
