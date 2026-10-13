@@ -40,7 +40,7 @@ def arithmetic(c, previous):
     low, high = count_below(alphabets,32,lower), count_below(alphabets,32,upper)
     require((p["count_below_lower"],p["count_below_upper"]) == (str(low),str(high)), "cutoff counts")
     require(high-low == int(p["interval_count"]) == int(c["T"]), "interval capacity")
-    require((lower,upper) == (133966008273,10996717764905), "witness cutoffs")
+    require((lower,upper) == (133535493048,10996285570280), "witness cutoffs")
     states = p["count_states"]
     require(len(states) == 44 and (p["lower_state"],p["upper_state"]) == (22,43), "state roots")
     keys = set()
@@ -62,7 +62,7 @@ def arithmetic(c, previous):
         root=states[p[key]]
         require(root["depth"] == 0 and int(root["bound"]) == bound, "root cutoff")
     k = 2*(upper-lower)-1
-    require(c["k"] == str(k) == "21725503513263", "translated size")
+    require(c["k"] == str(k) == "21725500154463", "translated size")
     require(c["cap"] == previous["cap"] and c["scales"] == previous["scales"], "scales")
     beta = Fraction(83*k+1,2)
     rho = 12*beta
@@ -89,11 +89,11 @@ def arithmetic(c, previous):
 
 def negative_controls(c, previous):
     mutations = [("T",str(int(c["T"])-1),"term count"), ("k",str(int(c["k"])-1),"translated size"),
-        ("packing",{**c["packing"],"count_below_lower":"10596665"},"cutoff counts"),
+        ("packing",{**c["packing"],"count_below_lower":"10308153"},"cutoff counts"),
         ("packing",{**c["packing"],"energy_index":33},"energy"),
         ("prime_transfer",{**c["prime_transfer"],"lean_formalized":True},"algebra and primes"),
         ("decomposition",{**c["decomposition"],"manuscript_prime_residue":2},"algebra and primes"),
-        ("eta",{"numerator":"1","denominator":"10819300749604980"},"eta")]
+        ("eta",{"numerator":"1","denominator":"10819299076922580"},"eta")]
     damaged = deepcopy(c["packing"])
     damaged["count_states"][3]["counts"][0] += 1
     mutations.append(("packing",damaged,"count state"))

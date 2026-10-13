@@ -8,7 +8,7 @@
 - T=\binom{M}{3},\qquad k=T^2+1.
 -\end{equation}
 -Let $r$ be an odd prime.  We recall the elementary finite-field facts
-+ d=13,\qquad T=25\cdot18^6,\qquad m=11,\qquad k=21\,725\,503\,513\,263.
++ d=13,\qquad T=25\cdot18^6,\qquad m=11,\qquad k=21\,725\,500\,154\,463.
 +\end{equation}
 +Let $r\ge37$ be prime with $r\equiv1\pmod3$.  We recall the elementary finite-field facts
  needed here; see \cite[Chapter~2]{LidlNiederreiter1994} for background.
@@ -143,12 +143,12 @@
 +The energy-$32$ layer has $872\,130\,560$ words of common squared
 +norm $267$. We retain only words whose encodings lie in $[C_-,C_+)$, where
 +\[
-+ C_-=133\,966\,008\,273,\qquad C_+=10\,996\,717\,764\,905.
++ C_-=133\,535\,493\,048,\qquad C_+=10\,996\,285\,570\,280.
 +\]
 +An exact cutoff recurrence gives
 +\[
-+ \#\{E(x)=32:c(x)<C_-\}=10\,596\,664,\qquad
-+ \#\{E(x)=32:c(x)<C_+\}=860\,902\,264.
++ \#\{E(x)=32:c(x)<C_-\}=10\,308\,152,\qquad
++ \#\{E(x)=32:c(x)<C_+\}=860\,613\,752.
 +\]
 +Their difference is exactly $T=850\,305\,600$. Lean proves these
 +counts from the actual finite word list, without enumerating it.
@@ -159,7 +159,7 @@
 +For each retained word define
 +\[
 + u(x)=c(x)-C_-,\qquad v(x)=k-1-2u(x),\qquad
-+ k=2(C_+-C_-)-1=21\,725\,503\,513\,263.
++ k=2(C_+-C_-)-1=21\,725\,500\,154\,463.
 +\]
 +Both maps take values in $[0,k)$ and are injective. A relation
 +$u(x)+u(y)+v(z)=k-1$ is equivalent to $c(x)+c(y)=2c(z)$.

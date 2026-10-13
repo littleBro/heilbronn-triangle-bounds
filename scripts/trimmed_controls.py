@@ -4,6 +4,7 @@ from functools import lru_cache
 from itertools import product
 from math import prod
 
+from search_trimmed import best_window, prefix_tables, unrank
 from verify import require
 
 
@@ -51,7 +52,7 @@ def count_below(alphabets, energy, cutoff):
 
 def finite_controls():
     cases = [[1], [2], [2,2], [1,2,2], [2,3,2], [3,2,2,1]]
-    counts = triples = 0
+    counts = triples = search_cases = 0
     for alphabets in cases:
         radices = [4*a-1 for a in alphabets]
         places = [prod(radices[:i]) for i in range(len(radices))]
@@ -62,6 +63,17 @@ def finite_controls():
             layers.setdefault(e, []).append(code)
         for e, codes in sorted(layers.items()):
             codes.sort()
+            rows = prefix_tables(alphabets)
+            require([unrank(alphabets, rows, e, r) for r in range(len(codes))] == codes,
+                    "small unranking")
+            for target in range(1, len(codes)+1):
+                expected = min(2*(codes[r+target-1]-codes[r])+1
+                               for r in range(len(codes)-target+1))
+                found, _ = best_window(alphabets, rows, e, target, prod(radices)+1)
+                require(found is not None and found[0] == expected, "small branch bound")
+                pruned, _ = best_window(alphabets, rows, e, target, expected)
+                require(pruned is None, "small strict branch bound")
+                search_cases += 1
             for cutoff in range(prod(radices)+2):
                 require(count_below(alphabets, e, cutoff) == bisect_left(codes, cutoff), "small cutoff count")
                 counts += 1
@@ -76,4 +88,5 @@ def finite_controls():
                 require((shifted[a]+shifted[b]+right[c] == k-1) == (a==b==c), "small matching")
                 triples += 1
     return {"half_alphabets": cases, "cutoff_counts_compared_with_enumeration": counts,
+            "branch_bound_target_cases": search_cases,
             "translated_matching_triples": triples, "scope": "exhaustive on the listed small cases only"}

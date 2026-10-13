@@ -101,8 +101,11 @@ packing. The independent checker reads high digits first, compares all 1,452
 table entries, exhausts 13,583 small cutoff counts and checks 42,216 matching
 triples. Both endpoint omissions and a missing translation have negative
 controls. The algebra remains the verified eighteen-form construction.
-The optional python scripts/search_trimmed.py reproduces the finite rank-grid
-search; it is not required by verification and does not establish optimality.
+The optional python scripts/search_trimmed.py reproduces the finite rank-window
+branch-and-bound search. Its interval bounds cover all ranks in the listed
+family, evaluating 8,922 windows directly. The complete search is not required
+by verification; 342 small search problems are checked against enumeration.
+Search optimality is not formalized and no global packing optimum is claimed.
 The interval source patch also receives the full reference check.
 
 Successful runs refresh the reports under artifacts/, including

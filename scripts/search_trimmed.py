@@ -1,7 +1,9 @@
-"""Bounded rank-window search on the retained mixed sphere; no optimality claim."""
+"""Finite rank-window branch bounds; no global packing optimality claim."""
+from functools import lru_cache
 from itertools import combinations
 from math import prod
 from pathlib import Path
+import heapq
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,8 +50,41 @@ def unrank(alphabets, rows, e, rank):
     return encoded
 
 
+def best_window(alphabets, rows, e, target, max_k):
+    """Search all ranks, pruning with monotonicity of the encoded word list.
+
+    For lo <= r <= hi, code(r+target-1)-code(r) is at least
+    code(lo+target-1)-code(hi). A pruned interval therefore cannot improve
+    the current feasible bound. Only scalar word ranks are evaluated.
+    """
+    @lru_cache(maxsize=65536)
+    def code(rank):
+        return unrank(alphabets, rows, e, rank)
+    best, evaluated, queue = None, 0, []
+    def push(lo, hi):
+        if lo <= hi:
+            bound = 2*(code(lo+target-1)-code(hi))+1
+            if bound < max_k:
+                heapq.heappush(queue, (bound, lo, hi))
+    push(0, at(rows[-1], e)-target)
+    while queue:
+        bound, lo, hi = heapq.heappop(queue)
+        if bound >= max_k:
+            continue
+        rank = (lo+hi)//2
+        lower, upper = code(rank), code(rank+target-1)+1
+        k = 2*(upper-lower)-1
+        evaluated += 1
+        if k < max_k:
+            max_k, best = k, (k, rank, lower, upper)
+        push(lo, rank-1)
+        push(rank+1, hi)
+    return best, evaluated
+
+
 def search():
     best, evaluated, layers = None, 0, 0
+    best_k = 15**7*19**4
     for positions in combinations(range(11), 4):
         alphabets = [5 if i in positions else 4 for i in range(11)]
         rows = prefix_tables(alphabets)
@@ -57,31 +92,19 @@ def search():
             if count < TARGET:
                 continue
             layers += 1
-            maximum_rank = count-TARGET
-            seen = {}
-            def evaluate(rank):
-                if rank not in seen:
-                    lo = unrank(alphabets, rows, e, rank)
-                    hi = unrank(alphabets, rows, e, rank+TARGET-1)
-                    seen[rank] = (2*(hi-lo)+1, rank, lo, hi)
-                return seen[rank]
-            current = min(evaluate(maximum_rank*i//128) for i in range(129))
-            radius = maximum_rank//128+1
-            for _ in range(4):
-                left, right = max(0, current[1]-radius), min(maximum_rank, current[1]+radius)
-                current = min(current, *(evaluate(left+(right-left)*i//64) for i in range(65)))
-                radius = (right-left)//64+1
-            evaluated += len(seen)
+            current, visited = best_window(alphabets, rows, e, TARGET, best_k)
+            evaluated += visited
+            if current is None:
+                continue
             item = {"half_alphabets_low_first": alphabets, "energy": e,
                     "layer_count": count, "first_rank": current[1],
-                    "lower_inclusive": current[2], "upper_exclusive": current[3]+1,
+                    "lower_inclusive": current[2], "upper_exclusive": current[3],
                     "k": current[0], "box_k": prod(4*a-1 for a in alphabets)}
-            if best is None or item["k"] < best["k"]:
-                best = item
-    return {"scope": "exact evaluations on the listed finite grids, not interval or packing optimality",
+            best_k, best = item["k"], item
+    return {"scope": "all ranks in the listed finite family via exact branch bounds; no Lean optimality proof or global packing optimality claim",
             "target": TARGET, "coordinate_orders": 330, "feasible_layers": layers,
-            "coarse_grid_subdivisions": 128, "local_refinement_rounds": 4,
-            "local_grid_subdivisions": 64, "distinct_windows_evaluated": evaluated,
+            "initial_k": 15**7*19**4, "search_completed": True,
+            "rank_windows_evaluated": evaluated,
             "best": best}
 
 

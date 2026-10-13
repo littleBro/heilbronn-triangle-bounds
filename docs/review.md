@@ -3,7 +3,7 @@
 The current target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 21725503513263 + 7) = 1 / 10819300749604981.
+    eta = 1 / (498 * 21725500154463 + 7) = 1 / 10819299076922581.
 
 Read the translated-interval and eighteen-form sections of [the note](../notes/sphere-packing.tex)
 and the [six-section source patch](../patches/trimmed-sphere.patch).
@@ -19,9 +19,9 @@ All original manuscript files remain pinned at fd4aeeb2ee4fc729c18d98444fed42fd0
 | Homogeneous degree-13 coordinates | EighteenPolynomials.finite_field_polynomials | Coefficientwise descent preserves degree |
 | Root existence and distinct-label criterion | EighteenPolynomials.root_exists, prime_field_labels | Every prime r >= 37 congruent to 1 mod 3 |
 | Counting below an encoded cutoff | IntervalCounting.below_cons | Universal recurrence on actual finite words |
-| Exact cutoff counts 10,596,664 and 860,902,264 | TrimmedLayer.below_lower, below_upper | 44 rows of 33 kernel-checked counts |
+| Exact cutoff counts 10,308,152 and 860,613,752 | TrimmedLayer.below_lower, below_upper | 44 rows of 33 kernel-checked counts |
 | Exactly T words in the interval | TrimmedLayer.exact_interval_count | Difference of the two cutoff counts |
-| Selection, bounds, injections and matching | TrimmedPacking.translated_packing | k = 21,725,503,513,263; original digit radices retained |
+| Selection, bounds, injections and matching | TrimmedPacking.translated_packing | k = 21,725,500,154,463; original digit radices retained |
 | Gain greater than 1.0249 | TrimmedPacking.trimmed_gain | Integer comparison against the preserved eighteen-form checkpoint |
 | Scale inequalities | Tuned.lean, Slab.lean, certificates/trimmed.json | Uniform arithmetic; geometry remains separate |
 | Allowed prime in (m, 2m] eventually | PNT in arithmetic progressions, written derivation | Standard unconditional theorem; not formalized here |
@@ -53,7 +53,7 @@ entries are checked in the kernel and are not assumed as hypotheses.
 - Read the half-alphabets in the current order [4,4,4,4,4,4,5,4,5,5,5].
   With the original radices 4A - 1, no digit sums carry and equal norm 267
   forces midpoint rigidity.
-- For the interval [133966008273, 10996717764905), check both cutoff counts.
+- For the interval [133535493048, 10996285570280), check both cutoff counts.
   After choosing the low digit d in radix b, the remaining cutoff is
   floor(B/b) + 1_{d < B mod b}. The independent checker reads high digits first.
 - Subtract the lower endpoint before setting v = k - 1 - 2u.
@@ -65,10 +65,14 @@ entries are checked in the kernel and are not assumed as hypotheses.
   This written use of the [standard theorem](https://dlmf.nist.gov/27.11)
   is separate from the Lean proof. B and q use ordinary Bertrand intervals.
 
-The new bounded search evaluates 313,427 intervals on finite grids over
-330 coordinate orders and energies 32, 33 and 34. It does not check every
-possible interval. The proof checker validates the exact witness independently;
-no interval optimum, global packing optimum or new determinant formula is claimed.
+The branch-and-bound search covers all rank windows over 330 coordinate
+orders and energies 32, 33 and 34, evaluating 8,922 windows directly.
+For a sorted encoded layer c and ranks a <= r <= b, the span of the window
+starting at r is at least c[a+T-1] - c[b]. This lower bound excludes entire
+rank ranges. Enumeration checks all target sizes in the listed small cases,
+giving 342 search comparisons. The proof checker validates the exact witness
+independently; search optimality is not formalized and no global packing
+optimum or new determinant formula is claimed.
 Independent controls compare 13,583 small cutoff counts with enumeration
 and check 42,216 matching triples. All 1,452 saved count entries are also
 recomputed by the separate lexicographic algorithm.

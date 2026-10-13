@@ -6,7 +6,7 @@ The current version retains the 18-form determinant decomposition over primes r 
 
 $$
 \Delta(n)\ge c\,n^{-2+\eta},\qquad
-\boxed{\eta=\frac{1}{10\,819\,300\,749\,604\,981}\approx9.24274149636251\cdot10^{-17}}.
+\boxed{\eta=\frac{1}{10\,819\,299\,076\,922\,581}\approx9.24274292530638\cdot10^{-17}}.
 $$
 
 The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. Lean proves the complete new norm decomposition, interpolation descent, homogeneous polynomial coordinates and nonzero residue for distinct labels. It also proves the finite packing and selected scale inequalities. The prime number theorem in the fixed progression justifies interpolation to all sufficiently large n in writing. The prime-distribution argument, slab geometry, lattice and probability estimates, and full Heilbronn theorem remain outside the formal proof.
@@ -34,17 +34,17 @@ The first command prepares pinned Mathlib dependencies and compiled imports; run
 | Five-term determinant and mixed sphere, d = 13 | 39 * 35^8 | ≈ 2.28644993011544e-17 |
 | Paired determinants and mixed sphere, d = 13 | 27 * 23^9 | ≈ 4.12910920359891e-17 |
 | Eighteen forms over split primes, d = 13 | 15^7 * 19^4 | ≈ 9.01814969547931e-17 |
-| Translated interval of the mixed sphere, d = 13 | 21,725,503,513,263 | ≈ 9.24274149636251e-17 |
+| Translated interval of the mixed sphere, d = 13 | 21,725,500,154,463 | ≈ 9.24274292530638e-17 |
 
-The current exponent is **about 2.49044% larger** than the preceding eighteen-form exponent. These compare exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
+The current exponent is **about 2.49046% larger** than the preceding eighteen-form exponent. These compare exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
 
 ## Current result: a translated interval of the sphere
 
 The algebra still requires **T = 850,305,600** words. Order the half-alphabets as **[4,4,4,4,4,4,5,4,5,5,5]**, retaining the original radices 4A − 1. The energy-32 layer has 872,130,560 words. Exactly **850,305,600** of them have encodings in
 
-    [133,966,008,273, 10,996,717,764,905).
+    [133,535,493,048, 10,996,285,570,280).
 
-The lower and upper cutoff counts are **10,596,664** and **860,902,264**. Subtract the lower endpoint from each retained encoding and set v = k − 1 − 2u. The resulting packing has **k = 21,725,503,513,263**. Translation preserves encoded midpoints, so the sphere argument still proves matching. The shorter final range does not replace the original digit radices.
+The lower and upper cutoff counts are **10,308,152** and **860,613,752**. Subtract the lower endpoint from each retained encoding and set v = k − 1 − 2u. The resulting packing has **k = 21,725,500,154,463**. Translation preserves encoded midpoints, so the sphere argument still proves matching. The shorter final range does not replace the original digit radices.
 
 Lean proves the cutoff recurrence, checks **44 rows of 33 exact counts**, connects them to the actual finite word list, and proves the complete translated packing. An independent checker reads digits in the opposite order. It also compares **13,583** small cutoff counts with enumeration and checks **42,216** translated matching triples. Negative controls cover both interval endpoints and the required translation.
 
@@ -54,7 +54,7 @@ Lean proves the cutoff recurrence, checks **44 rows of 33 exact counts**, connec
     python scripts/build_trimmed.py
     python scripts/verify_trimmed.py
 
-The optional [bounded search](scripts/search_trimmed.py) evaluates [313,427 intervals](artifacts/trimmed-search.json) over 330 coordinate orders and three feasible energies. The exact witness is verified independently; neither the interval nor the packing is claimed optimal. The eighteen-form algebra, prime restriction and written prime-distribution argument below are retained.
+The optional [branch-and-bound search](scripts/search_trimmed.py) covers all rank windows over 330 coordinate orders and three feasible energies. It evaluates [8,922 windows](artifacts/trimmed-search.json); monotonicity of the encoded word list excludes the remaining ranges. Independent enumeration checks the search on 342 small target problems. The witness has separate Lean proofs; search optimality is not formalized and no global packing optimum is claimed. The eighteen-form algebra, prime restriction and written prime-distribution argument below are retained.
 
 ## Preserved eighteen forms over split primes
 

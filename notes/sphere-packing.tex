@@ -20,11 +20,11 @@ and retaining one unpaired determinant gives \(T=25\cdot18^6\).
 An exactly counted interval of the mixed-radix sphere, translated to zero,
 and the retained slab scales give
 \[
- k=21\,725\,503\,513\,263,\qquad
- \eta_{\rm int}=\frac{1}{10\,819\,300\,749\,604\,981}
-       \approx9.24274149636251\cdot10^{-17}.
+ k=21\,725\,500\,154\,463,\qquad
+ \eta_{\rm int}=\frac{1}{10\,819\,299\,076\,922\,581}
+       \approx9.24274292530638\cdot10^{-17}.
 \]
-This is about $2.49044\%$ above the preceding eighteen-form exponent.
+This is about $2.49046\%$ above the preceding eighteen-form exponent.
 The prime number theorem in the fixed progression supplies the required
 bounded-ratio interpolation to every sufficiently large cardinality.
 The earlier constructions are retained below.
@@ -1344,12 +1344,12 @@ For $0\le x_j<2A_j$, put
 The energy-$32$ layer has $872\,130\,560$ words of common squared
 norm $267$. We retain only words whose encodings lie in $[C_-,C_+)$, where
 \[
- C_-=133\,966\,008\,273,\qquad C_+=10\,996\,717\,764\,905.
+ C_-=133\,535\,493\,048,\qquad C_+=10\,996\,285\,570\,280.
 \]
 An exact cutoff recurrence gives
 \[
- \#\{E(x)=32:c(x)<C_-\}=10\,596\,664,\qquad
- \#\{E(x)=32:c(x)<C_+\}=860\,902\,264.
+ \#\{E(x)=32:c(x)<C_-\}=10\,308\,152,\qquad
+ \#\{E(x)=32:c(x)<C_+\}=860\,613\,752.
 \]
 Their difference is exactly $T=850\,305\,600$. Lean proves these
 counts from the actual finite word list, without enumerating it.
@@ -1360,7 +1360,7 @@ energy and sum over digits; the empty word is the base case.
 For each retained word define
 \[
  u(x)=c(x)-C_-,\qquad v(x)=k-1-2u(x),\qquad
- k=2(C_+-C_-)-1=21\,725\,503\,513\,263.
+ k=2(C_+-C_-)-1=21\,725\,500\,154\,463.
 \]
 Both maps take values in $[0,k)$ and are injective. A relation
 $u(x)+u(y)+v(z)=k-1$ is equivalent to $c(x)+c(y)=2c(z)$.
@@ -1406,16 +1406,23 @@ counts with enumeration and check 42,216 matching triples. Removing
 either selected endpoint loses one word; using unshifted encodings
 violates the bound required for the right positions.
 
-The optional search evaluates 313,427 windows over 330 coordinate orders
-and energies $32,33,34$, using a finite rank grid and four local refinements.
-It does not examine every interval. The witness above is checked independently
-of this search and is not claimed optimal.
+The optional search covers all rank windows over 330 coordinate orders
+and energies $32,33,34$ by branch bounds. For the sorted encoded layer
+$c_0<\cdots<c_{N-1}$ and $a\le r\le b$, monotonicity gives
+\[
+ c_{r+T-1}-c_r\ge c_{a+T-1}-c_b.
+\]
+This lower bound excludes ranges that cannot improve the incumbent;
+the search evaluates 8,922 windows directly. Independent enumeration
+checks all target sizes on the listed small cases, giving 342 search
+comparisons. The witness above is checked independently of this search.
+Search optimality is not formalized and no global packing optimum is claimed.
 
 With the same slab estimates and the written prime-progression transfer,
 \[
  \Delta(n)\ge c n^{-2+\eta_{\rm int}},\qquad
  \eta_{\rm int}=\frac1{498k+7}
-   =\frac1{10\,819\,300\,749\,604\,981},
+   =\frac1{10\,819\,299\,076\,922\,581},
 \]
 for all sufficiently large $n$, conditional on the retained geometric estimates.
 Exact arithmetic gives

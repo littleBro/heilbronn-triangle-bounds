@@ -7,7 +7,7 @@ open HeilbronnMixedSphere HeilbronnTrimmedLayer HeilbronnInterval
 open HeilbronnMixedLayer (words words_nodup)
 
 def termCount : Nat := 850305600
-def packingSize : Nat := 21725503513263
+def packingSize : Nat := 21725500154463
 
 theorem interval_family : ∃ w : Fin termCount → Word alphabets,
     (∀ a b, w a = w b → a = b) ∧

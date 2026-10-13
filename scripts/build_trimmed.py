@@ -13,8 +13,8 @@ from build_tuned import replace_once
 ROOT = Path(__file__).resolve().parents[1]
 ALPHABETS = [4,4,4,4,4,4,5,4,5,5,5]
 ENERGY = 32
-LOWER = 133966008273
-UPPER = 10996717764905
+LOWER = 133535493048
+UPPER = 10996285570280
 TARGET = 25*18**6
 K = 2*(UPPER-LOWER)-1
 
@@ -125,12 +125,12 @@ For $0\le x_j<2A_j$, put
 The energy-$32$ layer has $872\,130\,560$ words of common squared
 norm $267$. We retain only words whose encodings lie in $[C_-,C_+)$, where
 \[
- C_-=133\,966\,008\,273,\qquad C_+=10\,996\,717\,764\,905.
+ C_-=133\,535\,493\,048,\qquad C_+=10\,996\,285\,570\,280.
 \]
 An exact cutoff recurrence gives
 \[
- \#\{E(x)=32:c(x)<C_-\}=10\,596\,664,\qquad
- \#\{E(x)=32:c(x)<C_+\}=860\,902\,264.
+ \#\{E(x)=32:c(x)<C_-\}=10\,308\,152,\qquad
+ \#\{E(x)=32:c(x)<C_+\}=860\,613\,752.
 \]
 Their difference is exactly $T=850\,305\,600$. Lean proves these
 counts from the actual finite word list, without enumerating it.
@@ -141,7 +141,7 @@ energy and sum over digits; the empty word is the base case.
 For each retained word define
 \[
  u(x)=c(x)-C_-,\qquad v(x)=k-1-2u(x),\qquad
- k=2(C_+-C_-)-1=21\,725\,503\,513\,263.
+ k=2(C_+-C_-)-1=21\,725\,500\,154\,463.
 \]
 Both maps take values in $[0,k)$ and are injective. A relation
 $u(x)+u(y)+v(z)=k-1$ is equivalent to $c(x)+c(y)=2c(z)$.
@@ -166,7 +166,7 @@ def patch_source():
     name = "03-norm-digits.tex"
     text = replace_once(changed[name], "M=\\binom{4d-1}{d},\\qquad\n T=\\binom{M}{3}", "T=25\\cdot18^6")
     text = replace_once(text, r"m=17,\qquad A=101,\qquad k=403^{17}",
-                        r"m=11,\qquad k=21\,725\,503\,513\,263")
+                        r"m=11,\qquad k=21\,725\,500\,154\,463")
     text = replace_once(text, "Let $r$ be an odd prime.", r"Let $r\ge37$ be prime with $r\equiv1\pmod3$.")
     text = replace_once(text, r"Choose an $\mathbb F_r$-basis $\beta_1,\ldots,\beta_d$ of $K$.",
                         r"Choose a power basis $\beta_\nu=\vartheta^{\nu-1}$, $1\le\nu\le13$, of $K/\mathbb F_r$.")
