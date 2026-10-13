@@ -14,16 +14,18 @@
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-At dimension \(d=13\), pair twelve conjugate determinants and retain
-one unpaired determinant. The classical five-term formula and polarization
-reduce the number of norm summands to \(T=25\cdot20^6\).
+At dimension \(d=13\), apply the known eighteen-form determinant
+decomposition over primes \(r\equiv1\pmod3\). Pairing twelve conjugates
+and retaining one unpaired determinant gives \(T=25\cdot18^6\).
 An exactly counted mixed-radix sphere and the retained slab scales give
 \[
- k=27\cdot23^9,\qquad
- \eta_{\rm pair}=\frac{1}{498\cdot27\cdot23^9+7}
-       \approx4.12910920359891\cdot10^{-17}.
+ k=15^7\cdot19^4,\qquad
+ \eta_{18}=\frac{1}{498\cdot15^7\cdot19^4+7}
+       \approx9.01814969547931\cdot10^{-17}.
 \]
-This is about 1.806 times the preceding five-term/orbit exponent.
+This is about 2.184 times the preceding twenty-form paired exponent.
+The prime number theorem in the fixed progression supplies the required
+bounded-ratio interpolation to every sufficiently large cardinality.
 The earlier constructions are retained below.
 Lean proves the group action, exact orbit count, norm decomposition, bilinear descent,
 homogeneous degree-13 coordinates and the distinct-label criterion.
@@ -31,6 +33,7 @@ It also proves the exact layer count, complete finite packing and
 inherited integer scale inequalities. The algebra proof uses Mathlib;
 the packing and scale proofs use core Lean.
 The slab's finite-field geometry is proved in writing, not in Lean.
+The prime-progression interpolation is also a written argument.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
 
@@ -1206,16 +1209,139 @@ The optional bounded search checks mixed alphabet sizes and small positive
 weights. Its output is exploratory evidence; the final witness is certified
 independently of the search.
 
+\section{Eighteen forms over split primes}\label{sec:eighteen}
+The classical eighteen-form construction of Conner, Gesmundo, Landsberg
+and Ventura \cite{cglv} improves the paired decomposition when a root
+of $u^2-u+1$ is available. We restrict the label primes explicitly.
+
+\begin{lemma}\label{lem:eighteen-norm}
+For $d=13$ and prime $r\ge37$ with $r\equiv1\pmod3$, there are
+$T=25\cdot18^6=850\,305\,600$ triples of homogeneous degree-$13$
+polynomials over $\mathbb F_r$ (allowing zero) satisfying
+\[
+ \mathcal N(X^{(1)},X^{(2)},X^{(3)})
+ =\sum_{a=0}^{T-1}\det(f_{ia}(X^{(j)}))_{i,j=1}^3.
+\]
+\end{lemma}
+\begin{proof}
+Choose $u\in\mathbb F_r$ with $u^2-u+1=0$. Such a root exists:
+Cauchy's theorem gives an element $z$ of order three in $\mathbb F_r^*$,
+and $u=-z$ works. Write $v=1-u$. The eighteen forms below are the
+Conner--Gesmundo--Landsberg--Ventura decomposition,
+arXiv:1909.04785, Theorem 4.1, with the second coefficient column
+multiplied by three. For each row permutation $\sigma$, the three
+listed coefficient vectors $c$ define $h(x,y)=\sum_i c_i x_{\sigma(i)}y_i$:
+\[
+\begin{array}{c|ccc}
+\sigma & c^{(1)} & c^{(2)} & c^{(3)}\\\hline
+(1,2,3)&(-u,-1,v)&(-v,-1,u)&(-v,v,v)\\
+(1,3,2)&(-1,-u,-v)&(v,-u,1)&(u,-u,-u)\\
+(2,1,3)&(-u,v,1)&(-v,v,-v)&(-v,u,1)\\
+(3,1,2)&(-1,-u,v)&(-1,-v,u)&(-1,1,-1)\\
+(2,3,1)&(-1,-1,1)&(v,u,1)&(u,v,1)\\
+(3,2,1)&(1,-u,v)&(-v,-v,v)&(1,-v,u)
+\end{array}
+\]
+Direct polynomial calculation modulo $u^2-u+1$ gives
+\[
+ 3\det A\det B=\sum_{t=1}^{18}\prod_{j=1}^3
+ h_t(A_{\cdot j},B_{\cdot j}).
+\]
+Lean proves this identity over every commutative ring containing such
+a root; the factor is three. The same form occurs in all three columns.
+Enumerate the thirteen conjugates as one singleton $g_0$ and six
+pairs $(a_v,b_v)$. For $w\in\{1,\ldots,18\}^6$ put
+\[
+ H_w(X)=\prod_{v=1}^6h_{w_v}(a_v(Z(X)),b_v(Z(X))),\qquad
+ F_{iw}(X)=g_0(Z_i(X))H_w(X).
+\]
+Column scaling gives $3^6\mathcal N=\sum_w\det(F_{iw}(X^{(j)}))$;
+each coordinate is homogeneous of degree thirteen.
+Apply the power-basis constant-coordinate functional $\ell$, which
+fixes $\mathbb F_r$. Interpolation at $25$ distinct nodes gives
+$\ell(xyz)=\sum_s\widehat x(s)\widehat y(s)\ell(c_sz)$.
+Thus the rows $3^{-6}\widehat F_{1w}(s)$, $\widehat F_{2w}(s)$,
+$\ell(c_sF_{3w})$ give $25\cdot18^6$ base-field determinants.
+This descent excludes characteristic three; the root condition must
+not be dropped. Lean also proves homogeneity and the nonzero criterion
+for distinct Vandermonde labels.
+\end{proof}
+
+Use eleven coordinates with half-alphabets
+$(5,5,5,5,4,4,4,4,4,4,4)$ and radices $b_j=4A_j-1$. Put
+\[
+ u(x)=\sum_jx_j\prod_{h<j}b_h,\qquad
+ k=19^4\cdot15^7=22\,266\,564\,609\,375.
+\]
+Writing $y_j=2x_j-(2A_j-1)$, the energy layer
+$\sum_j(y_j^2-1)/8=32$ has exactly
+\[
+ [z^{32}]\left(2\sum_{a=0}^4z^{a(a+1)/2}\right)^4
+ \left(2\sum_{a=0}^3z^{a(a+1)/2}\right)^7
+ =872\,130\,560>T
+\]
+words, all of squared norm $11+8\cdot32=267$.
+Eleven transitions of the exact counting recurrence are kernel-checked.
+Choose $T$ distinct words and put $v(x)=k-1-2u(x)$. Digit sums are
+below their radices, so encoded midpoints are coordinatewise midpoints.
+Equal squared norms force equality. Therefore both position maps are
+injective, take values in $[0,k)$, and satisfy
+\[
+ u(x)+u(y)+v(z)=k-1\quad\Longleftrightarrow\quad x=y=z.
+\]
+Lean proves this complete finite packing; no optimality is claimed.
+
+
+\paragraph{Transfer to all cardinalities.}
+For the final label prime, use the prime number theorem in the
+fixed progression $1\pmod3$: $\pi(x;3,1)\sim x/(2\log x)$.
+See NIST DLMF, Section 27.11, final paragraph,
+\url{https://dlmf.nist.gov/27.11}.
+It implies $\pi(2m;3,1)-\pi(m;3,1)\sim m/(2\log m)>0$.
+Thus for every sufficiently large $m$ there is a prime $r\equiv1\pmod3$
+with $m<r\le2m$. This is an unconditional standard theorem, used here
+in writing and not formalized in Lean. Mere infinitude of these primes
+would not justify the bounded-ratio interpolation step.
+The auxiliary primes $B$ and $q$ still use the ordinary Bertrand lemma.
+
+The slab transfer gives $A_kr^\alpha\le n_r\le D_kr^\alpha$ along
+the allowed primes, where $\alpha=\rho+\gamma$, $\rho=498k+6$ and
+$\gamma=\rho/(2\rho+1)$. For any sufficiently large $n$, set
+$m=\lceil(n/A_k)^{1/\alpha}\rceil$ and choose the allowed prime in
+$(m,2m]$. Then $n\le n_r\le C_kn$, and taking a subset preserves
+the minimum triangle area. Thus, conditional on the same geometric
+estimates,
+\[
+ \Delta(n)\ge c n^{-2+\eta_{18}},\qquad
+ \eta_{18}=\frac1{11\,088\,749\,175\,468\,757},\qquad
+ 2.18<\frac{\eta_{18}}{\eta_{\rm pair}}<2.19.
+\]
+The new algebra and complete finite packing are proved in Lean.
+The standard theorem on primes in progressions is used in writing;
+it is not an extra conjecture or a Lean assumption substituted for a proof.
+The geometric Heilbronn theorem remains outside the formalization.
+
+The independent checker verifies all 729 coefficients over
+$\mathbb Z[u]/(u^2-u+1)$, fully enumerates degrees three and five,
+and checks factorized norms and sampled descents in degree thirteen.
+It rejects a wrong root, wrong normalization, mismatched column forms
+and a dropped prime restriction. A full digit histogram and separate
+multinomial count both give $872\,130\,560$.
+The optional bounded search evaluates 8,341 histograms in its listed
+families; this establishes a feasible witness, not optimality.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the paired result, run \texttt{python scripts/build\_paired.py},
+For the current result, run \texttt{python scripts/build\_eighteen.py}
+and \texttt{python scripts/verify\_eighteen.py}.
+For the preserved paired result, run \texttt{python scripts/build\_paired.py},
 \texttt{python scripts/verify\_paired.py}, or the complete verifier below.
 
 For the preserved five-term result, run \texttt{python scripts/build\_rankfive.py},
 then \texttt{python scripts/verify\_rankfive.py}. The ternary,
 sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
-Frobenius-orbit and rank-five patches are nine alternatives applied
+Frobenius-orbit, rank-five, paired and eighteen-form patches are eleven alternatives applied
 directly to the unchanged manuscript, not successive patches.
 The retuned, slab, central, norm, bilinear and Frobenius patches update Sections 3--8, including the full deletion
 and interpolation argument.
@@ -1336,7 +1462,8 @@ Section~4. Mathlib is pinned to commit
 \texttt{20c73142afa995ac9c8fb80a9bb585a55ca38308};
 the dependency lock contains all seven exact revisions.
 \texttt{scripts/verify\_algebra.py} rebuilds these five modules, the
-two bilinear modules, four Frobenius modules, four rank-five modules and three paired modules, auditing 53
+two bilinear modules, four Frobenius modules, four rank-five modules,
+three paired modules and three eighteen-form modules, auditing 62
 exported theorems in total. Their only logical
 axioms are \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}. Each compilation is limited to one thread,
@@ -1454,6 +1581,12 @@ a different form in the third column and a repeated conjugate. The exact
 layer count is independently recovered by a multinomial sum.
 
 \begin{thebibliography}{9}
+\bibitem{cglv} A. Conner, F. Gesmundo, J. M. Landsberg, E. Ventura,
+\emph{Rank and border rank of Kronecker powers of tensors and Strassen's
+laser method}, Theorem 4.1. \url{https://arxiv.org/abs/1909.04785}.
+\bibitem{pnt-ap} NIST Digital Library of Mathematical Functions,
+Section 27.11, final paragraph: prime number theorem in arithmetic
+progressions. \url{https://dlmf.nist.gov/27.11}.
 \bibitem{upstream} OpenAI, \emph{A power improvement in the Heilbronn
 triangle lower bound}, September 25, 2026.
 Exact paths and hashes: \texttt{upstream/manifest.json}.

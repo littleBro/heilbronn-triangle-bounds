@@ -3,54 +3,64 @@
 The current target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 27 * 23^9 + 7) = 1 / 24218298686031505.
+    eta = 1 / (498 * 15^7 * 19^4 + 7) = 1 / 11088749175468757.
 
-This is a conditional refinement of the pinned OpenAI family 191 argument.
-Read the paired-determinant section of [the note](../notes/sphere-packing.tex)
-and the [six-section source patch](../patches/paired-norm.patch).
+Read the eighteen-form section of [the note](../notes/sphere-packing.tex)
+and the [six-section source patch](../patches/eighteen-norm.patch).
 All original manuscript files remain pinned at fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
 ## Evidence for each claim
 
 | Claim | Evidence | Boundary |
 | --- | --- | --- |
-| Twenty symmetric products for a determinant pair | PairedExpansion.pair_identity | Integral identity over every commutative ring, from the classical five-term formula and polarization |
-| Six pairs with one unpaired determinant | PairedExpansion.paired_product, PairedNorm.norm_expansion | Normalization 4^6; no extra factor five for the singleton |
-| T = 25 * 20^6 = 1,600,000,000 base-field terms | PairedNorm.finite_field_norm | Degree 13, at least 25 base-field elements, characteristic two excluded |
-| Homogeneous degree-13 coordinates | PairedPolynomials.finite_field_polynomials | Coefficientwise descent preserves degree |
-| Nonzero residue precisely for distinct labels | PairedPolynomials.prime_field_labels | Actual Mathlib field norm; every prime r >= 37 |
-| Exact energy-59 count 1,641,775,104 | PairedLayer.exact_layer_count | Ten kernel-checked histogram transitions tied to symbolic counting |
-| Selection, bounds, injections and matching | PairedPacking.trace_packing | k = 27 * 23^9; uses the general MixedSphere proof |
-| Gain greater than 1.80 | PairedPacking.trace_gain | Exact integer comparison against the preserved rank-five checkpoint |
-| Scale inequalities | Tuned.lean, Slab.lean, certificates/paired.json | Uniform arithmetic; geometric estimates remain separate |
+| Eighteen symmetric products for a determinant pair | EighteenExpansion.pair_identity | Every commutative ring with u² − u + 1 = 0; multiplier 3 |
+| Six pairs with one unpaired determinant | EighteenExpansion.paired_product, EighteenNorm.norm_expansion | Normalization 3^6 |
+| T = 25 * 18^6 = 850,305,600 | EighteenNorm.finite_field_norm | Degree 13, at least 25 base-field elements, characteristic 3 excluded, required root |
+| Homogeneous degree-13 coordinates | EighteenPolynomials.finite_field_polynomials | Coefficientwise descent preserves degree |
+| Root existence and distinct-label criterion | EighteenPolynomials.root_exists, prime_field_labels | Every prime r >= 37 congruent to 1 mod 3 |
+| Exact energy-32 count 872,130,560 | EighteenLayer.exact_layer_count | Eleven kernel-checked transitions tied to symbolic counting |
+| Selection, bounds, injections and matching | EighteenPacking.trace_packing | k = 15^7 * 19^4 |
+| Gain greater than 2.18 | EighteenPacking.trace_gain | Integer comparison against the preserved paired checkpoint |
+| Scale inequalities | Tuned.lean, Slab.lean, certificates/eighteen.json | Uniform arithmetic; geometry remains separate |
+| Allowed prime in (m, 2m] eventually | PNT in arithmetic progressions, written derivation | Standard unconditional theorem; not formalized here |
 | Slab, lattice, probability and deletion estimates | Written note and pinned manuscript | Not all formalized; no practical threshold or complete independent upstream audit |
 | Reproduction | artifacts/repository-verification.json and individual reports | Applies to the recorded sources and environment |
 
-The shared algebra audit covers eighteen Mathlib-based modules and 53 exported
-theorems. Only propext, Classical.choice and Quot.sound are permitted. No
-assumption stands in for a claimed norm or finite packing identity.
+The shared algebra audit covers 21 modules and 62 exported theorems. Only
+propext, Classical.choice and Quot.sound are permitted. The root condition
+is a hypothesis of the general algebraic identity; root existence is proved
+for the prime progression in the exported specialization.
 
 ## The steps most useful to review
 
-- Expand the 20 bilinear forms using the coefficient arrays of the
-  [Krishna–Makam formula](https://arxiv.org/abs/1801.00496).
-  Check that the same form is used in all three columns and that the
-  normalization is four, not six.
-- Enumerate the automorphisms by one singleton and six disjoint pairs.
-  Every conjugate occurs once. A common factor in each column scales the
-  unpaired determinant directly; it need not be expanded into five products.
-- Apply the constant-coordinate functional, which fixes the base field,
-  and 25-node interpolation of the first two rows. The third row is
-  constantCoord(c_t * input). Include the factor 4^(-6) in one row only.
-- Count the coefficient of z^59 in
-  (2 sum_{j=0}^6 z^(j(j+1)/2)) * (2 sum_{j=0}^5 z^(j(j+1)/2))^9.
-  The full digit histogram and a separate multinomial calculation agree.
-- With half-alphabets [7,6,6,6,6,6,6,6,6,6], use radices [27,23,23,23,23,23,23,23,23,23].
-  Each digit sum is below its radix; equal norm 482 forces midpoint rigidity.
-  Selection, both injections and matching are proved in Lean.
+- Compare the explicit forms to [CGLV, Theorem 4.1](https://arxiv.org/abs/1909.04785).
+  The second coefficient column is multiplied by three. Check the resulting
+  pair multiplier 3 directly; do not infer normalization from tensor notation.
+- Check all 729 tensor coefficients over Z[u]/(u² − u + 1). For the Lean
+  identity the same bilinear form appears in every column.
+- Enumerate one singleton and six disjoint pairs, then apply 25-node descent.
+  Include 3^(-6) in one row only.
+- Verify Cauchy's order-three element gives u = -z. The prime restriction
+  cannot be removed: for example r = 41 has no root in its degree-13 extension.
+- Count the coefficient of z^32 in
+  (2 sum_{j=0}^4 z^(j(j+1)/2))^4 * (2 sum_{j=0}^3 z^(j(j+1)/2))^7.
+  The full histogram and a separate multinomial count agree.
+- With radices [19,19,19,19,15,15,15,15,15,15,15], no digit sums carry.
+  Equal norm 267 forces midpoint rigidity.
+- For all-cardinalities interpolation, use pi(x;3,1) ~ x/(2 log x).
+  Then pi(2m;3,1) - pi(m;3,1) ~ m/(2 log m) > 0 eventually.
+  This written use of the [standard theorem](https://dlmf.nist.gov/27.11)
+  is separate from the Lean proof. B and q use ordinary Bertrand intervals.
 
-The bounded search in artifacts/packing-search.json is not an optimality proof.
-The proof checker validates the chosen witness independently of that search.
+The bounded search records 8,341 histograms in explicitly listed families.
+The proof checker validates its witness independently; no global optimum
+or new determinant formula is claimed.
+
+The checker applies the rank-five, paired and eighteen-form patches to
+separate ignored text copies, then checks all 58 referenced labels in each
+manuscript. A negative control removes the matching label and must fail.
+The two earlier patches now explicitly restore the row-position definitions
+and name the power-basis coordinates used by the retained source.
 
 The retained slab transfer is unchanged:
 
@@ -66,8 +76,8 @@ The retained slab transfer is unchanged:
 4. For N = (hq)^4 and gamma = rho/(2 rho + 1), rho = 498k + 6,
    pair and triple deletion have negative powers gamma - 6(k - 1) and
    2 gamma - 1. The latter is extremely close to zero.
-5. Cardinality grows as r^(rho + gamma). The two-sided bound, Bertrand's
-   interval and taking subsets give every sufficiently large n without
+5. Cardinality grows as r^(rho + gamma). The two-sided bound, the prime
+   interval for r = 1 mod 3 and taking subsets give every sufficiently large n without
    assuming that the sampled cardinalities are monotone.
 
 The exponent comparison does not control the hidden constants or the threshold

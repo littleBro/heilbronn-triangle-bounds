@@ -33,6 +33,9 @@ THEOREMS = {
     "PairedExpansion": ["pair_identity", "paired_product"],
     "PairedNorm": ["term_card", "norm_expansion", "norm_decomposition", "finite_field_norm"],
     "PairedPolynomials": ["finite_field_polynomials", "prime_field_labels"],
+    "EighteenExpansion": ["pair_identity", "paired_product"],
+    "EighteenNorm": ["term_card", "norm_expansion", "norm_decomposition", "finite_field_norm"],
+    "EighteenPolynomials": ["root_exists", "finite_field_polynomials", "prime_field_labels"],
 }
 
 
@@ -59,7 +62,8 @@ def verify_algebra():
         require(result.returncode == 0 and "error:" not in output and "sorryAx" not in output,
                 "Lean failure: " + module + "\n" + output)
         for name in names:
-            namespace = ("HeilbronnPaired" if module.startswith("Paired") else
+            namespace = ("HeilbronnEighteen" if module.startswith("Eighteen") else
+                         "HeilbronnPaired" if module.startswith("Paired") else
                          "HeilbronnRankFive" if module.startswith("RankFive") else
                          "HeilbronnFrobenius" if module.startswith("Frobenius") else "HeilbronnNorm")
             matches = re.findall("'" + namespace + r"\." + name +
@@ -85,9 +89,10 @@ def verify_algebra():
                  "coordinates and nonzero residue exactly for distinct labels; "
                  "37-node and 25-node descents, plus Galois-orbit compression "
                  "the five-term tensor formula and paired determinants, giving 1600000000 base-field "
-                 "determinants for every prime >= 37.",
+                 "determinants for every prime >= 37. The 18-form checkpoint gives 850305600 "
+                 "determinants for primes >= 37 congruent to 1 mod 3, with root existence proved.",
         "not_established": ["slab cap geometry", "lattice and probability estimates",
-                            "full Heilbronn theorem"],
+                            "prime number theorem in arithmetic progressions", "full Heilbronn theorem"],
         "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},
     }
     (ROOT / "artifacts/algebra-verification.json").write_text(

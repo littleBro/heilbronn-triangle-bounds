@@ -138,7 +138,7 @@
     "'HeilbronnFrobeniusPacking.trace_packing' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnFrobeniusPacking.trace_gain' does not depend on any axioms"
   ],
-  "algebra_theorems_audited": 53,
+  "algebra_theorems_audited": 62,
   "patch_applies": true,
   "patched_sections": 6,
   "evidence_sha256": {
@@ -167,11 +167,11 @@
     "certificates/central.json": "41f9889d0b318bcf51e1bc49c87fb76d0fffced60d0aa04ffca13538c5d26cf9",
     "patches/frobenius-orbits.patch": "69353b68a4a9771bf58342c0525aff34e70d6a1112cb01e14bf9359fc10a836f",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
-    "notes/sphere-packing.tex": "6aa01e68fd5ca1e6f2d2a8b08637a4308a94f5edf4db51ea4009b90a82e1fc46",
-    "README.md": "af08488131c9595769b1fb6eb7c2f80155f0f239b3fde49148ba2e83d6198935",
-    "docs/review.md": "5f8b6908b1575550084e27e8fe390a5eea647a7771c417549b237ff47301b65c",
-    "artifacts/sphere-latex-status.json": "74bdefc290c715344fecd629ce677dd0d9bf2389a375b830b9c6789e17460040",
-    "artifacts/algebra-verification.json": "1c104615924b5da4da1a63d3aab6771a5f38a46619ccdb3ac2f9a4e7ccccdd0e",
+    "notes/sphere-packing.tex": "688329ef5f0a651ce21def47df2f5bd6c3f8582b37158acbefaf66a4c24fbbe2",
+    "README.md": "4c249cf06050d949cec3f8411957f51323396d4308a8ceef6e0687a71a456013",
+    "docs/review.md": "95b6447449eca4bb66efc82bf455fb3f8253c1cb5711fd5ab7676b1dd261aa36",
+    "artifacts/sphere-latex-status.json": "594a399530289bb6c8725e2bea2be9abee4d0dd1fce8e5071a1b0cbb16adbee4",
+    "artifacts/algebra-verification.json": "fb2d3abe6ca76b1a333d25bea9769d173aab219b8cd2f2a1d72664e09bf6d935",
     "lean/NormExpansion.lean": "713d3bc94714a006ea0fe3b29fda382deb777b63014fd27d084a2824ed8f4e0b",
     "lean/NormDescent.lean": "1fe8045a3bfcff2f7116c697cfc55c4b1b094244b09c3beed467e2def5b5466e",
     "lean/NormAlgebra.lean": "018e9199ac2d5f0797f69d24422495865de2f4511636b60e26307bc36f4bcebc",
@@ -190,11 +190,14 @@
     "lean/PairedExpansion.lean": "0b170ce7a4eaa33530e9d1baae3e70df50ab496f66bbda07bdb4449c02315998",
     "lean/PairedNorm.lean": "139bdd4205f1356428ecb9692d1d44dd79a1870443ebcf5de5ccd8f62de930cf",
     "lean/PairedPolynomials.lean": "365c81d2e1449fa119fd4f9159b02e7247fe52146bbb293c892a9a7f09046c41",
-    "lakefile.lean": "eaf375d384a033e3cd00189ff88e8798b5e73f966c0d7b4ac1527cfee231cc77",
+    "lean/EighteenExpansion.lean": "d7db2fed625709c1d1c5380c3f1a7ad24fadd254b964c0ec21c9cd2513f9cb4b",
+    "lean/EighteenNorm.lean": "b2f304a86fb7109bcff7f5c0929296d8aa72692adeb0f7be3dde0e67ac97c635",
+    "lean/EighteenPolynomials.lean": "7d24b17af7b171ea6c6d0c0123bf65582fd53eff61f07b6a8e1a3d18a6f4ef92",
+    "lakefile.lean": "8f8484516303bdbfb4d749b44d2d86d4849d000e34bbc2bc1dca48fb6ceae7f6",
     "lake-manifest.json": "8bd77b3cd6efc5ceb88b72ee2f691cdbff5d768d88817b480b3c0cf547a9d3ad",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
     "scripts/prepare_mathlib.py": "7933e53832bffaec8175e990838e0108f8110db074b3e928d8e69c4c71d1547f",
-    "scripts/verify_algebra.py": "2ee348b7853752d17a9ea226580e77c996b3bdd1b52ef2d9f0fa30051fe4df22"
+    "scripts/verify_algebra.py": "c9f87e1eb253c652e4e270543faa7a081f0a3016615ce010f479b854246b4eba"
   },
   "not_established": [
     "Lean proof of slab cap geometry or full geometric theorem",

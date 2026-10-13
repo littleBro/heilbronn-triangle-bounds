@@ -19,7 +19,7 @@
  For $t\in K$, the product $\prod_{j=0}^{d-1}t^{r^j}$ is therefore fixed
  by Frobenius and belongs to $\mathbb F_r$; it is nonzero if $t\ne0$.
 -Choose an $\mathbb F_r$-basis $\beta_1,\ldots,\beta_d$ of $K$.
-+Choose a power basis $1,\vartheta,\ldots,\vartheta^{12}$ of $K/\mathbb F_r$.
++Choose a power basis $\beta_\nu=\vartheta^{\nu-1}$, $1\le\nu\le13$, of $K/\mathbb F_r$.
  For a group $X=(X_{i\nu})_{1\le i\le3,\,1\le\nu\le d}$ of $3d$
  variables, define
  \[
@@ -137,26 +137,11 @@
  Lemma~\ref{norm:prime-interval} with $n=100k^2L^3$ to choose a prime
  $B$ satisfying
  \begin{equation}\label{norm:base}
-@@ -129,22 +153,35 @@
+@@ -129,22 +153,43 @@
   \tau=\left\lfloor\frac{B^{k-1}}2\right\rfloor,
   \qquad R_h=\mathbb Z/h\mathbb Z.
  \end{equation}
 -For $0\le a<T$, designate positions in rows $1,2,3$, respectively, by
--\begin{equation}\label{norm:positions}
-- i_a=a,\qquad j_a=Ta,\qquad \ell_a=T^2-(T+1)a.
--\end{equation}
--These positions lie in $\{0,\ldots,k-1\}$ and are distinct within each
--row: they lie respectively in the intervals $[0,T-1]$, $[0,T^2-T]$,
--and $[1,T^2]$.  The only designated positions whose sum is $k-1$ are
--the matched triples:
--\begin{equation}\label{norm:matching}
-- i_a+j_{a'}+\ell_{a''}=k-1
-- \quad\Longleftrightarrow\quad a=a'=a''.
--\end{equation}
--To prove the forward implication, rewrite the equation as
--$a+Ta'=(T+1)a''$.  Reduction modulo $T$, together with
--$0\le a,a''<T$, gives $a=a''$; substitution then gives $a'=a''$.
--The reverse implication follows from \eqref{norm:positions}.
 +Use ten coordinates with half-alphabets
 +$(A_0,\ldots,A_9)=(7,6,\ldots,6)$: one alphabet has $14$ digits and nine
 +have $12$. Set $b_j=4A_j-1$ and
@@ -185,11 +170,32 @@
 +Both position maps are injective. Lean proves selection, bounds, injectivity
 +and matching. Enumerate the selected words by $0\le a<T$ and denote their
 +positions by $u_a,v_a$. This is a feasible witness, with no optimality claim.
++Designate the three row positions by
+ \begin{equation}\label{norm:positions}
+- i_a=a,\qquad j_a=Ta,\qquad \ell_a=T^2-(T+1)a.
+-\end{equation}
+-These positions lie in $\{0,\ldots,k-1\}$ and are distinct within each
+-row: they lie respectively in the intervals $[0,T-1]$, $[0,T^2-T]$,
+-and $[1,T^2]$.  The only designated positions whose sum is $k-1$ are
+-the matched triples:
++ i_a=j_a=u_a,\qquad \ell_a=v_a.
++\end{equation}
++Then the matching property used below is
+ \begin{equation}\label{norm:matching}
+- i_a+j_{a'}+\ell_{a''}=k-1
+- \quad\Longleftrightarrow\quad a=a'=a''.
+-\end{equation}
+-To prove the forward implication, rewrite the equation as
+-$a+Ta'=(T+1)a''$.  Reduction modulo $T$, together with
+-$0\le a,a''<T$, gives $a=a''$; substitution then gives $a'=a''$.
+-The reverse implication follows from \eqref{norm:positions}.
++ i_a+j_{a'}+\ell_{a''}=k-1\quad\Longleftrightarrow\quad a=a'=a''.
++\end{equation}
 +
  
  A random column $c=(c_1,c_2,c_3)^{\mathsf T}\in R_h^3$ is now defined
  as follows.  First choose $\xi$ uniformly from $K$.  For each row
-@@ -159,7 +196,7 @@
+@@ -159,7 +204,7 @@
  \begin{equation}\label{norm:column}
   c_i=\sum_{v=0}^{k-1}c_{iv}B^v\pmod h.
  \end{equation}

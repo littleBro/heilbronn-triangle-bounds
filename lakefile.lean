@@ -18,4 +18,5 @@ lean_lib Heilbronn where
     `MixedLayerCounting, `MixedLayerRows0, `MixedLayerRows1, `MixedLayerRows2,
     `MixedLayer, `RankFivePacking, `PairedExpansion, `PairedNorm, `PairedPolynomials,
     `PairedLayerData, `PairedLayerCounting, `PairedLayerRows0, `PairedLayerRows1,
-    `PairedLayer, `PairedPacking, `NormCompression, `Slab, `Tuned, `Sphere]
+    `PairedLayer, `PairedPacking, `EighteenExpansion, `EighteenNorm, `EighteenPolynomials,
+    `EighteenLayerData, `EighteenLayer, `EighteenPacking, `NormCompression, `Slab, `Tuned, `Sphere]
