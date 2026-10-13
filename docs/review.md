@@ -3,10 +3,10 @@
 The current target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 15^7 * 19^4 + 7) = 1 / 11088749175468757.
+    eta = 1 / (498 * 21725503513263 + 7) = 1 / 10819300749604981.
 
-Read the eighteen-form section of [the note](../notes/sphere-packing.tex)
-and the [six-section source patch](../patches/eighteen-norm.patch).
+Read the translated-interval and eighteen-form sections of [the note](../notes/sphere-packing.tex)
+and the [six-section source patch](../patches/trimmed-sphere.patch).
 All original manuscript files remain pinned at fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
 ## Evidence for each claim
@@ -18,10 +18,12 @@ All original manuscript files remain pinned at fd4aeeb2ee4fc729c18d98444fed42fd0
 | T = 25 * 18^6 = 850,305,600 | EighteenNorm.finite_field_norm | Degree 13, at least 25 base-field elements, characteristic 3 excluded, required root |
 | Homogeneous degree-13 coordinates | EighteenPolynomials.finite_field_polynomials | Coefficientwise descent preserves degree |
 | Root existence and distinct-label criterion | EighteenPolynomials.root_exists, prime_field_labels | Every prime r >= 37 congruent to 1 mod 3 |
-| Exact energy-32 count 872,130,560 | EighteenLayer.exact_layer_count | Eleven kernel-checked transitions tied to symbolic counting |
-| Selection, bounds, injections and matching | EighteenPacking.trace_packing | k = 15^7 * 19^4 |
-| Gain greater than 2.18 | EighteenPacking.trace_gain | Integer comparison against the preserved paired checkpoint |
-| Scale inequalities | Tuned.lean, Slab.lean, certificates/eighteen.json | Uniform arithmetic; geometry remains separate |
+| Counting below an encoded cutoff | IntervalCounting.below_cons | Universal recurrence on actual finite words |
+| Exact cutoff counts 10,596,664 and 860,902,264 | TrimmedLayer.below_lower, below_upper | 44 rows of 33 kernel-checked counts |
+| Exactly T words in the interval | TrimmedLayer.exact_interval_count | Difference of the two cutoff counts |
+| Selection, bounds, injections and matching | TrimmedPacking.translated_packing | k = 21,725,503,513,263; original digit radices retained |
+| Gain greater than 1.0249 | TrimmedPacking.trimmed_gain | Integer comparison against the preserved eighteen-form checkpoint |
+| Scale inequalities | Tuned.lean, Slab.lean, certificates/trimmed.json | Uniform arithmetic; geometry remains separate |
 | Allowed prime in (m, 2m] eventually | PNT in arithmetic progressions, written derivation | Standard unconditional theorem; not formalized here |
 | Slab, lattice, probability and deletion estimates | Written note and pinned manuscript | Not all formalized; no practical threshold or complete independent upstream audit |
 | Reproduction | artifacts/repository-verification.json and individual reports | Applies to the recorded sources and environment |
@@ -30,6 +32,9 @@ The shared algebra audit covers 21 modules and 62 exported theorems. Only
 propext, Classical.choice and Quot.sound are permitted. The root condition
 is a hypothesis of the general algebraic identity; root existence is proved
 for the prime progression in the exported specialization.
+The interval checker additionally audits nine counting and packing theorems.
+The generated finite table is connected to symbolic word counting; its
+entries are checked in the kernel and are not assumed as hypotheses.
 
 ## The steps most useful to review
 
@@ -45,18 +50,30 @@ for the prime progression in the exported specialization.
 - Count the coefficient of z^32 in
   (2 sum_{j=0}^4 z^(j(j+1)/2))^4 * (2 sum_{j=0}^3 z^(j(j+1)/2))^7.
   The full histogram and a separate multinomial count agree.
-- With radices [19,19,19,19,15,15,15,15,15,15,15], no digit sums carry.
-  Equal norm 267 forces midpoint rigidity.
+- Read the half-alphabets in the current order [4,4,4,4,4,4,5,4,5,5,5].
+  With the original radices 4A - 1, no digit sums carry and equal norm 267
+  forces midpoint rigidity.
+- For the interval [133966008273, 10996717764905), check both cutoff counts.
+  After choosing the low digit d in radix b, the remaining cutoff is
+  floor(B/b) + 1_{d < B mod b}. The independent checker reads high digits first.
+- Subtract the lower endpoint before setting v = k - 1 - 2u.
+  The upper cutoff is exclusive, so k = 2(upper - lower) - 1.
+  Omitting either endpoint loses a word; omitting the translation breaks
+  the right-position bound. The final k is not the digit radix product.
 - For all-cardinalities interpolation, use pi(x;3,1) ~ x/(2 log x).
   Then pi(2m;3,1) - pi(m;3,1) ~ m/(2 log m) > 0 eventually.
   This written use of the [standard theorem](https://dlmf.nist.gov/27.11)
   is separate from the Lean proof. B and q use ordinary Bertrand intervals.
 
-The bounded search records 8,341 histograms in explicitly listed families.
-The proof checker validates its witness independently; no global optimum
-or new determinant formula is claimed.
+The new bounded search evaluates 313,427 intervals on finite grids over
+330 coordinate orders and energies 32, 33 and 34. It does not check every
+possible interval. The proof checker validates the exact witness independently;
+no interval optimum, global packing optimum or new determinant formula is claimed.
+Independent controls compare 13,583 small cutoff counts with enumeration
+and check 42,216 matching triples. All 1,452 saved count entries are also
+recomputed by the separate lexicographic algorithm.
 
-The checker applies the rank-five, paired and eighteen-form patches to
+The checkers apply the rank-five, paired, eighteen-form and interval patches to
 separate ignored text copies, then checks all 58 referenced labels in each
 manuscript. A negative control removes the matching label and must fail.
 The two earlier patches now explicitly restore the row-position definitions

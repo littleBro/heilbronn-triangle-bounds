@@ -1,0 +1,32 @@
+{
+  "scope": "exact evaluations on the listed finite grids, not interval or packing optimality",
+  "target": 850305600,
+  "coordinate_orders": 330,
+  "feasible_layers": 990,
+  "coarse_grid_subdivisions": 128,
+  "local_refinement_rounds": 4,
+  "local_grid_subdivisions": 64,
+  "distinct_windows_evaluated": 313427,
+  "best": {
+    "half_alphabets_low_first": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      4,
+      5,
+      5,
+      5
+    ],
+    "energy": 32,
+    "layer_count": 872130560,
+    "first_rank": 10596664,
+    "lower_inclusive": 133966008273,
+    "upper_exclusive": 10996717764905,
+    "k": 21725503513263,
+    "box_k": 22266564609375
+  }
+}

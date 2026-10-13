@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "688329ef5f0a651ce21def47df2f5bd6c3f8582b37158acbefaf66a4c24fbbe2",
+  "source_sha256": "bd5fb47085634fefbc0162b03ef15ee8c9845c5ed9d64f63613007c4abefb0df",
   "attempt_date": "2026-10-13",
-  "attempt_scope": "Existing note including the 18-form identity, degree-13 norm descent, exact energy-32 mixed sphere, and written prime-progression transfer",
+  "attempt_scope": "Existing note including the interval-count recurrence, exact cutoffs, translated packing, and retained eighteen-form algebra and prime-progression transfer",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

@@ -17,13 +17,14 @@ replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
 At dimension \(d=13\), apply the known eighteen-form determinant
 decomposition over primes \(r\equiv1\pmod3\). Pairing twelve conjugates
 and retaining one unpaired determinant gives \(T=25\cdot18^6\).
-An exactly counted mixed-radix sphere and the retained slab scales give
+An exactly counted interval of the mixed-radix sphere, translated to zero,
+and the retained slab scales give
 \[
- k=15^7\cdot19^4,\qquad
- \eta_{18}=\frac{1}{498\cdot15^7\cdot19^4+7}
-       \approx9.01814969547931\cdot10^{-17}.
+ k=21\,725\,503\,513\,263,\qquad
+ \eta_{\rm int}=\frac{1}{10\,819\,300\,749\,604\,981}
+       \approx9.24274149636251\cdot10^{-17}.
 \]
-This is about 2.184 times the preceding twenty-form paired exponent.
+This is about $2.49044\%$ above the preceding eighteen-form exponent.
 The prime number theorem in the fixed progression supplies the required
 bounded-ratio interpolation to every sufficiently large cardinality.
 The earlier constructions are retained below.
@@ -1330,18 +1331,115 @@ multinomial count both give $872\,130\,560$.
 The optional bounded search evaluates 8,341 histograms in its listed
 families; this establishes a feasible witness, not optimality.
 
+\section{A translated interval of the sphere}\label{sec:trimmed}
+The eighteen-form algebra and its prime restriction remain unchanged.
+The next improvement comes from shortening the final position range.
+Use eleven coordinates with half-alphabets
+$(4,4,4,4,4,4,5,4,5,5,5)$ and radices $b_j=4A_j-1$.
+For $0\le x_j<2A_j$, put
+\[
+ E(x)=\sum_j\frac{(2x_j-(2A_j-1))^2-1}{8},\qquad
+ c(x)=\sum_j x_j\prod_{h<j}b_h.
+\]
+The energy-$32$ layer has $872\,130\,560$ words of common squared
+norm $267$. We retain only words whose encodings lie in $[C_-,C_+)$, where
+\[
+ C_-=133\,966\,008\,273,\qquad C_+=10\,996\,717\,764\,905.
+\]
+An exact cutoff recurrence gives
+\[
+ \#\{E(x)=32:c(x)<C_-\}=10\,596\,664,\qquad
+ \#\{E(x)=32:c(x)<C_+\}=860\,902\,264.
+\]
+Their difference is exactly $T=850\,305\,600$. Lean proves these
+counts from the actual finite word list, without enumerating it.
+For a low digit $d$ in radix $b$, the cutoff for the remaining word is
+$\lfloor R/b\rfloor+\mathbf1_{d<R\bmod b}$ for cutoff $R$. Subtract the digit's
+energy and sum over digits; the empty word is the base case.
+
+For each retained word define
+\[
+ u(x)=c(x)-C_-,\qquad v(x)=k-1-2u(x),\qquad
+ k=2(C_+-C_-)-1=21\,725\,503\,513\,263.
+\]
+Both maps take values in $[0,k)$ and are injective. A relation
+$u(x)+u(y)+v(z)=k-1$ is equivalent to $c(x)+c(y)=2c(z)$.
+The original radices still prevent carries; equal squared norms then
+force $x=y=z$. Translation and interval restriction preserve this
+argument. The shorter $k$ is the final position range, not a new radix
+product. Enumerate the retained words by $0\le a<T$ and set
+\begin{equation}\label{trimmed:positions}
+ i_a=j_a=u(x(a)),\qquad \ell_a=v(x(a)).
+\end{equation}
+The matching property is
+\begin{equation}\label{trimmed:matching}
+ i_a+j_{a'}+\ell_{a''}=k-1\quad\Longleftrightarrow\quad a=a'=a''.
+\end{equation}
+Lean proves selection, both bounds and injections, and matching.
+The interval is a verified feasible witness; optimality is not claimed.
+
+
+\paragraph{Formal count certificate.}
+Let $F_{\mathbf A}(e,R)$ count words of energy $e$ whose encoding is
+less than $R$. For an empty word this is $1$ exactly when $e=0$ and
+$R>0$. For the low coordinate, set $b=4A-1$ and let
+$\epsilon_A(d)=((2d-(2A-1))^2-1)/8$. Then
+\[
+ F_{A::\mathbf A}(e,R)=
+ \sum_{\substack{0\le d<2A\\\epsilon_A(d)\le e}}
+ F_{\mathbf A}\!\left(e-\epsilon_A(d),
+   \left\lfloor\frac Rb\right\rfloor+\mathbf1_{d<R\bmod b}\right).
+\]
+\texttt{IntervalCounting.lean} proves the digit inequality and this
+recurrence for the actual finite list of words. The certificate contains
+44 states indexed by a remaining alphabet suffix and a cutoff, each
+with energies $0$ through $32$. Two base rows and 42 transitions are
+kernel-checked. The generated proof gives both cutoff counts;
+\texttt{interval\_partition} then proves that their difference counts
+exactly the half-open interval. \texttt{TrimmedPacking.translated\_packing}
+proves selection, bounds, injectivity and matching.
+
+An independent algorithm reads the most significant digits first and
+sums complete blocks of lower-coordinate words. It checks every one of
+the 1,452 saved entries. Exhaustive small controls compare 13,583 cutoff
+counts with enumeration and check 42,216 matching triples. Removing
+either selected endpoint loses one word; using unshifted encodings
+violates the bound required for the right positions.
+
+The optional search evaluates 313,427 windows over 330 coordinate orders
+and energies $32,33,34$, using a finite rank grid and four local refinements.
+It does not examine every interval. The witness above is checked independently
+of this search and is not claimed optimal.
+
+With the same slab estimates and the written prime-progression transfer,
+\[
+ \Delta(n)\ge c n^{-2+\eta_{\rm int}},\qquad
+ \eta_{\rm int}=\frac1{498k+7}
+   =\frac1{10\,819\,300\,749\,604\,981},
+\]
+for all sufficiently large $n$, conditional on the retained geometric estimates.
+Exact arithmetic gives
+\[
+ 1.0249<\frac{\eta_{\rm int}}{\eta_{18}}<1.0250;
+\]
+the lower comparison is also kernel-checked. The full geometric theorem
+and the prime-distribution argument remain outside Lean.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the current result, run \texttt{python scripts/build\_eighteen.py}
-and \texttt{python scripts/verify\_eighteen.py}.
+For the current result, run \texttt{python scripts/build\_trimmed.py}
+and \texttt{python scripts/verify\_trimmed.py}.
+For the preserved eighteen-form result, run
+\texttt{python scripts/build\_eighteen.py} and
+\texttt{python scripts/verify\_eighteen.py}.
 For the preserved paired result, run \texttt{python scripts/build\_paired.py},
 \texttt{python scripts/verify\_paired.py}, or the complete verifier below.
 
 For the preserved five-term result, run \texttt{python scripts/build\_rankfive.py},
 then \texttt{python scripts/verify\_rankfive.py}. The ternary,
 sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
-Frobenius-orbit, rank-five, paired and eighteen-form patches are eleven alternatives applied
+Frobenius-orbit, rank-five, paired, eighteen-form and interval patches are twelve alternatives applied
 directly to the unchanged manuscript, not successive patches.
 The retuned, slab, central, norm, bilinear and Frobenius patches update Sections 3--8, including the full deletion
 and interpolation argument.

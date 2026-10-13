@@ -158,7 +158,7 @@
     "lean/EighteenExpansion.lean": "d7db2fed625709c1d1c5380c3f1a7ad24fadd254b964c0ec21c9cd2513f9cb4b",
     "lean/EighteenNorm.lean": "b2f304a86fb7109bcff7f5c0929296d8aa72692adeb0f7be3dde0e67ac97c635",
     "lean/EighteenPolynomials.lean": "7d24b17af7b171ea6c6d0c0123bf65582fd53eff61f07b6a8e1a3d18a6f4ef92",
-    "lakefile.lean": "8f8484516303bdbfb4d749b44d2d86d4849d000e34bbc2bc1dca48fb6ceae7f6",
+    "lakefile.lean": "a5a62b17c2afe98d4d8e775f517e67a405ba32c12a0d3634a1d830f245cc61f3",
     "lake-manifest.json": "8bd77b3cd6efc5ceb88b72ee2f691cdbff5d768d88817b480b3c0cf547a9d3ad",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
     "scripts/prepare_mathlib.py": "7933e53832bffaec8175e990838e0108f8110db074b3e928d8e69c4c71d1547f",
