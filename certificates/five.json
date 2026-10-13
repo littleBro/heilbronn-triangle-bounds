@@ -1,0 +1,241 @@
+{
+  "schema": "heilbronn-five-v1",
+  "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "status": "conditional-on-upstream-estimates",
+  "scope": "paper exponent; not the upstream Lean comparator exponent",
+  "previous_certificate": "certificates/rowdigits.json",
+  "previous_sha256": "ddf366f5754ac2b5890a9feb8406ca454f0bf719310513909b02db1546e348ea",
+  "d": 5,
+  "T": "2916",
+  "k": "1166895",
+  "decomposition": {
+    "pairs": 2,
+    "unpaired_conjugates": 1,
+    "terms_per_pair": 18,
+    "extension_determinants": "324",
+    "nodes_per_term": 9,
+    "pair_identity_multiplier": 3,
+    "normalization_denominator": 9,
+    "root_equation": "u^2-u+1=0",
+    "base_characteristic_excludes": [
+      3
+    ],
+    "formal_base_field_minimum": 9,
+    "manuscript_prime_minimum": 37,
+    "manuscript_prime_residue": 1,
+    "manuscript_prime_modulus": 3,
+    "formula_source": "https://arxiv.org/abs/1909.04785",
+    "row_maps": [
+      "3^(-2) * eval_t",
+      "eval_t",
+      "constantCoord(c_t * input)"
+    ]
+  },
+  "packing": {
+    "half_alphabets_low_first": [
+      2,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "radices_low_first": [
+      7,
+      7,
+      7,
+      7,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "unshifted_base": "583443",
+    "shift": "291726",
+    "energy_index": 2,
+    "squared_norm": 25,
+    "layer_count": "3072",
+    "count_table": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0
+      ],
+      [
+        8,
+        0,
+        0
+      ],
+      [
+        16,
+        0,
+        0
+      ],
+      [
+        32,
+        0,
+        0
+      ],
+      [
+        64,
+        64,
+        0
+      ],
+      [
+        128,
+        256,
+        128
+      ],
+      [
+        256,
+        768,
+        768
+      ],
+      [
+        512,
+        2048,
+        3072
+      ]
+    ],
+    "positions": [
+      "S+u",
+      "S+u",
+      "K0-1-2*u"
+    ]
+  },
+  "tags": {
+    "row1": {
+      "0": "1"
+    },
+    "row2": "basis coordinates of the label at positions 0..d-1",
+    "top_row_digit_choices": 1,
+    "minor_valuation_max": 4,
+    "fresh_digit_index_min": 1166890,
+    "required_k_min": 10,
+    "largest_tagged_position_sum": 1166893
+  },
+  "scales": {
+    "h": "B^k",
+    "tau": "floor(B^(k-1)/2)",
+    "H": "2*h",
+    "q": "h^6 < q <= 2*h^6; q prime",
+    "N": "(h*q)^4",
+    "n_r": "floor(r^gamma*sqrt(N^3/tau))",
+    "L1": "r",
+    "L2": "r",
+    "L3": "400*k^2*r^4",
+    "P": "L1*L2*L3",
+    "B": "100*k^2*P < B <= 200*k^2*P; B prime"
+  },
+  "row_digits": {
+    "coefficient_bound": "6*k^2*L1*L2*L3",
+    "general_tail": "((r/L2)^2*(r/L3)^2)^j",
+    "chosen_tail": "(r/L3)^(2*j)",
+    "theta": "B*(r/L3)^2",
+    "theta_upper": {
+      "numerator": "1",
+      "denominator": "2"
+    },
+    "conditional_moment_upper": 2,
+    "base_r_power": 6,
+    "conditional_probability_proof": "written; not formalized in Lean"
+  },
+  "collision": {
+    "M": "L3/r = 400*k^2*r^3",
+    "exactly_two_equal_moment": "2/M",
+    "joint_tail": "Pr(b>=j and J | labels) <= M^(-2*j-1), 1<=j<=a<d",
+    "all_three_equal_moment": 2,
+    "total": "6/(M*r^d)+2/r^(2*d)",
+    "r_powers": [
+      -8,
+      -10
+    ],
+    "proof_status": "written; not formalized in Lean"
+  },
+  "prime_transfer": {
+    "progression": "1 mod 3",
+    "interval": "m < r <= 2m for all sufficiently large m",
+    "theorem": "prime number theorem in a fixed arithmetic progression",
+    "source": "https://dlmf.nist.gov/27.11",
+    "lean_formalized": false
+  },
+  "cap": {
+    "set": "{(x,y,x^2-nu*y^2): 0 <= x < w, y in F_q}; nu nonsquare",
+    "width": "w = floor(q/(1000*H^2))",
+    "cardinality": "s = w*q",
+    "density_bound": "s >= q^2/(2000*H^2)",
+    "short_relation_change": "only first-coordinate bounds are required",
+    "proof_status": "written finite-field argument; not formalized in Lean"
+  },
+  "rho": "290556858",
+  "beta": {
+    "numerator": "48426143",
+    "denominator": "1"
+  },
+  "gamma": {
+    "numerator": "290556858",
+    "denominator": "290556859"
+  },
+  "alpha": {
+    "numerator": "84423288311945880",
+    "denominator": "290556859"
+  },
+  "eta": {
+    "numerator": "1",
+    "denominator": "145278430"
+  },
+  "gain_from_rowdigits": {
+    "numerator": "15789789943",
+    "denominator": "145278430"
+  },
+  "constraints": {
+    "zero_case_h_powers": [
+      0,
+      -2,
+      -6
+    ],
+    "two_equal_r_power": {
+      "numerator": "-2",
+      "denominator": "290556859"
+    },
+    "three_equal_r_power": {
+      "numerator": "-581113720",
+      "denominator": "290556859"
+    },
+    "pair_r_power": {
+      "numerator": "-1017146875720980",
+      "denominator": "290556859"
+    }
+  },
+  "formal_scope": {
+    "proved": [
+      "degree-5 norm decomposition into 9*18^2 determinants",
+      "homogeneous norm coordinates and distinct-label criterion over split primes",
+      "exact 3072-word layer, shifted packing and separation from label tags",
+      "determinant factorization for two repeated top columns",
+      "fresh-position and cleared-denominator alteration inequalities",
+      "exponent identity and gain greater than 108 over degree seven"
+    ],
+    "written_not_formalized": [
+      "tag minor valuation and fresh-digit joint probability bound",
+      "conditional divisor moment and repeated-label partition",
+      "upstream lattice, orbit, slab geometry and weighted counting arguments",
+      "asymptotic deletion and prime progression interpolation"
+    ]
+  },
+  "parameter_choice": "explicit feasible witness; no optimality claim"
+}
