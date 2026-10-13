@@ -8,22 +8,22 @@
 \newtheorem{proposition}[lemma]{Proposition}
 \title{Sphere packing and improved scales for the Heilbronn construction}
 \author{Ivan Blinov\\\small Research draft prepared with OpenAI Codex assistance}
-\date{October 8, 2026}
+\date{October 13, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-At dimension \(d=13\), the classical five-term determinant formula,
-Galois-orbit averaging and bilinear interpolation reduce the number of
-norm summands to \(T=25(5^{13}+60)/13\). An exactly counted mixed-radix
-sphere and the retained slab scales give the conditional paper exponent
+At dimension \(d=13\), pair twelve conjugate determinants and retain
+one unpaired determinant. The classical five-term formula and polarization
+reduce the number of norm summands to \(T=25\cdot20^6\).
+An exactly counted mixed-radix sphere and the retained slab scales give
 \[
- k=39\cdot35^8,\qquad
- \eta_{\rm rank\,5}=\frac{1}{498\cdot39\cdot35^8+7}
-       \approx2.28644993011544\cdot10^{-17}.
+ k=27\cdot23^9,\qquad
+ \eta_{\rm pair}=\frac{1}{498\cdot27\cdot23^9+7}
+       \approx4.12910920359891\cdot10^{-17}.
 \]
-This is about 2.344 times the preceding Galois-orbit exponent.
+This is about 1.806 times the preceding five-term/orbit exponent.
 The earlier constructions are retained below.
 Lean proves the group action, exact orbit count, norm decomposition, bilinear descent,
 homogeneous degree-13 coordinates and the distinct-label criterion.
@@ -1096,10 +1096,123 @@ Substitution into the unchanged slab transfer gives
 These are comparisons of asymptotic exponents. No practical threshold,
 point configuration or global optimality is claimed.
 
+\section{Pairing conjugate determinants}\label{sec:paired}
+The five-term formula is optimal for one determinant, but pairing two
+factors allows the same function to occur in all three columns. This
+additional symmetry avoids expanding the remaining odd factor.
+
+\begin{lemma}\label{norm:decomposition}
+For $d=13$ there are $T=25\cdot20^6=1\,600\,000\,000$ triples of
+homogeneous degree-$13$ polynomials $f_{ia}\in\mathbb F_r[X]$ (allowing zero),
+such that
+\begin{equation}\label{norm:determinant-sum}
+ \mathcal N(X^{(1)},X^{(2)},X^{(3)})
+ =\sum_{a=0}^{T-1}\det(f_{ia}(X^{(j)}))_{i,j=1}^3.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Start with the five-term integral determinant formula of Krishna--Makam,
+arXiv:1801.00496, Section 3.1. Its coefficient arrays $c_{tir}$ satisfy
+$\det Z=\sum_{t=0}^4\prod_{i=1}^3\sum_r c_{tir}Z_{ri}$ and are
+\[
+\begin{array}{c|ccc}
+t&\sum_r c_{t1r}Z_r&\sum_r c_{t2r}Z_r&\sum_r c_{t3r}Z_r\\\hline
+0&Z_2+Z_3&Z_1&Z_2\\
+1&-Z_1-Z_3&Z_2&Z_1\\
+2&-Z_2&Z_1+Z_3&Z_2+Z_3\\
+3&Z_2-Z_1&Z_3&Z_1+Z_2+Z_3\\
+4&Z_1&Z_2+Z_3&Z_1+Z_3
+\end{array}
+\]
+Let $E=\{(1,1,1),(1,-1,-1),(-1,1,-1),(-1,-1,1)\}$ and put
+\[
+ h_{t,\epsilon}(x,y)=\sum_{i,r}\epsilon_i c_{tir}x_ry_i.
+\]
+Polarization, $24abc=\sum_{\epsilon\in E}(\epsilon_1a+
+\epsilon_2b+\epsilon_3c)^3$, gives the integral identity
+\[
+ 4\det A\det B=\sum_{t,\epsilon}\prod_{j=1}^3
+                   h_{t,\epsilon}(A_{\cdot j},B_{\cdot j}).
+\]
+Indeed compare the coefficient of $z_1z_2z_3$ in the five-term formula
+for $\det(A\operatorname{diag}(z)B^{\mathsf T})$. Equivalently the displayed
+identity can be checked directly over the integers; Lean proves it over
+every commutative ring. The identical form in all three columns is essential.
+
+Enumerate the thirteen conjugates as one singleton $g_0$ and six pairs
+$(a_v,b_v)$. Write $M_g=(g(Z_i(X^{(j)})))_{i,j}$. For each of the $20^6$
+choices $w=((t_v,\epsilon_v))_{v=1}^6$, set
+\[
+ H_w(X)=\prod_{v=1}^6h_{t_v,\epsilon_v}(a_v(Z(X)),b_v(Z(X))),
+ \qquad F_{iw}(X)=g_0(Z_i(X))H_w(X).
+\]
+Every $F_{iw}$ is homogeneous of degree $13$, and column scaling gives
+\[
+ 4^6\mathcal N=\sum_w\det(F_{iw}(X^{(j)}))_{i,j}.
+\]
+There is no additional factor of five for the unpaired determinant.
+Let $\ell:K\to\mathbb F_r$ be the constant-coordinate functional of a
+power basis, so that $\ell$ fixes the base field. At $25$ distinct nodes
+$s=0,\ldots,24$, polynomial interpolation gives
+$xy=\sum_s\widehat x(s)\widehat y(s)c_s$ for degree-less-than-$13$
+representatives. Thus $\ell(xyz)=\sum_s\widehat x(s)\widehat y(s)\ell(c_sz)$.
+Apply this identity to each determinant, using rows
+$4^{-6}\widehat F_{1w}(s)$, $\widehat F_{2w}(s)$, and $\ell(c_sF_{3w})$.
+This gives $25\cdot20^6$ base-field determinants. The only characteristic
+restriction of this construction is that $2$ is invertible; prime $r\ge37$
+also supplies the interpolation nodes. No Galois-orbit division is used.
+\end{proof}
+
+Use ten coordinates with half-alphabets
+$(A_0,\ldots,A_9)=(7,6,\ldots,6)$: one alphabet has $14$ digits and nine
+have $12$. Set $b_j=4A_j-1$ and
+\[
+ u(x)=\sum_jx_j\prod_{h<j}b_h,\qquad
+ k=\prod_jb_j=27\cdot23^9=48\,631\,121\,859\,501.
+\]
+With $y_j=2x_j-(2A_j-1)$, take the layer
+$J=\sum_j(y_j^2-1)/8=59$. Its exact cardinality is
+\[
+ [z^{59}]\left(2\sum_{a=0}^6z^{a(a+1)/2}\right)
+ \left(2\sum_{a=0}^5z^{a(a+1)/2}\right)^9
+ =1\,641\,775\,104>T.
+\]
+Ten transitions of the recurrence $C_{A::S}(e)=
+2\sum_{a=0}^{A-1}C_S(e-a(a+1)/2)$, truncated at $e=59$, are checked
+by the Lean kernel. Negative indices are zero and $C_{[]}(e)=\mathbf1_{e=0}$.
+The layer has squared norm $10+8\cdot59=482$. Select $T$ distinct words
+and put $v(x)=k-1-2u(x)$. Digit sums are below their respective radices,
+so an encoded midpoint is a coordinatewise midpoint. Equal squared norms
+force all three words to coincide. Therefore
+\[
+ 0\le u(x),v(x)<k,\qquad
+ u(x)+u(y)+v(z)=k-1\quad\Longleftrightarrow\quad x=y=z.
+\]
+Both position maps are injective. Lean proves selection, bounds, injectivity
+and matching. Enumerate the selected words by $0\le a<T$ and denote their
+positions by $u_a,v_a$. This is a feasible witness, with no optimality claim.
+
+
+The slab scales from Section~\ref{sec:slab} are retained. They give
+\[
+ \eta_{\rm pair}=\frac{1}{24\,218\,298\,686\,031\,505},\qquad
+ 1.80<\frac{\eta_{\rm pair}}{\eta_{\rm rank\,5}}<1.81.
+\]
+The geometric transfer remains conditional on the pinned upstream
+estimates. The algebraic construction and complete finite packing have
+universal Lean proofs. The underlying five-term formula and polarization
+are classical; novelty and global optimality are not claimed.
+The optional bounded search checks mixed alphabet sizes and small positive
+weights. Its output is exploratory evidence; the final witness is certified
+independently of the search.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the current result, run \texttt{python scripts/build\_rankfive.py},
+For the paired result, run \texttt{python scripts/build\_paired.py},
+\texttt{python scripts/verify\_paired.py}, or the complete verifier below.
+
+For the preserved five-term result, run \texttt{python scripts/build\_rankfive.py},
 then \texttt{python scripts/verify\_rankfive.py}. The ternary,
 sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
 Frobenius-orbit and rank-five patches are nine alternatives applied
@@ -1223,7 +1336,7 @@ Section~4. Mathlib is pinned to commit
 \texttt{20c73142afa995ac9c8fb80a9bb585a55ca38308};
 the dependency lock contains all seven exact revisions.
 \texttt{scripts/verify\_algebra.py} rebuilds these five modules, the
-two bilinear modules, four Frobenius modules and four rank-five modules, auditing 45
+two bilinear modules, four Frobenius modules, four rank-five modules and three paired modules, auditing 53
 exported theorems in total. Their only logical
 axioms are \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}. Each compilation is limited to one thread,
@@ -1333,6 +1446,12 @@ The complete geometric theorem, practical point generation, novelty,
 priority, and unrestricted optimality remain outside the established
 scope. The unchanged upstream Lean comparator uses exponent
 \(1/(100000k)\) and a subsequence target; it has not been rerun.
+
+The paired checkpoint fully enumerates $20$ terms in degree three and
+$400$ in degree five. It also checks factorized degree-thirteen norms and
+sampled descended terms. Negative controls reject omitted factors of four,
+a different form in the third column and a repeated conjugate. The exact
+layer count is independently recovered by a multinomial sum.
 
 \begin{thebibliography}{9}
 \bibitem{upstream} OpenAI, \emph{A power improvement in the Heilbronn

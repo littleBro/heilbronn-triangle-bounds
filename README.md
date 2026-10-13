@@ -2,23 +2,23 @@
 
 A conditional research draft by **[Ivan Blinov (@littleBro)](https://github.com/littleBro)**, extending [OpenAI math family 191](https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-power-improvement-in-the-Heilbronn-triangle-lower-bound-September-25-2026), with OpenAI Codex assistance.
 
-The current version applies a classical five-term determinant formula, groups its norm expansion into Galois orbits, and uses a mixed-radix sphere. With the retained slab scales at d = 13, this gives the **conditional paper exponent**
+The current version pairs conjugate determinants using the classical five-term formula and polarization, then uses a mixed-radix sphere. With the retained slab scales at d = 13, this gives the **conditional paper exponent**
 
 $$
 \Delta(n)\ge c\,n^{-2+\eta},\qquad
-\boxed{\eta=\frac{1}{498\cdot39\cdot35^8+7}\approx2.28644993011544\cdot10^{-17}}.
+\boxed{\eta=\frac{1}{498\cdot27\cdot23^9+7}\approx4.12910920359891\cdot10^{-17}}.
 $$
 
 The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates. Lean proves the complete new norm decomposition, interpolation descent, homogeneous polynomial coordinates and nonzero residue for distinct labels. It also proves the finite packing and selected scale inequalities. The slab geometry, lattice and probability estimates, and full Heilbronn theorem remain outside the formal proof.
 
-[Proof and review guide](docs/review.md) · [Current certificate](certificates/rankfive.json) · [Lean algebra proof](lean/RankFivePolynomials.lean) · [Lean packing proof](lean/RankFivePacking.lean) · [Reproduction guide](docs/reproducibility.md)
+[Proof and review guide](docs/review.md) · [Current certificate](certificates/paired.json) · [Lean algebra proof](lean/PairedPolynomials.lean) · [Lean packing proof](lean/PairedPacking.lean) · [Reproduction guide](docs/reproducibility.md)
 
 Run all retained results with Python 3.11+, Git and the pinned Lean 4.11.0 toolchain:
 
     python scripts/prepare_mathlib.py
     python scripts/verify_all.py
 
-The first command prepares pinned Mathlib dependencies and compiled imports; run it once per fresh checkout. On systems with Make, make verify runs the checks after this setup. Verification also requires all twenty generated certificates, patches and count-table files to regenerate byte for byte.
+The first command prepares pinned Mathlib dependencies and compiled imports; run it once per fresh checkout. On systems with Make, make verify runs the checks after this setup. Verification also requires all twenty-three generated certificates, patches and count-table files to regenerate byte for byte.
 
 | Packing | k | Conditional paper exponent |
 | --- | --- | --- |
@@ -32,10 +32,31 @@ The first command prepares pinned Mathlib dependencies and compiled imports; run
 | Bilinear descent and exact layer, d = 13 | 27^11 | ≈ 3.61217890050488e-19 |
 | Galois-orbit compression, d = 13 | 27^10 | ≈ 9.75288303136317e-18 |
 | Five-term determinant and mixed sphere, d = 13 | 39 * 35^8 | ≈ 2.28644993011544e-17 |
+| Paired determinants and mixed sphere, d = 13 | 27 * 23^9 | ≈ 4.12910920359891e-17 |
 
-The current exponent is **about 2.344 times** the preceding Galois-orbit exponent. These compare exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
+The current exponent is **about 1.806 times** the preceding five-term/orbit exponent. These compare exponents in asymptotic lower bounds for minimum triangle area; thresholds and constants remain unspecified.
 
-## Current result: five-term determinant and mixed sphere
+## Current result: paired determinants
+
+Pair the twelve conjugates around one unpaired determinant. The Krishna–Makam formula and elementary cubic polarization give an integral identity with **20 symmetric products for each pair**. The same bilinear form appears in every column of a product. After six pairs, the unpaired determinant absorbs the common column factors, giving **20^6 = 64,000,000** extension-field determinants. The normalization is **4^6**, and 25-node descent gives **T = 1,600,000,000** base-field determinants.
+
+Lean proves this identity for the actual degree-13 field norm, its homogeneous degree-13 polynomial coordinates and the distinct-label criterion for every prime r >= 37. The general theorem needs at least 25 base-field elements and excludes characteristic two; no Galois-orbit division is used in this checkpoint.
+
+The new sphere has one coordinate with 14 digits and nine with 12, encoded with radices 27 and 23. Its energy-59 layer contains exactly **1,641,775,104** words, of squared norm 482. Thus **k = 27 * 23^9 = 48,631,121,859,501**, giving **eta = 1/24,218,298,686,031,505** with the retained slab scales. Lean checks all ten counting transitions and proves the full finite packing.
+
+- [Paired identity and product compression](lean/PairedExpansion.lean)
+- [Field-norm decomposition](lean/PairedNorm.lean) and [homogeneous coordinates](lean/PairedPolynomials.lean)
+- [Exact layer](lean/PairedLayer.lean) and [complete packing](lean/PairedPacking.lean)
+- [Certificate](certificates/paired.json), [manuscript patch](patches/paired-norm.patch) and [verification report](artifacts/paired-verification.json)
+
+    python scripts/build_paired.py
+    python scripts/verify_paired.py
+
+Independent controls fully enumerate the paired expansion in degrees 3 and 5. Degree 13 has a universal Lean proof, a factorized finite norm check and sampled descent checks. Negative controls reject missing normalization, mismatched column forms and repeated conjugates. A separate multinomial calculation verifies the layer size. The shared algebra audit rebuilds eighteen modules and audits 53 exported theorems.
+
+The optional exact [packing search](scripts/search_packing.py) and [recorded finite search](artifacts/packing-search.json) cover broader mixed alphabets and small positive weights. These searches establish feasibility only. The underlying determinant formula and polarization are classical; novelty and unrestricted optimality are not claimed.
+
+## Preserved five-term determinant and mixed sphere
 
 The [Krishna–Makam integral formula](https://arxiv.org/abs/1801.00496), Section 3.1, writes a 3-by-3 determinant as five products of linear forms. Expand the thirteen conjugate determinants with this formula, then antisymmetrize the three columns. Because thirteen is odd, the resulting sum of determinants is **six times** the norm. Lean proves the formula and this normalization over any commutative ring.
 
@@ -52,7 +73,7 @@ For packing, use one coordinate with 20 digits and eight with 18 digits, encoded
     python scripts/build_rankfive.py
     python scripts/verify_rankfive.py
 
-Independent controls enumerate the full expansion in degrees 3 and 5, sample degree 13, and reject a missing factor 1/6, omitted orbit weights and a non-invariant projection. A separate multinomial count agrees with the sphere coefficient. Small mixed spheres are exhaustively checked; an explicit counterexample rejects reducing radix 27 to 26 without a new argument. The shared algebra audit now rebuilds fifteen modules and checks 45 exported theorems once per complete verification run. The five-term formula is prior work; novelty and global optimality of this application are not claimed.
+Independent controls enumerate the full expansion in degrees 3 and 5, sample degree 13, and reject a missing factor 1/6, omitted orbit weights and a non-invariant projection. A separate multinomial count agrees with the sphere coefficient. Small mixed spheres are exhaustively checked; an explicit counterexample rejects reducing radix 27 to 26 without a new argument. At this checkpoint the algebra audit covered fifteen modules and 45 exported theorems. The five-term formula is prior work; novelty and global optimality of this application are not claimed.
 
 ## Preserved Galois-orbit compression
 
@@ -213,7 +234,7 @@ Regenerate and verify the sphere-only baseline:
 
 **The complete finite sphere packing is now proved in Lean.** This includes the energy-layer bound, a finite pigeonhole theorem, selection of T distinct words from one layer, encoding, bounds, injectivity, and matching. The final theorem also checks T using the falling-factorial quotient definition of binomial coefficients. No sufficiently large sphere is assumed as a precondition, and the enormous set is never enumerated during proof checking.
 
-The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The central-layer checkpoint is central_packing_binomial in Central.lean. The 37-node checkpoint is norm_packing in NormCompression.lean; the bilinear checkpoint is bilinear_packing in ExactLayer.lean. The Frobenius checkpoint is trace_packing in FrobeniusPacking.lean; the current theorem is trace_packing in RankFivePacking.lean. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
+The baseline theorem is paper_packing_binomial in Sphere.lean; the retuned specialization is tuned_packing in Tuned.lean. The central-layer checkpoint is central_packing_binomial in Central.lean. The 37-node checkpoint is norm_packing in NormCompression.lean; the bilinear checkpoint is bilinear_packing in ExactLayer.lean. The Frobenius checkpoint is trace_packing in FrobeniusPacking.lean; the five-term theorem is trace_packing in RankFivePacking.lean; the current theorem is trace_packing in PairedPacking.lean. They use only standard Lean logical axioms; the numeric comparisons use no axioms. None of these versions formally proves the complete geometric theorem or parameter-comparison optimality.
 
 The sphere idea is classical Behrend; stronger progression-free-set constructions are known ([Elsholtz, Hunter, Proske, Sauermann](https://arxiv.org/abs/2406.12290)). We claim neither a new sphere method nor unrestricted optimality. The certificate records a bounded comparison of dimensions 3–284 under its sufficient-capacity criterion.
 
@@ -258,7 +279,7 @@ To regenerate the deterministic certificate and patch:
 
 The verifier preserves upstream files, compiles only the local proof, rejects changed source hashes, and checks patch applicability. Its finite tests cover 21 packing sizes, 12 coefficient/carry examples, and six negative controls. Finite coverage is separate from the universal Lean theorem.
 
-The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the earlier sphere proofs check their binomial counts inside Lean. The current packing uses T = 25 * (5^13 + 60)/13 with an exactly counted mixed-radix layer. See the respective proof notes for their scopes.
+The arithmetic and packing checks do not independently validate the upstream paper. The preserved ternary proof uses a copied T literal checked by Python; the earlier sphere proofs check their binomial counts inside Lean. The current packing uses T = 25 * 20^6 with an exactly counted mixed-radix layer. See the respective proof notes for their scopes.
 
 The proof notes are supplied as TeX. The current note, including norm compression, compiled successfully with the built-in Tectonic 0.17.0+20260731 after installing its support bundle from the [official v33 mirror](https://github.com/tectonic-typesetting/tectonic-relay-service/blob/main/temporary_redirects.map). The source hash and bundle identity are recorded in [the compilation report](artifacts/sphere-latex-status.json). Generated note PDFs are not included. The separate artifacts/latex-status.json retains the earlier ternary-note attempt. Note compilation is separate from the Lean and Python checks.
 

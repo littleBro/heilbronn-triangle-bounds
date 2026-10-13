@@ -30,6 +30,9 @@ THEOREMS = {
     "RankFiveNorm": ["patternTerm_rotate", "norm_pattern_sum", "norm_class_sum", "trace_term_card",
                      "trace_norm_decomposition", "finite_field_trace_norm"],
     "RankFivePolynomials": ["finite_field_trace_polynomials", "prime_field_trace_labels"],
+    "PairedExpansion": ["pair_identity", "paired_product"],
+    "PairedNorm": ["term_card", "norm_expansion", "norm_decomposition", "finite_field_norm"],
+    "PairedPolynomials": ["finite_field_polynomials", "prime_field_labels"],
 }
 
 
@@ -56,7 +59,8 @@ def verify_algebra():
         require(result.returncode == 0 and "error:" not in output and "sorryAx" not in output,
                 "Lean failure: " + module + "\n" + output)
         for name in names:
-            namespace = ("HeilbronnRankFive" if module.startswith("RankFive") else
+            namespace = ("HeilbronnPaired" if module.startswith("Paired") else
+                         "HeilbronnRankFive" if module.startswith("RankFive") else
                          "HeilbronnFrobenius" if module.startswith("Frobenius") else "HeilbronnNorm")
             matches = re.findall("'" + namespace + r"\." + name +
                                  r"' depends on axioms: \[([^]]*)\]", output)
@@ -80,7 +84,7 @@ def verify_algebra():
         "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial "
                  "coordinates and nonzero residue exactly for distinct labels; "
                  "37-node and 25-node descents, plus Galois-orbit compression "
-                 "and the five-term tensor formula, giving 2347506125 base-field "
+                 "the five-term tensor formula and paired determinants, giving 1600000000 base-field "
                  "determinants for every prime >= 37.",
         "not_established": ["slab cap geometry", "lattice and probability estimates",
                             "full Heilbronn theorem"],

@@ -46,9 +46,12 @@
     "RankFiveExpansion",
     "RankFiveOrbits",
     "RankFiveNorm",
-    "RankFivePolynomials"
+    "RankFivePolynomials",
+    "PairedExpansion",
+    "PairedNorm",
+    "PairedPolynomials"
   ],
-  "audited_theorems": 45,
+  "audited_theorems": 53,
   "lean_axiom_audit": [
     "'HeilbronnNorm.determinant_product_compression' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnNorm.orbit_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
@@ -99,14 +102,22 @@
     "'HeilbronnRankFive.trace_norm_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnRankFive.finite_field_trace_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnRankFive.finite_field_trace_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]",
-    "'HeilbronnRankFive.prime_field_trace_labels' depends on axioms: [propext, Classical.choice, Quot.sound]"
+    "'HeilbronnRankFive.prime_field_trace_labels' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnPaired.pair_identity' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnPaired.paired_product' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnPaired.term_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnPaired.norm_expansion' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnPaired.norm_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnPaired.finite_field_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnPaired.finite_field_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnPaired.prime_field_labels' depends on axioms: [propext, Classical.choice, Quot.sound]"
   ],
   "compilation_limits": {
     "threads": 1,
     "memory_mb_per_process": 2048,
     "timeout_seconds_per_module": 120
   },
-  "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial coordinates and nonzero residue exactly for distinct labels; 37-node and 25-node descents, plus Galois-orbit compression and the five-term tensor formula, giving 2347506125 base-field determinants for every prime >= 37.",
+  "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial coordinates and nonzero residue exactly for distinct labels; 37-node and 25-node descents, plus Galois-orbit compression the five-term tensor formula and paired determinants, giving 1600000000 base-field determinants for every prime >= 37.",
   "not_established": [
     "slab cap geometry",
     "lattice and probability estimates",
@@ -128,10 +139,13 @@
     "lean/RankFiveOrbits.lean": "9aef7899c7323a22df85bfef4db9691026680709c680f10d7147b180ea34d2a1",
     "lean/RankFiveNorm.lean": "04e23a6825b7b3792ebede9ccd22d687ad1d59e7a6c916a7b1fd714273751292",
     "lean/RankFivePolynomials.lean": "b1a954ae436f68fd4c13a51e94a910b4e04726e5fc432d387c5f090a0676eeaf",
-    "lakefile.lean": "11b5f84dbf5b4ae75f08eccab4a4625d467476a07d6b064aa6f18ce539e4042f",
+    "lean/PairedExpansion.lean": "0b170ce7a4eaa33530e9d1baae3e70df50ab496f66bbda07bdb4449c02315998",
+    "lean/PairedNorm.lean": "139bdd4205f1356428ecb9692d1d44dd79a1870443ebcf5de5ccd8f62de930cf",
+    "lean/PairedPolynomials.lean": "365c81d2e1449fa119fd4f9159b02e7247fe52146bbb293c892a9a7f09046c41",
+    "lakefile.lean": "eaf375d384a033e3cd00189ff88e8798b5e73f966c0d7b4ac1527cfee231cc77",
     "lake-manifest.json": "8bd77b3cd6efc5ceb88b72ee2f691cdbff5d768d88817b480b3c0cf547a9d3ad",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
     "scripts/prepare_mathlib.py": "7933e53832bffaec8175e990838e0108f8110db074b3e928d8e69c4c71d1547f",
-    "scripts/verify_algebra.py": "6064126edd844476b83c9cffbbc64128f6b66b8b2b84996814230dcb0219ecd2"
+    "scripts/verify_algebra.py": "2ee348b7853752d17a9ea226580e77c996b3bdd1b52ef2d9f0fa30051fe4df22"
   }
 }
