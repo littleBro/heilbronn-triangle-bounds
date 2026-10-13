@@ -128,7 +128,7 @@ def table_source(table):
     return text+"end HeilbronnEighteenLayer\n"
 
 
-def patch_sections():
+def norm_sections():
     originals, changed = slab_sections()
     name = "03-norm-digits.tex"
     text = replace_once(changed[name],
@@ -149,6 +149,11 @@ def patch_sections():
         "Lemma~\\ref{norm:prime-interval} supplies a prime $r$ with $m<r\\le2m$.", PRIME_TRANSFER)
     changed[name] = replace_once(changed[name], "for every sufficiently large prime $r$.",
         r"for every sufficiently large prime $r\equiv1\pmod3$.")
+    return originals, changed
+
+
+def patch_sections():
+    originals, changed = norm_sections()
     return "".join("".join(difflib.unified_diff(
         originals[n].splitlines(keepends=True), changed[n].splitlines(keepends=True),
         fromfile="a/build/sections/"+n, tofile="b/build/sections/"+n)) for n in originals)

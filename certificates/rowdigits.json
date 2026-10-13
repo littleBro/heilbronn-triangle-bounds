@@ -1,0 +1,241 @@
+{
+  "schema": "heilbronn-rowdigits-v1",
+  "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "status": "conditional-on-upstream-estimates",
+  "scope": "paper exponent; not the upstream Lean comparator exponent",
+  "previous_certificate": "certificates/trimmed.json",
+  "previous_sha256": "eaaf5360059f3ca31afec7dfdb31cdf049aca4df91a1b40abe66bbc1828cf4a2",
+  "d": 7,
+  "T": "75816",
+  "k": "63412811",
+  "decomposition": {
+    "pairs": 3,
+    "unpaired_conjugates": 1,
+    "terms_per_pair": 18,
+    "extension_determinants": "5832",
+    "nodes_per_term": 13,
+    "pair_identity_multiplier": 3,
+    "normalization_denominator": 27,
+    "root_equation": "u^2-u+1=0",
+    "base_characteristic_excludes": [
+      3
+    ],
+    "formal_base_field_minimum": 13,
+    "manuscript_prime_minimum": 37,
+    "manuscript_prime_residue": 1,
+    "manuscript_prime_modulus": 3,
+    "formula_source": "https://arxiv.org/abs/1909.04785",
+    "row_maps": [
+      "3^(-3) * eval_t",
+      "eval_t",
+      "constantCoord(c_t * input)"
+    ]
+  },
+  "packing": {
+    "half_alphabets_low_first": [
+      3,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "radices_low_first": [
+      11,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7
+    ],
+    "energy_index": 5,
+    "squared_norm": 49,
+    "layer_count": "78848",
+    "count_table": [
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        8,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        8,
+        24,
+        24,
+        8,
+        0,
+        0
+      ],
+      [
+        16,
+        64,
+        96,
+        64,
+        16,
+        0
+      ],
+      [
+        32,
+        160,
+        320,
+        320,
+        160,
+        32
+      ],
+      [
+        64,
+        384,
+        960,
+        1280,
+        960,
+        384
+      ],
+      [
+        128,
+        896,
+        2688,
+        4480,
+        4480,
+        2688
+      ],
+      [
+        256,
+        2048,
+        7168,
+        14336,
+        17920,
+        14336
+      ],
+      [
+        512,
+        4608,
+        18432,
+        43520,
+        68608,
+        78848
+      ]
+    ]
+  },
+  "row_digits": {
+    "coefficient_bound": "6*k^2*L1*L2*L3",
+    "general_tail": "((r/L2)^2*(r/L3)^2)^j",
+    "chosen_tail": "(r/L3)^(2*j)",
+    "theta": "B*(r/L3)^2",
+    "theta_upper": {
+      "numerator": "1",
+      "denominator": "2"
+    },
+    "conditional_moment_upper": 2,
+    "base_r_power": 6,
+    "conditional_probability_proof": "written; not formalized in Lean"
+  },
+  "prime_transfer": {
+    "progression": "1 mod 3",
+    "interval": "m < r <= 2m for all sufficiently large m",
+    "theorem": "prime number theorem in a fixed arithmetic progression",
+    "source": "https://dlmf.nist.gov/27.11",
+    "lean_formalized": false
+  },
+  "cap": {
+    "set": "{(x,y,x^2-nu*y^2): 0 <= x < w, y in F_q}; nu nonsquare",
+    "width": "w = floor(q/(1000*H^2))",
+    "cardinality": "s = w*q",
+    "density_bound": "s >= q^2/(2000*H^2)",
+    "short_relation_change": "only first-coordinate bounds are required",
+    "proof_status": "written finite-field argument; not formalized in Lean"
+  },
+  "scales": {
+    "h": "B^k",
+    "tau": "floor(B^(k-1)/2)",
+    "H": "2*h",
+    "q": "h^6 < q <= 2*h^6; q prime",
+    "N": "(h*q)^4",
+    "n_r": "floor(r^gamma*sqrt(N^3/tau))",
+    "L1": "r",
+    "L2": "r",
+    "L3": "400*k^2*r^4",
+    "P": "L1*L2*L3",
+    "B": "100*k^2*P < B <= 200*k^2*P; B prime"
+  },
+  "rho": "15789789942",
+  "beta": {
+    "numerator": "2631631657",
+    "denominator": "1"
+  },
+  "gamma": {
+    "numerator": "15789789942",
+    "denominator": "31579579885"
+  },
+  "alpha": {
+    "numerator": "498634932856548306612",
+    "denominator": "31579579885"
+  },
+  "eta": {
+    "numerator": "1",
+    "denominator": "15789789943"
+  },
+  "gain_from_trimmed": {
+    "numerator": "10819299076922581",
+    "denominator": "15789789943"
+  },
+  "gain_from_eighteen": {
+    "numerator": "11088749175468757",
+    "denominator": "15789789943"
+  },
+  "constraints": {
+    "zero_case_h_powers": [
+      0,
+      -2,
+      -6
+    ],
+    "collision_r_power": {
+      "numerator": "-1",
+      "denominator": "31579579885"
+    },
+    "pair_r_power": {
+      "numerator": "-6007649681592190608",
+      "denominator": "31579579885"
+    }
+  },
+  "formal_scope": {
+    "proved": [
+      "degree-7 norm decomposition into 13*18^3 determinants",
+      "homogeneous coordinates and distinct-label criterion over split primes",
+      "exact energy-5 layer and complete mixed-radix packing",
+      "row-digit divisibility, moment-bound arithmetic and base scale identity",
+      "cleared-denominator alteration inequalities and exponent identity",
+      "gain from trimmed checkpoint greater than 680000"
+    ],
+    "written_not_formalized": [
+      "conditional divisor tail and expectation with row-dependent digit ranges",
+      "upstream lattice, orbit, slab geometry and weighted counting arguments",
+      "probability, asymptotic deletion and interpolation",
+      "prime number theorem in the progression 1 mod 3"
+    ]
+  },
+  "parameter_choice": "explicit feasible witness; no optimality claim"
+}

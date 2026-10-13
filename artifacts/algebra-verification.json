@@ -52,9 +52,12 @@
     "PairedPolynomials",
     "EighteenExpansion",
     "EighteenNorm",
-    "EighteenPolynomials"
+    "EighteenPolynomials",
+    "SevenDescent",
+    "SevenNorm",
+    "SevenPolynomials"
   ],
-  "audited_theorems": 62,
+  "audited_theorems": 70,
   "lean_axiom_audit": [
     "'HeilbronnNorm.determinant_product_compression' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnNorm.orbit_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
@@ -122,14 +125,22 @@
     "'HeilbronnEighteen.finite_field_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnEighteen.root_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
     "'HeilbronnEighteen.finite_field_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]",
-    "'HeilbronnEighteen.prime_field_labels' depends on axioms: [propext, Classical.choice, Quot.sound]"
+    "'HeilbronnEighteen.prime_field_labels' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSeven.bilinear_interpolation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSeven.bilinear_determinant_descent' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSeven.term_card' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSeven.norm_expansion' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSeven.norm_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSeven.finite_field_norm' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSeven.finite_field_polynomials' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSeven.prime_field_labels' depends on axioms: [propext, Classical.choice, Quot.sound]"
   ],
   "compilation_limits": {
     "threads": 1,
     "memory_mb_per_process": 2048,
     "timeout_seconds_per_module": 120
   },
-  "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial coordinates and nonzero residue exactly for distinct labels; 37-node and 25-node descents, plus Galois-orbit compression the five-term tensor formula and paired determinants, giving 1600000000 base-field determinants for every prime >= 37. The 18-form checkpoint gives 850305600 determinants for primes >= 37 congruent to 1 mod 3, with root existence proved.",
+  "scope": "Universal degree-13 field-norm decomposition, homogeneous polynomial coordinates and nonzero residue exactly for distinct labels; 37-node and 25-node descents, plus Galois-orbit compression the five-term tensor formula and paired determinants, giving 1600000000 base-field determinants for every prime >= 37. The 18-form checkpoint gives 850305600 determinants for primes >= 37 congruent to 1 mod 3, with root existence proved. The degree-7 checkpoint gives 75816 determinants over the same primes, with homogeneous coordinates and the distinct-label criterion.",
   "not_established": [
     "slab cap geometry",
     "lattice and probability estimates",
@@ -158,10 +169,13 @@
     "lean/EighteenExpansion.lean": "d7db2fed625709c1d1c5380c3f1a7ad24fadd254b964c0ec21c9cd2513f9cb4b",
     "lean/EighteenNorm.lean": "b2f304a86fb7109bcff7f5c0929296d8aa72692adeb0f7be3dde0e67ac97c635",
     "lean/EighteenPolynomials.lean": "7d24b17af7b171ea6c6d0c0123bf65582fd53eff61f07b6a8e1a3d18a6f4ef92",
+    "lean/SevenDescent.lean": "70baf390078ace9c534a98b46c7aa744a0ed985573348c0c894e6403c355e50a",
+    "lean/SevenNorm.lean": "1155743c913f7f4d83ee0774bf48149db64d9497dfafb74a7f45dc3bfc0410db",
+    "lean/SevenPolynomials.lean": "4301fe37f0dd0839b307f4261a6dcd94a791e3f1eb54f3a825e275b004273805",
     "lakefile.lean": "a5a62b17c2afe98d4d8e775f517e67a405ba32c12a0d3634a1d830f245cc61f3",
     "lake-manifest.json": "8bd77b3cd6efc5ceb88b72ee2f691cdbff5d768d88817b480b3c0cf547a9d3ad",
     "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
     "scripts/prepare_mathlib.py": "7933e53832bffaec8175e990838e0108f8110db074b3e928d8e69c4c71d1547f",
-    "scripts/verify_algebra.py": "c9f87e1eb253c652e4e270543faa7a081f0a3016615ce010f479b854246b4eba"
+    "scripts/verify_algebra.py": "160b14297599060039d5388a711244d52313e9cd57dd80ed19ab9236be9eaee4"
   }
 }

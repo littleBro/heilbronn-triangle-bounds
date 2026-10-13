@@ -1,128 +1,105 @@
 # Reviewing the current conditional result
 
-The current target is
+The target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 21725500154463 + 7) = 1 / 10819299076922581.
+    eta = 1 / (249 * 63412811 + 4) = 1 / 15789789943.
 
-Read the translated-interval and eighteen-form sections of [the note](../notes/sphere-packing.tex)
-and the [six-section source patch](../patches/trimmed-sphere.patch).
-All original manuscript files remain pinned at fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+Read the row-dependent-digits section of [the note](../notes/sphere-packing.tex)
+and the [six-section source patch](../patches/row-digits.patch).
+The source remains pinned at fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+Earlier checkpoints, including the small interval refinement, remain reproducible.
 
 ## Evidence for each claim
 
 | Claim | Evidence | Boundary |
 | --- | --- | --- |
-| Eighteen symmetric products for a determinant pair | EighteenExpansion.pair_identity | Every commutative ring with u² − u + 1 = 0; multiplier 3 |
-| Six pairs with one unpaired determinant | EighteenExpansion.paired_product, EighteenNorm.norm_expansion | Normalization 3^6 |
-| T = 25 * 18^6 = 850,305,600 | EighteenNorm.finite_field_norm | Degree 13, at least 25 base-field elements, characteristic 3 excluded, required root |
-| Homogeneous degree-13 coordinates | EighteenPolynomials.finite_field_polynomials | Coefficientwise descent preserves degree |
-| Root existence and distinct-label criterion | EighteenPolynomials.root_exists, prime_field_labels | Every prime r >= 37 congruent to 1 mod 3 |
-| Counting below an encoded cutoff | IntervalCounting.below_cons | Universal recurrence on actual finite words |
-| Exact cutoff counts 10,308,152 and 860,613,752 | TrimmedLayer.below_lower, below_upper | 44 rows of 33 kernel-checked counts |
-| Exactly T words in the interval | TrimmedLayer.exact_interval_count | Difference of the two cutoff counts |
-| Selection, bounds, injections and matching | TrimmedPacking.translated_packing | k = 21,725,500,154,463; original digit radices retained |
-| Gain greater than 1.0249 | TrimmedPacking.trimmed_gain | Integer comparison against the preserved eighteen-form checkpoint |
-| Scale inequalities | Tuned.lean, Slab.lean, certificates/trimmed.json | Uniform arithmetic; geometry remains separate |
-| Allowed prime in (m, 2m] eventually | PNT in arithmetic progressions, written derivation | Standard unconditional theorem; not formalized here |
-| Slab, lattice, probability and deletion estimates | Written note and pinned manuscript | Not all formalized; no practical threshold or complete independent upstream audit |
-| Reproduction | artifacts/repository-verification.json and individual reports | Applies to the recorded sources and environment |
+| Eighteen symmetric products for a determinant pair | EighteenExpansion.pair_identity | Root u^2 - u + 1 = 0; multiplier 3 |
+| Three pairs and one singleton | SevenNorm.norm_expansion | Degree seven; normalization 3^3 |
+| T = 13 * 18^3 = 75,816 | SevenNorm.finite_field_norm | At least 13 base-field elements, characteristic 3 excluded, required root |
+| Homogeneous degree-seven coordinates | SevenPolynomials.finite_field_polynomials | Coefficientwise descent preserves degree |
+| Distinct-label criterion | SevenPolynomials.prime_field_labels | Every prime r >= 37 congruent to 1 mod 3; root existence reused |
+| Exact energy-five count 78,848 | SevenLayer.exact_layer_count | Nine kernel-checked recurrence transitions |
+| Selection, bounds, injections and matching | SevenPacking.trace_packing | k = 11 * 7^8 = 63,412,811 |
+| Conditional tail with different row ranges | Written lemma in note and patch | Not a Lean probability theorem |
+| Divisibility, moment-bound arithmetic and base growth | RowDigits.long_digits_divisible, digit_moment_bound, base_scale | Integer inequalities; separate from the probability proof |
+| Alteration inequalities and exponent identity | RowDigits.alteration_constraints, exponent_identity | Positive denominators cleared |
+| Gain greater than 680,000 against interval checkpoint | SevenPacking.trace_gain | Kernel-checked integer comparison |
+| Retained slab and zero-case bounds | Slab.lean and source patch | Arithmetic formalized; geometry remains written |
+| Allowed prime in (m, 2m] eventually | PNT in arithmetic progressions, written derivation | Standard theorem; not formalized here |
+| Lattice, orbit, weighted count and deletion | Pinned manuscript and written transfer | No complete independent upstream audit or practical threshold |
+| Reproduction | repository-verification.json and individual reports | Applies to recorded sources and runtime versions |
 
-The shared algebra audit covers 21 modules and 62 exported theorems. Only
-propext, Classical.choice and Quot.sound are permitted. The root condition
-is a hypothesis of the general algebraic identity; root existence is proved
-for the prime progression in the exported specialization.
-The interval checker additionally audits nine counting and packing theorems.
-The generated finite table is connected to symbolic word counting; its
-entries are checked in the kernel and are not assumed as hypotheses.
+The shared algebra audit covers 24 modules and 70 exported theorems. Only
+propext, Classical.choice and Quot.sound are permitted. The new core checker
+additionally audits five row-scale and five packing theorems. No count-table
+entry is assumed: kernel evaluation and symbolic recurrence connect it to
+actual finite words.
 
-## The steps most useful to review
+## The most useful mathematical review
 
-- Compare the explicit forms to [CGLV, Theorem 4.1](https://arxiv.org/abs/1909.04785).
-  The second coefficient column is multiplied by three. Check the resulting
-  pair multiplier 3 directly; do not infer normalization from tensor notation.
-- Check all 729 tensor coefficients over Z[u]/(u² − u + 1). For the Lean
-  identity the same bilinear form appears in every column.
-- Enumerate one singleton and six disjoint pairs, then apply 25-node descent.
-  Include 3^(-6) in one row only.
-- Verify Cauchy's order-three element gives u = -z. The prime restriction
-  cannot be removed: for example r = 41 has no root in its degree-13 extension.
-- Count the coefficient of z^32 in
-  (2 sum_{j=0}^4 z^(j(j+1)/2))^4 * (2 sum_{j=0}^3 z^(j(j+1)/2))^7.
-  The full histogram and a separate multinomial count agree.
-- Read the half-alphabets in the current order [4,4,4,4,4,4,5,4,5,5,5].
-  With the original radices 4A - 1, no digit sums carry and equal norm 267
-  forces midpoint rigidity.
-- For the interval [133535493048, 10996285570280), check both cutoff counts.
-  After choosing the low digit d in radix b, the remaining cutoff is
-  floor(B/b) + 1_{d < B mod b}. The independent checker reads high digits first.
-- Subtract the lower endpoint before setting v = k - 1 - 2u.
-  The upper cutoff is exclusive, so k = 2(upper - lower) - 1.
-  Omitting either endpoint loses a word; omitting the translation breaks
-  the right-position bound. The final k is not the digit radix product.
-- For all-cardinalities interpolation, use pi(x;3,1) ~ x/(2 log x).
-  Then pi(2m;3,1) - pi(m;3,1) ~ m/(2 log m) > 0 eventually.
-  This written use of the [standard theorem](https://dlmf.nist.gov/27.11)
-  is separate from the Lean proof. B and q use ordinary Bertrand intervals.
+1. Check the row-product coefficient bound. Every determinant product uses
+   one digit in each row, so 6k^2 L1 L2 L3 replaces 6k^2 L^3. All low digits
+   remain positive and smaller than B, including digits with residue zero.
+2. Check the new conditional tail for arbitrary fixed labels, with repetitions.
+   Condition on the first column and first entries of the other columns.
+   The four Schur congruences force j digits each, with probabilities
+   (r/L2)^j, (r/L2)^j, (r/L3)^j, (r/L3)^j. A row with Li = r is deterministic;
+   its probability factors are zero or one. Do not reuse a fourth-power
+   bound involving the long row alone.
+3. With L1 = L2 = r and L3 = 400k^2r^4, check
+   theta = B(r/L3)^2 <= 200k^2r^4/L3 = 1/2. The pointwise tail-sum identity
+   then proves E[D | labels] <= 2. This probabilistic step is written,
+   while its integer scale bound is formalized.
+4. Check every subsequent use of the digit distribution. The orbit and
+   weighted counts condition on C; their interfaces require units, the
+   determinant obstruction, and the uniform conditional moment. They do
+   not require equal row ranges or randomness in all three rows.
+5. Recompute the sample exponents. B grows as r^6, so collision loss is
+   r^(2 gamma + 6 - d). Degree seven and gamma < 1/2 suffice. With the
+   retained q and N, beta = (83k+1)/2 and rho = 6 beta = 249k+3.
+   Proportional-pair loss is r^(gamma - 3(k-1)); the three zero-case losses
+   remain h^6/q, h^4/q and h^6/q^2.
+6. Enumerate the seven conjugates as one singleton and three disjoint pairs,
+   apply the known [CGLV formula](https://arxiv.org/abs/1909.04785), and include
+   3^(-3) in one row. Thirteen interpolation nodes suffice for products of
+   degree-at-most-six representatives. Lean proves the universal identity.
+7. Verify the layer coefficient
+   2^9 * (choose(8,5) + choose(8,4) + choose(8,2)) = 78,848.
+   The complete packing uses radices 11,7,7,7,7,7,7,7,7. Equal squared norm
+   49 forces midpoint rigidity; all digit sums are below their radices.
+8. For all-cardinalities interpolation use the
+   [prime number theorem in arithmetic progressions](https://dlmf.nist.gov/27.11).
+   Mere infinitude of split primes would not suffice. B and q use ordinary
+   Bertrand intervals. This part remains a written argument.
 
-The branch-and-bound search covers all rank windows over 330 coordinate
-orders and energies 32, 33 and 34, evaluating 8,922 windows directly.
-For a sorted encoded layer c and ranks a <= r <= b, the span of the window
-starting at r is at least c[a+T-1] - c[b]. This lower bound excludes entire
-rank ranges. Enumeration checks all target sizes in the listed small cases,
-giving 342 search comparisons. The proof checker validates the exact witness
-independently; search optimality is not formalized and no global packing
-optimum or new determinant formula is claimed.
-Independent controls compare 13,583 small cutoff counts with enumeration
-and check 42,216 matching triples. All 1,452 saved count entries are also
-recomputed by the separate lexicographic algorithm.
+## Independent controls and retained checkpoints
 
-The checkers apply the rank-five, paired, eighteen-form and interval patches to
-separate ignored text copies, then checks all 58 referenced labels in each
-manuscript. A negative control removes the matching label and must fail.
-The two earlier patches now explicitly restore the row-position definitions
-and name the power-basis coordinates used by the retained source.
+The new controls enumerate every one of 5,832 extension-field terms for one
+matrix over a verified degree-seven quotient of F37. They check 24 descents
+and reject omitted normalization and an omitted node. Universal identities
+are proved separately in Lean; this enumeration is a finite implementation check.
 
-The retained slab transfer is unchanged:
+Three small row-digit fixtures enumerate 163,840 matrices and check 2,560
+conditional tail inequalities. The one-digit cases enumerate every matrix.
+The two-digit case fixes twelve reproducible top-row configurations and
+exhausts bottom-row draws. Every checked conditional residue group is complete.
+An incorrectly retained fourth-power bound has 496 counterexamples in these
+fixtures. The full probability lemma is the written argument above.
 
-1. The conditional digit moment only needs theta <= 1/2. With
-   L = 400 k^2 r^4, B is of order r^12 with fixed k-dependent constants.
-2. The explicit slab of the elliptic paraboloid has exactly wq points.
-   The allowed shifts, zero exclusion and nonzero-sum short-relation argument
-   use only the first coordinate; the zero-sum case uses the cap property.
-   Check that the three inclusion-probability bounds need no other box constraint.
-3. H = 2h puts every affine-residue shell in the unchanged R >= h moment range.
-   The cap has q >= 2000 H^2 when h >= 10 and q > h^6. Its size bound gives
-   zero-determinant losses h^6/q, h^4/q and h^6/q^2. Boundedness is sufficient.
-4. For N = (hq)^4 and gamma = rho/(2 rho + 1), rho = 498k + 6,
-   pair and triple deletion have negative powers gamma - 6(k - 1) and
-   2 gamma - 1. The latter is extremely close to zero.
-5. Cardinality grows as r^(rho + gamma). The two-sided bound, the prime
-   interval for r = 1 mod 3 and taking subsets give every sufficiently large n without
-   assuming that the sampled cardinalities are monotone.
+An independent full histogram agrees with all 60 saved count entries; a
+binomial calculation gives the layer coefficient. Small spheres exercise
+6,528 matching triples. Ten corrupted certificates must be rejected.
+The patch checker applies the actual patch to ignored text snapshots and
+checks all 58 referenced labels; removing the matching label must fail.
 
-The exponent comparison does not control the hidden constants or the threshold
-for n. It does not establish a practical finite-size configuration, priority,
-independent peer review or unrestricted optimality.
+The interval checkpoint retains its general cutoff proof, 44 rows of 33
+counts, 13,583 enumeration comparisons, 42,216 matching triples, and 342
+small search comparisons. Its branch-and-bound search concerns only the
+listed coordinate orders and energies; no global packing optimum is claimed.
+All thirteen checkpoints are verified by python scripts/verify_all.py.
 
-## Previous results and attribution
-
-The ternary, d = 41 sphere, d = 13 retuning, slab, central-layer, 37-node norm
-and bilinear-layer variants retain their own
-certificates, Lean files, patches and checkers. They are useful checkpoints and
-use their own parameters. The sphere method is classical Behrend, the moment
-count is elementary, and the slab is a subset of the classical elliptic
-paraboloid already used upstream. The norm regrouping and interpolation use
-elementary algebra. The new descent uses classical polynomial-interpolation
-multiplication, within the framework of [bilinear complexity](https://arxiv.org/abs/1107.0336);
-novelty of this application is not established.
-
-The repository format was informed by
-[Swapnil Jain's integer-mult-kappa](https://github.com/Swapnil-jain/integer-mult-kappa)
-and [CrocSwap's integer-mult-bounds](https://github.com/CrocSwap/integer-mult-bounds).
-Those projects concern a different problem; their multiplication estimates are
-not assumptions of this Heilbronn construction.
-
-The unchanged upstream Lean comparator has a different exponent and a subsequence
-target. This repository's certificates concern the manuscript exponent; they do
-not constitute a completed proof of that comparator.
+The full geometric Heilbronn theorem, the new probability lemma, and prime
+progression theorem are not formalized here. The exponent comparison does
+not give a practical finite-n improvement. Novelty and unrestricted optimality
+are not established.

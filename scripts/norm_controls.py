@@ -61,7 +61,7 @@ class Field:
 
     def irreducible(self):
         # For prime d, Rabin's criterion reduces to these two conditions.
-        require(self.d in (2, 3, 5, 13), "prime control degree")
+        require(self.d in (2, 3, 5, 7, 13), "prime control degree")
         require(all(self.p % a for a in range(2, self.p) if a*a <= self.p), "prime base")
         return (all(evaluate(self.polynomial, a, self.p) for a in range(self.p)) and
                 self.power(self.x, self.p**self.d) == self.x)

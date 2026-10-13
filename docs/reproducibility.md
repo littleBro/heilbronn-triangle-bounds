@@ -45,7 +45,7 @@ permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
 NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
 imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
 and a 120-second timeout. The shared algebra checker also rebuilds BilinearDescent and
-BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, for 62 exported theorem audits in total, including the
+BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, plus three degree-seven modules, for 70 exported theorem audits in total, including the
 prime-field specialization and homogeneous polynomial form. Run this part
 alone with python scripts/verify_algebra.py.
 The complete verifier runs its algebra-dependent checkers in one process,
@@ -163,3 +163,14 @@ stored in this repository, and generated note PDFs are not included.
 The separate artifacts/latex-status.json is the historical ternary-note attempt.
 Document compilation is not part of verify_all.py or the current CI workflow.
 The PDF under upstream/ is the unchanged original manuscript.
+
+The row-digit checkpoint adds degree-seven interpolation, norm and homogeneous
+coordinate proofs, with three pairs and normalization 27. Nine transitions
+of a six-entry count table prove the exact packing layer. RowDigits.lean
+proves the changed scale arithmetic; the conditional probability lemma
+remains a written proof. Run python scripts/verify_rowdigits.py alone or use
+the full verifier, which now checks thirteen results and regenerates
+thirty-three files. Independent controls enumerate 5,832 extension-field
+terms for one matrix, 163,840 small digit matrices, and 2,560 conditional
+tail inequalities. The fixtures and sampling boundaries are recorded in
+artifacts/rowdigits-verification.json.

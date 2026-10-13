@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "b99698eb474384ea0328f0a1f2de594f2272605ea011c01faf7325ed6506abad",
+  "source_sha256": "5cd03fdb74632dbda740b81a226f88211add51ea59aa9f057e7431a5ab72d76b",
   "attempt_date": "2026-10-13",
-  "attempt_scope": "Existing note including the exact interval counts, translated packing, branch-bound search, and retained eighteen-form algebra and prime-progression transfer",
+  "attempt_scope": "Existing note including the row-dependent digit proof, degree-seven norm, exact sphere layer, conditional exponent and retained checkpoints",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",
