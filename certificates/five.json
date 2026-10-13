@@ -164,7 +164,9 @@
       -8,
       -10
     ],
-    "proof_status": "written; not formalized in Lean"
+    "proof_status": "Lean; explicit tag and distinct-label interfaces",
+    "pair_theorem": "HeilbronnFive.DigitModel.tagged_small_residue_moment",
+    "total_theorem": "HeilbronnFive.total_small_residue_moment"
   },
   "prime_transfer": {
     "progression": "1 mod 3",
@@ -227,12 +229,15 @@
       "homogeneous norm coordinates and distinct-label criterion over split primes",
       "exact 3072-word layer, shifted packing and separation from label tags",
       "determinant factorization for two repeated top columns",
+      "tag-minor valuation, exact joint digit tails and uniform minor-divisor moment",
+      "balanced determinant coefficients and the tagged small-residue pair moment",
+      "column-reindexing invariance and the finite label-mixture bound",
       "fresh-position and cleared-denominator alteration inequalities",
       "exponent identity and gain greater than 108 over degree seven"
     ],
     "written_not_formalized": [
-      "tag minor valuation and fresh-digit joint probability bound",
-      "conditional divisor moment and repeated-label partition",
+      "instantiation of norm packing and tags in the finite digit theorem, including distinct-label exclusion",
+      "identification of the minor exponent with the upstream Smith divisor",
       "upstream lattice, orbit, slab geometry and weighted counting arguments",
       "asymptotic deletion and prime progression interpolation"
     ]

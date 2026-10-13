@@ -148,11 +148,11 @@
     "certificates/tuned.json": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
     "certificates/slab.json": "df7a70005c8a734cff376de212aa49c4dae4413c2c68a17dc1069adf80a0d819",
     "patches/slab-cap.patch": "3e274f138968cc77f37c0e334fb7c1728b6346db06a7c22e89f92696c217e9a6",
-    "notes/sphere-packing.tex": "e08f01bf53ff59190bee65ffb4fa08fc5cf824209e1308a5a783a2104467e97f",
-    "README.md": "6e469014096f8a6a4bed4568850723b14833714d0c62dbb0f2cece47f7af6409",
-    "docs/review.md": "c1bd6d8816b689795774eb6600efb4d68ed2a0fa7a9c9dbf9b21d380967c30cd",
+    "notes/sphere-packing.tex": "43e83ae4525949f3f6b3fe058abbe5ed2138d385f0d5ca5265f16ba0ddcbe88b",
+    "README.md": "46440f096dfd58f4b6f559ce0a8dbecd01587788d1d49b0a9b5a56999d7c29a0",
+    "docs/review.md": "b2dbbd4c48e983d98acc19e9f8a9696c47f0ec1fe41a1ef64707bb459b2f9041",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
-    "artifacts/sphere-latex-status.json": "e73f834a35e0dfa857af1b534dd9753d49f093d3f00ca4af7a11349a3960dec3"
+    "artifacts/sphere-latex-status.json": "c80c1750e0533513c9ec8c2ddc443d905d52f75ed00630043522316a790d532a"
   },
   "not_established": [
     "Lean proof of the slab cap geometry or full geometric theorem",

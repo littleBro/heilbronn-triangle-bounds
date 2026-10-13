@@ -31,6 +31,15 @@ IMPORTS = [
     "Mathlib/Tactic/NormNum.lean",
     "Mathlib/Tactic/Ring.lean",
     "Mathlib/Tactic/Group.lean",
+    "Mathlib/Data/Fintype/BigOperators.lean",
+    "Mathlib/Algebra/BigOperators/Ring.lean",
+    "Mathlib/Algebra/GeomSum.lean",
+    "Mathlib/Data/Nat/ModEq.lean",
+    "Mathlib/Data/Nat/Find.lean",
+    "Mathlib/Algebra/Polynomial/Div.lean",
+    "Mathlib/Tactic/Linarith.lean",
+    "Mathlib/Tactic/FieldSimp.lean",
+    "Mathlib/Tactic/FinCases.lean",
 ]
 
 

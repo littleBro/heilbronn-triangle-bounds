@@ -20,16 +20,23 @@ from verify_slab import rejected
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = ["Sphere","Tuned","Slab","RowDigits","FiveScales","MixedSphere",
            "MixedLayerData","MixedLayerCounting","FiveLayerData","FiveLayer","FivePacking"]
-PROVED = ["degree-5 norm decomposition into 9*18^2 determinants",
-          "homogeneous norm coordinates and distinct-label criterion over split primes",
-          "exact 3072-word layer, shifted packing and separation from label tags",
-          "determinant factorization for two repeated top columns",
-          "fresh-position and cleared-denominator alteration inequalities",
-          "exponent identity and gain greater than 108 over degree seven"]
-WRITTEN = ["tag minor valuation and fresh-digit joint probability bound",
-           "conditional divisor moment and repeated-label partition",
-           "upstream lattice, orbit, slab geometry and weighted counting arguments",
-           "asymptotic deletion and prime progression interpolation"]
+PROVED = [
+    "degree-5 norm decomposition into 9*18^2 determinants",
+    "homogeneous norm coordinates and distinct-label criterion over split primes",
+    "exact 3072-word layer, shifted packing and separation from label tags",
+    "determinant factorization for two repeated top columns",
+    "tag-minor valuation, exact joint digit tails and uniform minor-divisor moment",
+    "balanced determinant coefficients and the tagged small-residue pair moment",
+    "column-reindexing invariance and the finite label-mixture bound",
+    "fresh-position and cleared-denominator alteration inequalities",
+    "exponent identity and gain greater than 108 over degree seven",
+]
+WRITTEN = [
+    "instantiation of norm packing and tags in the finite digit theorem, including distinct-label exclusion",
+    "identification of the minor exponent with the upstream Smith divisor",
+    "upstream lattice, orbit, slab geometry and weighted counting arguments",
+    "asymptotic deletion and prime progression interpolation",
+]
 
 
 def arithmetic(c, previous):
@@ -61,7 +68,9 @@ def arithmetic(c, previous):
     require(c["collision"]=={"M":"L3/r = 400*k^2*r^3","exactly_two_equal_moment":"2/M",
         "joint_tail":"Pr(b>=j and J | labels) <= M^(-2*j-1), 1<=j<=a<d",
         "all_three_equal_moment":2,"total":"6/(M*r^d)+2/r^(2*d)","r_powers":[-8,-10],
-        "proof_status":"written; not formalized in Lean"},"collision interface")
+        "proof_status":"Lean; explicit tag and distinct-label interfaces",
+        "pair_theorem":"HeilbronnFive.DigitModel.tagged_small_residue_moment",
+        "total_theorem":"HeilbronnFive.total_small_residue_moment"},"collision interface")
     base_power=1+1+4
     require(base_power-2*(4-1)==0 and Fraction(200,400)==Fraction(1,2),"moment scale")
     beta=Fraction(3*4*(1+6)*k-(k-1),2)
@@ -158,7 +167,8 @@ def main():
             "algebra_theorems_audited":algebra["audited_theorems"],"patched_sections":6,
             "patched_manuscript_reference_check":references,
             "evidence_sha256":{p:sha256((ROOT/p).read_bytes()).hexdigest() for p in evidence},
-            "not_established":["full geometric Heilbronn theorem in Lean","fresh-digit probability lemma in Lean",
+            "not_established":["full geometric Heilbronn theorem in Lean","end-to-end norm-packing instantiation of the finite probability theorem",
+                "Smith normal form and identification of the minor exponent",
                 "prime number theorem in Lean","practical finite-n bounds",
                 "complete independent audit of upstream estimates","novelty or optimality"]}
     (ROOT/"artifacts/five-verification.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8",newline="\n")

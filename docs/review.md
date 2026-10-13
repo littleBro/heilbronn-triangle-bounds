@@ -23,19 +23,46 @@ The degree-seven result and every earlier checkpoint remain reproducible.
 | Selection, bounds, injections and shifted matching | FivePacking.tagged_packing | k = 1,166,895; shift 291,726 |
 | Tags do not reach the target coefficient | FivePacking.tag_separation | Support inequality; coefficient transfer is written |
 | Repeated-column determinant factorization | FiveCollision.repeated_top_factorization | Universal over commutative rings |
-| Tag minor valuation and fresh-digit joint tail | Written lemma in note and patch | Not a Lean probability theorem |
+| Tag minor valuation and fresh-digit joint tail | FiveTags and FiveJointTail | Universal finite digit model; exact rational probabilities |
+| Small-residue pair moment | FiveTagged.tagged_small_residue_moment (under DigitModel) | Explicit digit/tag bounds; actual determinant residue and minor exponent |
+| Column relabelling and total label mixture | FiveReindex and FiveFiniteTheorem.total_small_residue_moment | Tag data for each repeated pair; distinct-label exclusion interface |
 | Fresh position lies beyond Schur prefixes | FiveScales.fresh_position | Requires a < d and k >= 2d |
-| Row-digit moment arithmetic and base growth | RowDigits.lean | Integer inequalities; probability proof remains written |
+| Uniform minor-divisor moment and scale | FiveTags.actual_uniform_moment (under DigitModel), FiveTagged.five_probability_scale | Third-row digit model, arbitrary fixed top rows with a unit pivot |
+| Norm-packing instantiation and Smith-divisor identification | Written construction and pinned diagonal-form lemma | Not an end-to-end Lean instantiation |
 | Deletion inequalities and exponent identity | FiveScales.lean | Positive denominators cleared |
 | Gain greater than 108 over degree seven | FivePacking.trace_gain | Kernel-checked integer comparison |
 | Slab, lattice, orbit, weighted count and deletion | Pinned manuscript and written transfer | No complete independent upstream audit or practical threshold |
 | Allowed prime in (m, 2m] eventually | Written PNT progression argument | Standard theorem; not formalized here |
 
-The shared algebra audit covers 28 modules and 80 exported theorems. Only
+The shared algebra and finite probability audit covers 39 modules and 120 exported theorems. Only
 propext, Classical.choice and Quot.sound are permitted. The new core checker
 also audits four scale theorems and seven packing theorems. No count-table
 entry is assumed: kernel evaluation and symbolic recurrence connect it to
 actual finite words.
+
+## Finite probability theorem and its inputs
+
+The probability files use rational averages over the complete product of finite
+digit alphabets. `residueAlphabet_complete` proves that the parameterization
+exhausts the positive representatives of a prescribed residue.
+`probability_le_of_completion` bounds events by an injective restriction to
+the remaining digits. Schur-prefix uniqueness and the fresh coefficient
+equation establish that injection; their joint tail is not an assumption.
+
+`tagged_small_residue_moment` derives the bound 2/M for the actual determinant
+residue and the exponent defined by divisibility of all 2-by-2 minors. It
+also proves the carry implication from the coefficient range bounds.
+`smallMoment_permute` proves invariance under any allowed column permutation.
+`total_small_residue_moment` derives 6/(M*N)+2/N^2 from explicit tag data for
+the repeated-label cases and exclusion of small residues for distinct labels.
+`average_product` identifies the iterated average with the joint product
+average. No probability bound is an input of either final theorem.
+
+The public construction supplies N=r^d and these structural hypotheses in
+writing. The norm-packing/tag instantiation, including the distinct-label
+exclusion, and the identification of the minor exponent with the upstream
+Smith divisor remain explicit interfaces. No Smith normal-form or complete
+geometric theorem is claimed as part of this finite formalization.
 
 ## The most useful mathematical review
 
@@ -107,7 +134,8 @@ missing-reference negative control. All fourteen checkpoints are verified
 by python scripts/verify_all.py; all thirty-six generated files must reproduce
 exactly. The upstream files are never modified.
 
-The full geometric Heilbronn theorem, the fresh-digit probability lemma,
-and prime progression theorem are not formalized here. The exponent comparison
+The finite fresh-digit probability theorem is formalized. The full geometric
+Heilbronn theorem, its norm-packing instantiation and Smith-divisor connection,
+and the prime progression theorem are not formalized here. The exponent comparison
 does not give a practical finite-n improvement. Novelty and unrestricted
 optimality are not established.

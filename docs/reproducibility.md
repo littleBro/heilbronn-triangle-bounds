@@ -45,7 +45,7 @@ permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
 NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
 imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
 and a 120-second timeout. The shared algebra checker also rebuilds BilinearDescent and
-BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, plus three degree-seven and four degree-five modules, for 80 exported theorem audits in total, including the
+BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, plus three degree-seven and four degree-five algebra modules and eleven finite probability modules, for 120 exported theorem audits in 39 modules in total, including the
 prime-field specialization and homogeneous polynomial form. Run this part
 alone with python scripts/verify_algebra.py.
 The complete verifier runs its algebra-dependent checkers in one process,
@@ -178,7 +178,11 @@ The tagged degree-five checkpoint adds nine-node descent, the full degree-five
 norm and homogeneous coordinates, and the determinant factorization for two
 repeated top columns. Core Lean checks the 3,072-word layer, shifted packing,
 tag separation, fresh-position inequalities and exponent arithmetic. The
-joint probability estimate and tag-minor valuation are written proofs.
+joint probability estimate, tag-minor valuation, carry implication, column
+reindexing and label averaging now have universal Lean proofs. The final
+theorem uses structural tag and distinct-label interfaces; instantiating
+them from the norm packing and identifying the minor exponent with the
+upstream Smith divisor remain written connections.
 Run python scripts/verify_five.py alone or the full verifier, which checks
 fourteen results and reproduces thirty-six generated files. The new controls
 enumerate 147,456 digit matrices and 324 norm terms for each of two degree-five

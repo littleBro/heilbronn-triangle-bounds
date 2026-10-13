@@ -23,4 +23,5 @@ lean_lib Heilbronn where
     `TrimmedLayerData, `TrimmedLayer, `TrimmedPacking, `NormCompression, `Slab, `Tuned, `Sphere,
     `SevenDescent, `SevenNorm, `SevenPolynomials, `SevenLayerData, `SevenLayer, `SevenPacking,
     `RowDigits, `FiveDescent, `FiveNorm, `FivePolynomials, `FiveCollision,
-    `FiveLayerData, `FiveLayer, `FivePacking, `FiveScales]
+    `FiveLayerData, `FiveLayer, `FivePacking, `FiveScales,
+    `FiveProbability, `FiveDigits, `FiveJointTail, `FiveTags, `FiveMoment, `FiveCarry, `FiveCoefficientBounds, `FiveLabels, `FiveTagged, `FiveReindex, `FiveFiniteTheorem]

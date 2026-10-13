@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "e08f01bf53ff59190bee65ffb4fa08fc5cf824209e1308a5a783a2104467e97f",
+  "source_sha256": "43e83ae4525949f3f6b3fe058abbe5ed2138d385f0d5ca5265f16ba0ddcbe88b",
   "attempt_date": "2026-10-13",
-  "attempt_scope": "Existing note including degree-five label tags, fresh-digit joint estimate, shifted sphere layer, conditional exponent and retained checkpoints",
+  "attempt_scope": "Existing note including universal finite tagged probability proofs, explicit norm-packing and Smith-divisor interfaces, and retained checkpoints",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

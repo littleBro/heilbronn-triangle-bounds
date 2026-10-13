@@ -87,12 +87,12 @@
     "scripts/build_patch.py": "fb6792ff41bf1b2d16535210d38f93a33320ef72ae1c5fc41b38e8a48ea65079",
     "certificates/sphere.json": "e9c76c95682da3f1021c30fa72c224fdb8f9ffb1993b63d52166911edacfff02",
     "patches/sphere-packing.patch": "f6bad1502b906c453a4cb8a93eef4d371765f21e2798cdd4604043da56fc5ad4",
-    "notes/sphere-packing.tex": "e08f01bf53ff59190bee65ffb4fa08fc5cf824209e1308a5a783a2104467e97f",
+    "notes/sphere-packing.tex": "43e83ae4525949f3f6b3fe058abbe5ed2138d385f0d5ca5265f16ba0ddcbe88b",
     "notes/packing.tex": "0eb5f502a4393da4ce7e2e238dc800b1010c4ec3975f27b3d1da742f21aa7d4e",
-    "README.md": "6e469014096f8a6a4bed4568850723b14833714d0c62dbb0f2cece47f7af6409",
+    "README.md": "46440f096dfd58f4b6f559ce0a8dbecd01587788d1d49b0a9b5a56999d7c29a0",
     "NOTICE": "8d91d8eb249583000aa79abfda277e4e5d97503ff4a8f77e20568a93368a8f87",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
-    "artifacts/sphere-latex-status.json": "e73f834a35e0dfa857af1b534dd9753d49f093d3f00ca4af7a11349a3960dec3"
+    "artifacts/sphere-latex-status.json": "c80c1750e0533513c9ec8c2ddc443d905d52f75ed00630043522316a790d532a"
   },
   "not_established": [
     "complete independent proof or formalization of the upstream geometric theorem",

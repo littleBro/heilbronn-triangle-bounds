@@ -150,7 +150,7 @@ def collision_controls():
             "joint_tail_inequalities":tails,"weighted_moment_inequalities":groups,
             "no_fresh_digit_counterexample":{"k":2,"a":1,"joint_probability":str(Fraction(c[1],c['total'])),"incorrect_bound":"1/8"},
             "no_distinguishing_tag_rejected":True,
-            "scope":"complete finite digit distributions at the displayed parameters; general theorem remains written"}
+            "scope":"complete finite digit distributions at the displayed parameters; supplementary controls for the universal Lean finite digit theorem"}
 
 
 def field_controls():

@@ -9,7 +9,7 @@ $$
 \boxed{\eta=\frac{1}{145\,278\,430}\approx6.8833\cdot10^{-9}}.
 $$
 
-The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates and the written transfer. Lean proves the degree-five norm decomposition, interpolation descent, homogeneous norm coordinates and nonzero residue for distinct labels. It also proves the finite packing, tag separation, repeated-column factorization and selected scale inequalities. The new fresh-digit probability lemma and the prime-progression interpolation are written proofs. The slab geometry, lattice and probability estimates, and full Heilbronn theorem remain outside the formal proof.
+The claim is for every sufficiently large n, conditional on the pinned manuscript's geometric estimates and the written transfer. Lean proves the degree-five norm decomposition, interpolation descent, homogeneous norm coordinates and nonzero residue for distinct labels. It also proves the finite packing, tag separation, repeated-column factorization, selected scale inequalities, and the finite fresh-digit probability theorem. The latter uses an explicit independent digit model and proves the actual small-residue moment, column reindexing and label averaging. Instantiating its tag and distinct-label interfaces from the norm packing, identifying the minor exponent with the manuscript's Smith divisor, and the slab, lattice, orbit, deletion and prime-progression arguments remain written. The full Heilbronn theorem is not formalized.
 
 [Proof and review guide](docs/review.md) · [Current certificate](certificates/five.json) · [Lean algebra proof](lean/FivePolynomials.lean) · [Lean packing proof](lean/FivePacking.lean) · [Reproduction guide](docs/reproducibility.md)
 
@@ -46,18 +46,19 @@ Keep **L1 = L2 = r**, **L3 = 400k²r⁴** and **B of order r⁶**. In the low po
 
 For labels **(lambda, lambda, mu)**, the first two rows are deterministic. The determinant polynomial factors as **U(Y)(Z1(Y) − Z2(Y))**. The first differing label coordinate gives a nonzero coefficient of U at a position **a < 5**, so the smaller Smith divisor satisfies **D <= B^a**. A small determinant requires the coefficient at **k − 1** to vanish. This equation fixes one third-row digit at **k − 1 − a**, outside every low prefix used to bound D. It supplies a factor **1/M**, where **M = L3/r**.
 
-The written joint estimate is **E[D 1_small | exactly two equal labels] <= 2/M**. All three labels equal still contribute, with probability **r^(-2d)**. Thus **E[D 1_small] <= 6/(M r^d) + 2/r^(2d)**. At d = 5 these terms have powers **r^(-8)** and **r^(-10)**, allowing **gamma < 1** in the deletion argument.
+The Lean finite digit theorem proves the joint estimate **E[D 1_small | exactly two equal labels] <= 2/M**. All three labels equal still contribute, with probability **r^(-2d)**. Thus **E[D 1_small] <= 6/(M r^d) + 2/r^(2d)**. At d = 5 these terms have powers **r^(-8)** and **r^(-10)**, allowing **gamma < 1** in the deletion argument.
 
 Two conjugate pairs, one singleton and nine-node descent give **T = 9 * 18² = 2,916**. The sphere with half-alphabets **[2,2,2,2,1,1,1,1,1]** has **3,072** words at energy two. Its original radix product is **K0 = 583,443**. Shifting the first two rows by **S = 291,726** leaves space for the tags and gives **k = K0 + 2S = 1,166,895**. With **rho = 249k + 3** and **gamma = rho/(rho + 1)**, the exponent is **eta = 2/(249k + 5) = 1/145,278,430**.
 
 - [Nine-node descent](lean/FiveDescent.lean), [norm identity](lean/FiveNorm.lean), [homogeneous coordinates](lean/FivePolynomials.lean), and [determinant factorization](lean/FiveCollision.lean)
 - [Exact layer](lean/FiveLayer.lean), [shifted packing and tag separation](lean/FivePacking.lean), and [scale inequalities](lean/FiveScales.lean)
+- [Small-residue probability theorem](lean/FiveTagged.lean), [column reindexing](lean/FiveReindex.lean), and [complete finite label mixture](lean/FiveFiniteTheorem.lean)
 - [Certificate](certificates/five.json), [six-section source patch](patches/degree-five.patch), and [verification report](artifacts/five-verification.json)
 
     python scripts/build_five.py
     python scripts/verify_five.py
 
-Independent controls enumerate **147,456** digit matrices in 36 complete conditional groups, test the weighted estimate, and reject both a reused low digit and a missing distinguishing tag. They also check 32 small coefficient identities and enumerate all 324 norm terms for two degree-five matrices. Thirteen corrupted certificates are rejected. The shared algebra audit covers **28 modules and 80 exported theorems**. These checks complement the universal algebra proofs; the new probability argument remains written.
+Independent controls enumerate **147,456** digit matrices in 36 complete conditional groups, test the weighted estimate, and reject both a reused low digit and a missing distinguishing tag. They also check 32 small coefficient identities and enumerate all 324 norm terms for two degree-five matrices. Thirteen corrupted certificates are rejected. The shared algebra and finite probability audit covers **39 modules and 120 exported theorems**. These finite controls supplement the universal Lean proofs. The probability theorem assumes explicit digit/tag data and distinct-label exclusion, with no probability estimate among those inputs; the remaining connections to the manuscript are listed in the [review guide](docs/review.md).
 
 ## Preserved row-dependent digits and degree seven
 

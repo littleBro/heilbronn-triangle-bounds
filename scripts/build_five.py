@@ -122,6 +122,13 @@ Distinct labels make $J$ impossible. These three disjoint cases prove
 \eqref{orb:tagged-total}.
 \end{proof}
 
+The finite digit argument is formalized in \texttt{FiveTagged.lean},
+with column reindexing in \texttt{FiveReindex.lean} and label averaging
+in \texttt{FiveFiniteTheorem.lean}. The latter takes explicit tag data
+and the distinct-label exclusion interface. Instantiating these from
+the norm packing, and identifying the minor exponent with the Smith
+divisor in Lemma~\ref{orb:diagonal}, remain written connections.
+
 The fresh-position condition matters: a digit already fixed by the
 Schur congruences cannot supply the extra factor $1/M$. Likewise a
 label pair whose top rows agree supplies no nonzero $U_a$. The tags
@@ -144,16 +151,23 @@ $O(r^{-10})$, respectively. This proves the stated bound.
 \end{proof}
 """
 
-PROVED = ["degree-5 norm decomposition into 9*18^2 determinants",
-          "homogeneous norm coordinates and distinct-label criterion over split primes",
-          "exact 3072-word layer, shifted packing and separation from label tags",
-          "determinant factorization for two repeated top columns",
-          "fresh-position and cleared-denominator alteration inequalities",
-          "exponent identity and gain greater than 108 over degree seven"]
-WRITTEN = ["tag minor valuation and fresh-digit joint probability bound",
-           "conditional divisor moment and repeated-label partition",
-           "upstream lattice, orbit, slab geometry and weighted counting arguments",
-           "asymptotic deletion and prime progression interpolation"]
+PROVED = [
+    "degree-5 norm decomposition into 9*18^2 determinants",
+    "homogeneous norm coordinates and distinct-label criterion over split primes",
+    "exact 3072-word layer, shifted packing and separation from label tags",
+    "determinant factorization for two repeated top columns",
+    "tag-minor valuation, exact joint digit tails and uniform minor-divisor moment",
+    "balanced determinant coefficients and the tagged small-residue pair moment",
+    "column-reindexing invariance and the finite label-mixture bound",
+    "fresh-position and cleared-denominator alteration inequalities",
+    "exponent identity and gain greater than 108 over degree seven",
+]
+WRITTEN = [
+    "instantiation of norm packing and tags in the finite digit theorem, including distinct-label exclusion",
+    "identification of the minor exponent with the upstream Smith divisor",
+    "upstream lattice, orbit, slab geometry and weighted counting arguments",
+    "asymptotic deletion and prime progression interpolation",
+]
 
 
 def rows():
@@ -247,7 +261,9 @@ def main():
         "collision":{"M":"L3/r = 400*k^2*r^3", "exactly_two_equal_moment":"2/M",
             "joint_tail":"Pr(b>=j and J | labels) <= M^(-2*j-1), 1<=j<=a<d",
             "all_three_equal_moment":2, "total":"6/(M*r^d)+2/r^(2*d)",
-            "r_powers":[-8,-10], "proof_status":"written; not formalized in Lean"},
+            "r_powers":[-8,-10], "proof_status":"Lean; explicit tag and distinct-label interfaces",
+        "pair_theorem":"HeilbronnFive.DigitModel.tagged_small_residue_moment",
+        "total_theorem":"HeilbronnFive.total_small_residue_moment"},
         "prime_transfer":previous["prime_transfer"], "cap":previous["cap"],
         "rho":str(rho), "beta":rational(Fraction(83*K+1,2)),
         "gamma":rational(gamma), "alpha":rational(alpha), "eta":rational(eta),

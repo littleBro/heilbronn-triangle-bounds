@@ -360,7 +360,7 @@
  \begin{equation}
   \mathbb E[D\mid\lambda_1,\lambda_2,\lambda_3]\leq2
   \quad\text{for every fixed triple of labels.}
-@@ -226,3 +215,76 @@
+@@ -226,3 +215,83 @@
  \end{equation}
  This is the estimate needed when the digit obstruction restricts a
  small determinant to triples with repeated labels.
@@ -432,6 +432,13 @@
 +Distinct labels make $J$ impossible. These three disjoint cases prove
 +\eqref{orb:tagged-total}.
 +\end{proof}
++
++The finite digit argument is formalized in \texttt{FiveTagged.lean},
++with column reindexing in \texttt{FiveReindex.lean} and label averaging
++in \texttt{FiveFiniteTheorem.lean}. The latter takes explicit tag data
++and the distinct-label exclusion interface. Instantiating these from
++the norm packing, and identifying the minor exponent with the Smith
++divisor in Lemma~\ref{orb:diagonal}, remain written connections.
 +
 +The fresh-position condition matters: a digit already fixed by the
 +Schur congruences cannot supply the extra factor $1/M$. Likewise a

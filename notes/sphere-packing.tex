@@ -36,8 +36,11 @@ It also proves the exact layer count, shifted finite packing, tag support
 separation, repeated-column factorization and integer scale inequalities.
 The algebra proof uses Mathlib;
 the packing and scale proofs use core Lean.
-The new fresh-digit joint probability lemma, slab geometry,
-and prime-progression interpolation are written arguments, not Lean proofs.
+The finite fresh-digit probability theorem is now proved in Lean, including
+joint tails, tag valuation, carries, column reindexing and label averaging.
+Its instantiation from the norm packing and its identification with the
+upstream Smith divisor remain written connections. Slab geometry and
+prime-progression interpolation are also outside the formal proof.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
 
@@ -1695,12 +1698,38 @@ moment bound is still at most two. Distinct labels make $J$ impossible.
 These three cases prove the second assertion.
 \end{proof}
 
-The tag-minor valuation and the joint probability argument in this lemma
-remain written proofs. Lean proves the determinant factorization,
-fresh-position inequality and relevant scale arithmetic. Without a tag
-distinguishing the two labels, the minor can vanish identically. If the
-supposed fresh digit lies inside the Schur prefix, it cannot supply the
-additional factor $1/M$.
+The finite probability argument now has a Lean proof. The sample space is
+the full product of independent, uniformly chosen finite digit indices;
+probabilities and expectations are exact rational averages.
+\texttt{FiveDigits.lean} proves that the residue-class parameterization
+exhausts the allowed positive digits. \texttt{FiveJointTail.lean} proves
+the joint tail by an injection into the assignments of the remaining
+digits: the Schur congruences determine $2j$ low digits, and the coefficient
+equation determines one disjoint digit. No independence between the two
+events, and no probability estimate, is assumed as a premise.
+
+\texttt{FiveTags.lean} proves the first nonzero tag-minor coefficient and
+its exact base valuation. It defines $b$ as the largest $j\le k$ for which
+all actual $2\times2$ integer minors are divisible by $B^j$.
+\texttt{FiveCoefficientBounds.lean} proves the $6k^2L_1L_2L_3$ bound,
+and \texttt{FiveCarry.lean} proves that a small determinant residue
+forces the coefficient at $k-1$ to vanish.
+The theorem in \texttt{FiveTagged.lean} therefore gives $2/M$ for the
+actual small-residue event, with explicit digit and tag hypotheses.
+\texttt{FiveReindex.lean} proves that permuting columns preserves the
+full expectation. \texttt{FiveFiniteTheorem.lean} derives
+$6/(MN)+2/N^2$ for $N$ labels from tag data for the repeated-label cases
+and the separate distinct-label exclusion interface. The product-average
+identity is also proved, so this is the expectation over both labels and
+digits. The all-equal contribution is retained.
+
+Applying this finite theorem with $N=r^d$, constructing its tag data from
+the norm packing, and supplying distinct-label exclusion are still written
+connections. Identifying the minor-based $b$ with the Smith exponent uses
+the pinned diagonal-form lemma; Smith normal form itself is not formalized
+here. These interfaces do not supply an unproved probability bound to the
+finite theorem. Without a distinguishing tag the minor can vanish, and a
+digit inside the Schur prefix cannot supply the additional factor $1/M$.
 
 \subsection{Transfer and the new exponent}
 Conditional on $C$, exact lifting and the retained weighted-count and orbit
@@ -1743,7 +1772,11 @@ Two degree-five matrices over $\mathbb F_{37}$ each enumerate all 324 norm
 terms. Thirty-two descended terms are checked; omitting a node breaks 31.
 The layer histogram independently agrees with all 30 count entries, and
 the verifier rejects thirteen corrupted certificates. These finite tests
-complement the universal algebra proofs and the written probability lemma.
+complement the universal algebra and finite probability proofs. The shared
+audit now rebuilds 39 Mathlib-based modules and checks 120 exported theorems,
+including 40 new finite probability exports. Only the standard logical
+axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}
+are permitted. This does not certify the remaining geometric interfaces.
 
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
@@ -1886,8 +1919,8 @@ the dependency lock contains all seven exact revisions.
 \texttt{scripts/verify\_algebra.py} rebuilds these five modules, the
 two bilinear modules, four Frobenius modules, four rank-five modules,
 three paired modules, three eighteen-form modules, three degree-seven modules,
-and four degree-five modules, auditing 80
-exported theorems in total. Their only logical
+four degree-five algebra modules, and eleven finite probability modules,
+auditing 120 exported theorems in 39 modules in total. Their only logical
 axioms are \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}. Each compilation is limited to one thread,
 2048 MB and 120 seconds.

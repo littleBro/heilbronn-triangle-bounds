@@ -1,7 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Tactic.Ring
 
-/-! Algebraic factorization used by the written fresh-digit argument. -/
+/-! Algebraic factorization used by the finite fresh-digit probability theorem. -/
 
 namespace HeilbronnFive
 

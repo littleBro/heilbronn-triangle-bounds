@@ -1,6 +1,6 @@
 import RowDigits
 
-/-! Arithmetic for the tagged degree-five construction. Probability remains written. -/
+/-! Arithmetic for the tagged degree-five construction. The finite probability theorem is in FiveTagged and FiveFiniteTheorem. -/
 
 namespace HeilbronnFiveScales
 open HeilbronnRowDigits (rho)
