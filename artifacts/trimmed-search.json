@@ -1,0 +1,31 @@
+{
+  "scope": "all ranks in the listed finite family via exact branch bounds; no Lean optimality proof or global packing optimality claim",
+  "target": 850305600,
+  "coordinate_orders": 330,
+  "feasible_layers": 990,
+  "initial_k": 22266564609375,
+  "search_completed": true,
+  "rank_windows_evaluated": 8922,
+  "best": {
+    "half_alphabets_low_first": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      4,
+      5,
+      5,
+      5
+    ],
+    "energy": 32,
+    "layer_count": 872130560,
+    "first_rank": 10308152,
+    "lower_inclusive": 133535493048,
+    "upper_exclusive": 10996285570280,
+    "k": 21725500154463,
+    "box_k": 22266564609375
+  }
+}

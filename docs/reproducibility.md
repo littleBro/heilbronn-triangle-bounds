@@ -29,11 +29,11 @@ Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
 
 The command first verifies the supplied ternary, sphere, retuned, slab,
-central-layer, norm-compression, bilinear-layer, Frobenius-orbit, rank-five, paired-determinant and eighteen-form certificates.
+central-layer, norm-compression, bilinear-layer, Frobenius-orbit, rank-five, paired-determinant, eighteen-form and interval certificates.
 It checks all saved upstream hashes, compiles the local Lean proofs, audits their
 logical axioms, exercises finite and negative controls, and checks each patch
 against the pinned original manuscript without applying it.
-It then regenerates all certificates, patches and all four Lean count tables and requires exact byte equality
+It then regenerates all certificates, patches, all five Lean count tables and the interval-count proof source, and requires exact byte equality
 with the supplied files. Generated text uses UTF-8 with LF line endings.
 A regeneration mismatch is a failure even when the resulting certificate would pass.
 
@@ -45,7 +45,7 @@ permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
 NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
 imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
 and a 120-second timeout. The shared algebra checker also rebuilds BilinearDescent and
-BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, for 62 exported theorem audits in total, including the
+BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, plus three degree-seven modules, for 70 exported theorem audits in total, including the
 prime-field specialization and homogeneous polynomial form. Run this part
 alone with python scripts/verify_algebra.py.
 The complete verifier runs its algebra-dependent checkers in one process,
@@ -93,6 +93,21 @@ to ignored text snapshots under .lake/patch-reference-checks and checks
 that every referenced label exists exactly once. It does not compile or
 export another PDF. Removing the matching label is a negative control.
 
+The interval checkpoint adds a general encoded-cutoff recurrence and 44 rows
+of 33 exact counts. TrimmedLayer.lean is generated with the table: its finite
+transitions use kernel evaluation and its recurrence proof connects the counts
+to actual words. TrimmedPacking.lean proves selection and the translated
+packing. The independent checker reads high digits first, compares all 1,452
+table entries, exhausts 13,583 small cutoff counts and checks 42,216 matching
+triples. Both endpoint omissions and a missing translation have negative
+controls. The algebra remains the verified eighteen-form construction.
+The optional python scripts/search_trimmed.py reproduces the finite rank-window
+branch-and-bound search. Its interval bounds cover all ranks in the listed
+family, evaluating 8,922 windows directly. The complete search is not required
+by verification; 342 small search problems are checked against enumeration.
+Search optimality is not formalized and no global packing optimum is claimed.
+The interval source patch also receives the full reference check.
+
 Successful runs refresh the reports under artifacts/, including
 repository-verification.json. These contain runtime details and hashes of
 the actual checked files; changes to runtime versions or source files can change
@@ -127,16 +142,17 @@ that a remote run passed.
 | Five-term determinant and mixed sphere | scripts/build_rankfive.py | scripts/verify_rankfive.py |
 | Paired determinants and mixed sphere | scripts/build_paired.py | scripts/verify_paired.py |
 | Eighteen forms over split primes | scripts/build_eighteen.py | scripts/verify_eighteen.py |
+| Translated interval of the mixed sphere | scripts/build_trimmed.py | scripts/verify_trimmed.py |
 
 After intentionally changing a generator, run it, inspect the changed certificate
 and patch, then run the complete verification command.
-The eleven source patches are alternatives against the same original manuscript.
+The twelve source patches are alternatives against the same original manuscript.
 
 ## Proof notes
 
 The current note is notes/sphere-packing.tex; the earlier ternary argument is
 notes/packing.tex. Neither is needed by the executable proof checks.
-The current note, including eighteen-form determinants, the new mixed-radix layer and prime-progression transfer, compiled successfully in the desktop editor with
+The current note, including eighteen-form determinants, the translated interval and prime-progression transfer, compiled successfully in the desktop editor with
 Tectonic 0.17.0+20260731. Its source hash and bundle identity are recorded in
 [artifacts/sphere-latex-status.json](../artifacts/sphere-latex-status.json).
 The initial download failure was resolved by using the
@@ -147,3 +163,14 @@ stored in this repository, and generated note PDFs are not included.
 The separate artifacts/latex-status.json is the historical ternary-note attempt.
 Document compilation is not part of verify_all.py or the current CI workflow.
 The PDF under upstream/ is the unchanged original manuscript.
+
+The row-digit checkpoint adds degree-seven interpolation, norm and homogeneous
+coordinate proofs, with three pairs and normalization 27. Nine transitions
+of a six-entry count table prove the exact packing layer. RowDigits.lean
+proves the changed scale arithmetic; the conditional probability lemma
+remains a written proof. Run python scripts/verify_rowdigits.py alone or use
+the full verifier, which now checks thirteen results and regenerates
+thirty-three files. Independent controls enumerate 5,832 extension-field
+terms for one matrix, 163,840 small digit matrices, and 2,560 conditional
+tail inequalities. The fixtures and sampling boundaries are recorded in
+artifacts/rowdigits-verification.json.

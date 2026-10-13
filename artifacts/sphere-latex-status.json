@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "688329ef5f0a651ce21def47df2f5bd6c3f8582b37158acbefaf66a4c24fbbe2",
+  "source_sha256": "5cd03fdb74632dbda740b81a226f88211add51ea59aa9f057e7431a5ab72d76b",
   "attempt_date": "2026-10-13",
-  "attempt_scope": "Existing note including the 18-form identity, degree-13 norm descent, exact energy-32 mixed sphere, and written prime-progression transfer",
+  "attempt_scope": "Existing note including the row-dependent digit proof, degree-seven norm, exact sphere layer, conditional exponent and retained checkpoints",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

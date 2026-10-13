@@ -18,12 +18,14 @@ GENERATED = [
     "certificates/rankfive.json", "patches/rank-five.patch", "lean/MixedLayerData.lean",
     "certificates/paired.json", "patches/paired-norm.patch", "lean/PairedLayerData.lean",
     "certificates/eighteen.json", "patches/eighteen-norm.patch", "lean/EighteenLayerData.lean",
+    "certificates/rowdigits.json", "patches/row-digits.patch", "lean/SevenLayerData.lean",
+    "certificates/trimmed.json", "patches/trimmed-sphere.patch", "lean/TrimmedLayerData.lean", "lean/TrimmedLayer.lean",
 ]
 
 
 def run(script):
     print(f"Checking {script}", flush=True)
-    if script in ("verify_norm.py", "verify_bilinear.py", "verify_frobenius.py", "verify_rankfive.py", "verify_paired.py", "verify_eighteen.py"):
+    if script in ("verify_norm.py", "verify_bilinear.py", "verify_frobenius.py", "verify_rankfive.py", "verify_paired.py", "verify_eighteen.py", "verify_trimmed.py", "verify_rowdigits.py"):
         # One process shares one fresh algebra rebuild; no disk cache is trusted.
         importlib.import_module(Path(script).stem).main()
         return
@@ -38,11 +40,11 @@ def main():
     # Validate supplied certificates before allowing their generators to write.
     for script in ["verify.py", "verify_sphere.py", "verify_tuned.py", "verify_slab.py",
                    "verify_central.py", "verify_norm.py", "verify_bilinear.py", "verify_frobenius.py",
-                   "verify_rankfive.py", "verify_paired.py", "verify_eighteen.py"]:
+                   "verify_rankfive.py", "verify_paired.py", "verify_eighteen.py", "verify_trimmed.py", "verify_rowdigits.py"]:
         run(script)
     for script in ["build_certificate.py", "build_patch.py", "build_sphere.py", "build_tuned.py",
                    "build_slab.py", "build_central.py", "build_norm.py", "build_bilinear.py",
-                   "build_frobenius.py", "build_rankfive.py", "build_paired.py", "build_eighteen.py"]:
+                   "build_frobenius.py", "build_rankfive.py", "build_paired.py", "build_eighteen.py", "build_trimmed.py", "build_rowdigits.py"]:
         run(script)
     changed = [name for name, before in saved.items() if (ROOT / name).read_bytes() != before]
     if changed:
@@ -58,7 +60,7 @@ def verify_reports():
                "artifacts/central-verification.json", "artifacts/norm-verification.json",
                "artifacts/algebra-verification.json", "artifacts/bilinear-verification.json",
                "artifacts/frobenius-verification.json", "artifacts/rankfive-verification.json",
-               "artifacts/paired-verification.json", "artifacts/eighteen-verification.json"]
+               "artifacts/paired-verification.json", "artifacts/eighteen-verification.json", "artifacts/trimmed-verification.json", "artifacts/rowdigits-verification.json"]
     for name in reports:
         report = json.loads((ROOT / name).read_text(encoding="utf-8"))
         if report["status"] != "pass":
@@ -74,7 +76,7 @@ def verify_reports():
     ]
     summary = {
         "status": "pass",
-        "checked_results": ["ternary", "sphere", "tuned", "slab", "central", "norm", "bilinear", "frobenius", "rankfive", "paired", "eighteen"],
+        "checked_results": ["ternary", "sphere", "tuned", "slab", "central", "norm", "bilinear", "frobenius", "rankfive", "paired", "eighteen", "trimmed", "rowdigits"],
         "generated_files_unchanged": GENERATED,
         "environment": "local invocation; see individual reports for runtime versions",
         "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},
@@ -83,7 +85,7 @@ def verify_reports():
     }
     (ROOT / "artifacts/repository-verification.json").write_text(
         json.dumps(summary, indent=2) + "\n", encoding="utf-8", newline="\n")
-    print("PASS: all eleven results checked; all twenty-six generated files reproduced exactly.")
+    print("PASS: all thirteen results checked; all thirty-three generated files reproduced exactly.")
 
 
 if __name__ == "__main__":

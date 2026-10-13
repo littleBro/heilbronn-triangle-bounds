@@ -14,26 +14,29 @@
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-At dimension \(d=13\), apply the known eighteen-form determinant
-decomposition over primes \(r\equiv1\pmod3\). Pairing twelve conjugates
-and retaining one unpaired determinant gives \(T=25\cdot18^6\).
-An exactly counted mixed-radix sphere and the retained slab scales give
+Give the first two matrix rows digit range $r$ and the third range
+$400k^2r^4$. The determinant coefficient bound uses their product, so
+the base grows as $r^6$, while the conditional divisor moment stays bounded.
+This allows degree $d=7$. Three pairs of conjugates, one singleton, and
+thirteen-node descent give $T=13\cdot18^3=75\,816$ over primes
+$r\equiv1\pmod3$. An exact sphere layer and the retained slab cap give
 \[
- k=15^7\cdot19^4,\qquad
- \eta_{18}=\frac{1}{498\cdot15^7\cdot19^4+7}
-       \approx9.01814969547931\cdot10^{-17}.
+ k=63\,412\,811,\qquad
+ \eta_{\rm row}=\frac{1}{15\,789\,789\,943}
+       \approx6.33320648095971\cdot10^{-11}.
 \]
-This is about 2.184 times the preceding twenty-form paired exponent.
+This exponent is about $702\,273$ times the degree-thirteen eighteen-form
+exponent, or $685\,209$ times its translated-interval refinement.
 The prime number theorem in the fixed progression supplies the required
 bounded-ratio interpolation to every sufficiently large cardinality.
 The earlier constructions are retained below.
-Lean proves the group action, exact orbit count, norm decomposition, bilinear descent,
-homogeneous degree-13 coordinates and the distinct-label criterion.
+Lean proves the new degree-seven norm decomposition, bilinear descent,
+homogeneous coordinates and the distinct-label criterion.
 It also proves the exact layer count, complete finite packing and
 inherited integer scale inequalities. The algebra proof uses Mathlib;
 the packing and scale proofs use core Lean.
-The slab's finite-field geometry is proved in writing, not in Lean.
-The prime-progression interpolation is also a written argument.
+The new conditional row-digit probability lemma, slab geometry,
+and prime-progression interpolation are written arguments, not Lean proofs.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
 
@@ -1330,18 +1333,265 @@ multinomial count both give $872\,130\,560$.
 The optional bounded search evaluates 8,341 histograms in its listed
 families; this establishes a feasible witness, not optimality.
 
+\section{A translated interval of the sphere}\label{sec:trimmed}
+The eighteen-form algebra and its prime restriction remain unchanged.
+The next improvement comes from shortening the final position range.
+Use eleven coordinates with half-alphabets
+$(4,4,4,4,4,4,5,4,5,5,5)$ and radices $b_j=4A_j-1$.
+For $0\le x_j<2A_j$, put
+\[
+ E(x)=\sum_j\frac{(2x_j-(2A_j-1))^2-1}{8},\qquad
+ c(x)=\sum_j x_j\prod_{h<j}b_h.
+\]
+The energy-$32$ layer has $872\,130\,560$ words of common squared
+norm $267$. We retain only words whose encodings lie in $[C_-,C_+)$, where
+\[
+ C_-=133\,535\,493\,048,\qquad C_+=10\,996\,285\,570\,280.
+\]
+An exact cutoff recurrence gives
+\[
+ \#\{E(x)=32:c(x)<C_-\}=10\,308\,152,\qquad
+ \#\{E(x)=32:c(x)<C_+\}=860\,613\,752.
+\]
+Their difference is exactly $T=850\,305\,600$. Lean proves these
+counts from the actual finite word list, without enumerating it.
+For a low digit $d$ in radix $b$, the cutoff for the remaining word is
+$\lfloor R/b\rfloor+\mathbf1_{d<R\bmod b}$ for cutoff $R$. Subtract the digit's
+energy and sum over digits; the empty word is the base case.
+
+For each retained word define
+\[
+ u(x)=c(x)-C_-,\qquad v(x)=k-1-2u(x),\qquad
+ k=2(C_+-C_-)-1=21\,725\,500\,154\,463.
+\]
+Both maps take values in $[0,k)$ and are injective. A relation
+$u(x)+u(y)+v(z)=k-1$ is equivalent to $c(x)+c(y)=2c(z)$.
+The original radices still prevent carries; equal squared norms then
+force $x=y=z$. Translation and interval restriction preserve this
+argument. The shorter $k$ is the final position range, not a new radix
+product. Enumerate the retained words by $0\le a<T$ and set
+\begin{equation}\label{trimmed:positions}
+ i_a=j_a=u(x(a)),\qquad \ell_a=v(x(a)).
+\end{equation}
+The matching property is
+\begin{equation}\label{trimmed:matching}
+ i_a+j_{a'}+\ell_{a''}=k-1\quad\Longleftrightarrow\quad a=a'=a''.
+\end{equation}
+Lean proves selection, both bounds and injections, and matching.
+The interval is a verified feasible witness; optimality is not claimed.
+
+
+\paragraph{Formal count certificate.}
+Let $F_{\mathbf A}(e,R)$ count words of energy $e$ whose encoding is
+less than $R$. For an empty word this is $1$ exactly when $e=0$ and
+$R>0$. For the low coordinate, set $b=4A-1$ and let
+$\epsilon_A(d)=((2d-(2A-1))^2-1)/8$. Then
+\[
+ F_{A::\mathbf A}(e,R)=
+ \sum_{\substack{0\le d<2A\\\epsilon_A(d)\le e}}
+ F_{\mathbf A}\!\left(e-\epsilon_A(d),
+   \left\lfloor\frac Rb\right\rfloor+\mathbf1_{d<R\bmod b}\right).
+\]
+\texttt{IntervalCounting.lean} proves the digit inequality and this
+recurrence for the actual finite list of words. The certificate contains
+44 states indexed by a remaining alphabet suffix and a cutoff, each
+with energies $0$ through $32$. Two base rows and 42 transitions are
+kernel-checked. The generated proof gives both cutoff counts;
+\texttt{interval\_partition} then proves that their difference counts
+exactly the half-open interval. \texttt{TrimmedPacking.translated\_packing}
+proves selection, bounds, injectivity and matching.
+
+An independent algorithm reads the most significant digits first and
+sums complete blocks of lower-coordinate words. It checks every one of
+the 1,452 saved entries. Exhaustive small controls compare 13,583 cutoff
+counts with enumeration and check 42,216 matching triples. Removing
+either selected endpoint loses one word; using unshifted encodings
+violates the bound required for the right positions.
+
+The optional search covers all rank windows over 330 coordinate orders
+and energies $32,33,34$ by branch bounds. For the sorted encoded layer
+$c_0<\cdots<c_{N-1}$ and $a\le r\le b$, monotonicity gives
+\[
+ c_{r+T-1}-c_r\ge c_{a+T-1}-c_b.
+\]
+This lower bound excludes ranges that cannot improve the incumbent;
+the search evaluates 8,922 windows directly. Independent enumeration
+checks all target sizes on the listed small cases, giving 342 search
+comparisons. The witness above is checked independently of this search.
+Search optimality is not formalized and no global packing optimum is claimed.
+
+With the same slab estimates and the written prime-progression transfer,
+\[
+ \Delta(n)\ge c n^{-2+\eta_{\rm int}},\qquad
+ \eta_{\rm int}=\frac1{498k+7}
+   =\frac1{10\,819\,299\,076\,922\,581},
+\]
+for all sufficiently large $n$, conditional on the retained geometric estimates.
+Exact arithmetic gives
+\[
+ 1.0249<\frac{\eta_{\rm int}}{\eta_{18}}<1.0250;
+\]
+the lower comparison is also kernel-checked. The full geometric theorem
+and the prime-distribution argument remain outside Lean.
+
+\section{Row-dependent digits and degree seven}\label{sec:rowdigits}
+The previous refinements improved a packing for fixed $d=13$.
+Here the digit distribution changes, allowing $d=7$ and a much smaller
+number of required terms. The small interval refinement above remains a
+separate checkpoint; it is not needed for the following witness.
+
+\subsection{A product bound instead of a cube}
+Choose the row lengths
+\[
+ L_1=L_2=r,\qquad L_3=400k^2r^4,\qquad
+ P=L_1L_2L_3=400k^2r^6.
+\]
+In row $i$, choose each positive digit uniformly from $1,\ldots,L_i$
+with its prescribed residue modulo $r$. The first two rows are
+deterministic conditional on the label; every digit in the third row has
+$L_3/r$ choices. Independence includes these deterministic variables.
+Take
+\[
+ 100k^2P<B\le200k^2P,\quad B\text{ prime},\qquad
+ h=B^k,\qquad \tau=\lfloor B^{k-1}/2\rfloor.
+\]
+All $L_i<B$, so every low digit is a unit modulo $B$.
+Each determinant monomial uses one digit from each row. There are at
+most $6k^2$ contributions to any coefficient, giving
+$A_0=6k^2P$. The centered-representative and carry estimates in the
+original obstruction proof therefore hold with $P$ in place of $L^3$.
+In particular, a small determinant still forces a repeated label.
+
+\begin{lemma}[Conditional row-digit tail]
+Let $r\mid L_i$ and $L_i<B$, with independent prescribed-residue digits
+in row $i$. For any fixed triple of labels, including repetitions,
+the smaller Smith divisor $D=B^b$ satisfies, for $1\le j\le k$,
+\[
+ \Pr(b\ge j\mid\text{labels})
+ \le \bigl((r/L_2)^2(r/L_3)^2\bigr)^j.
+\]
+Writing $\theta=B(r/L_2)^2(r/L_3)^2<1$, one has
+$\mathbb E[D\mid\text{labels}]\le(1-\theta)^{-1}$.
+\end{lemma}
+\begin{proof}
+Condition further on the first column and the first entries of the
+other two columns. The unit $C_{11}$ is invertible. If $b\ge j$, the
+vanishing minors force
+\[
+ C_{iv}\equiv C_{i1}C_{11}^{-1}C_{1v}\pmod{B^j},
+ \qquad i,v\in\{2,3\}.
+\]
+Each congruence fixes the first $j$ digits of its entry. Its probability
+is zero or $(r/L_i)^j$, and the four remaining entries use independent
+draws. Multiply these four bounds and average the conditioning.
+When $L_2=r$, the corresponding probabilities are zero or one;
+no randomness in that row is required. Repeated labels do not identify
+the independent digit draws in row three. Finally apply
+\[
+ B^b=1+\sum_{j=1}^k(B^j-B^{j-1})\mathbf1_{\{b\ge j\}},
+ \qquad B^j-B^{j-1}\le B^j,
+\]
+and sum the geometric series. This is a written finite probability proof.
+\end{proof}
+For the chosen lengths,
+\[
+ \theta=B(r/L_3)^2\le\frac{200k^2r^4}{L_3}=\frac12,
+ \qquad\mathbb E[D\mid\text{labels}]\le2.
+\]
+Lean checks the integer inequality $2Br^2\le L_3^2$ under the upper
+bound on $B$, the divisibility of $L_3$ by $r$, and
+$200k^2r^2L_3=80000k^4r^6$.
+The moment theorem itself is not formalized.
+The orbit and weighted-count arguments condition on the entire digit
+matrix. Their remaining uses of digits require unit entries, the
+determinant obstruction, and this uniform conditional moment bound.
+Their geometric and lattice estimates are still carried over from the
+pinned manuscript, as made explicit in the six-section source patch.
+
+\subsection{The smaller norm and packing}
+Use $K=\mathbb F_{r^7}$, where $r\ge37$ and $r\equiv1\pmod3$.
+Apply the same eighteen-form identity to three pairs of conjugates and
+leave one singleton. Normalize by $3^3$, then descend each determinant
+at $2d-1=13$ distinct nodes. This yields
+\[
+ T=13\cdot18^3=75\,816.
+\]
+The files \texttt{SevenDescent.lean}, \texttt{SevenNorm.lean}, and
+\texttt{SevenPolynomials.lean} prove the full norm identity, homogeneous
+degree-seven coordinates and the nonzero criterion for distinct labels.
+The root-existence proof for the allowed primes is reused.
+
+Take half-alphabets $(3,2,2,2,2,2,2,2,2)$ with radices $(11,7,\ldots,7)$.
+The energy-five layer has
+\[
+ [z^5]2^9(1+z+z^3)(1+z)^8
+ =2^9\left(\binom85+\binom84+\binom82\right)
+ =78\,848>75\,816
+\]
+words and squared norm $49$. Nine recurrence transitions prove the
+count in the Lean kernel. Selection of $T$ words and the existing
+mixed-radix sphere argument give the complete packing with
+$k=11\cdot7^8=63\,412\,811$.
+
+\subsection{Alteration and the conditional exponent}
+Keep $H=2h$, $h^6<q\le2h^6$, and $N=(hq)^4$. The three degenerate
+losses remain $h^6/q$, $h^4/q$, and $h^6/q^2$, all bounded.
+Now $B\asymp_k r^6$ rather than $r^{12}$. With
+\[
+ \beta=42k-\frac{k-1}{2}=\frac{83k+1}{2},\quad
+ \rho=6\beta=249k+3,\quad
+ \gamma=\frac{\rho}{2\rho+1},\quad \alpha=\rho+\gamma,
+\]
+the proportional-pair error is $O_k(r^{\gamma-3(k-1)})=o(1)$.
+The bad-triple error divided by the sample count is
+\[
+ O_k\bigl((\log r)^2r^{2\gamma+6-7}\bigr)
+ =O_k\bigl((\log r)^2r^{-1/(2\rho+1)}\bigr)=o(1).
+\]
+Thus degree seven suffices. The same deletion argument, followed by
+the written prime-progression interpolation, gives the conditional exponent
+\[
+ \boxed{\eta_{\rm row}=\frac{2\gamma}{\alpha}
+       =\frac1{249k+4}=\frac1{15\,789\,789\,943}.}
+\]
+The exact gain against the preceding interval checkpoint is
+$10\,819\,299\,076\,922\,581/15\,789\,789\,943\approx685\,208.55$;
+against the untrimmed eighteen-form checkpoint it is approximately
+$702\,273.38$. These compare exponents, not areas at any practical
+cardinality. No effective useful threshold, global optimum, or novelty
+claim is established.
+
+\subsection{Independent finite controls}
+The Python controls enumerate $18^3=5832$ extension-field determinants
+for one degree-seven matrix over $\mathbb F_{37}$ and check 24 descended
+terms. Omitting the normalization or an interpolation node is detected.
+The universal identities are separately proved in Lean.
+The row-digit controls enumerate $163\,840$ small matrices across three
+fixtures, checking $2560$ conditional tail inequalities. The one-digit
+fixtures enumerate every matrix; the two-digit fixture uses twelve fixed
+top-row configurations and complete bottom-row draws. They find 496
+counterexamples to the incorrect fourth-power tail for the long row alone.
+These finite checks support implementation review and do not replace
+the written probability proof. The complete verifier also rejects ten
+corrupted certificates and checks the actual patched manuscript references.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the current result, run \texttt{python scripts/build\_eighteen.py}
-and \texttt{python scripts/verify\_eighteen.py}.
+For the current result, run \texttt{python scripts/build\_rowdigits.py}
+and \texttt{python scripts/verify\_rowdigits.py}.
+For the preserved interval result, run \texttt{python scripts/build\_trimmed.py}
+and \texttt{python scripts/verify\_trimmed.py}.
+For the preserved eighteen-form result, run
+\texttt{python scripts/build\_eighteen.py} and
+\texttt{python scripts/verify\_eighteen.py}.
 For the preserved paired result, run \texttt{python scripts/build\_paired.py},
 \texttt{python scripts/verify\_paired.py}, or the complete verifier below.
 
 For the preserved five-term result, run \texttt{python scripts/build\_rankfive.py},
 then \texttt{python scripts/verify\_rankfive.py}. The ternary,
 sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
-Frobenius-orbit, rank-five, paired and eighteen-form patches are eleven alternatives applied
+Frobenius-orbit, rank-five, paired, eighteen-form, interval and row-digit patches are thirteen alternatives applied
 directly to the unchanged manuscript, not successive patches.
 The retuned, slab, central, norm, bilinear and Frobenius patches update Sections 3--8, including the full deletion
 and interpolation argument.
