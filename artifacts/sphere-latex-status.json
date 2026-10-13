@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "6aa01e68fd5ca1e6f2d2a8b08637a4308a94f5edf4db51ea4009b90a82e1fc46",
+  "source_sha256": "688329ef5f0a651ce21def47df2f5bd6c3f8582b37158acbefaf66a4c24fbbe2",
   "attempt_date": "2026-10-13",
-  "attempt_scope": "Existing note including the 20-term paired determinant identity, complete field-norm descent, homogeneous coordinates and exact energy-59 mixed sphere",
+  "attempt_scope": "Existing note including the 18-form identity, degree-13 norm descent, exact energy-32 mixed sphere, and written prime-progression transfer",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

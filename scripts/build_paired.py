@@ -103,6 +103,14 @@ force all three words to coincide. Therefore
 Both position maps are injective. Lean proves selection, bounds, injectivity
 and matching. Enumerate the selected words by $0\le a<T$ and denote their
 positions by $u_a,v_a$. This is a feasible witness, with no optimality claim.
+Designate the three row positions by
+\begin{equation}\label{norm:positions}
+ i_a=j_a=u_a,\qquad \ell_a=v_a.
+\end{equation}
+Then the matching property used below is
+\begin{equation}\label{norm:matching}
+ i_a+j_{a'}+\ell_{a''}=k-1\quad\Longleftrightarrow\quad a=a'=a''.
+\end{equation}
 """
 
 
@@ -132,7 +140,7 @@ def patch_sections():
                         r"m=10,\qquad k=27\cdot23^9")
     text = replace_once(text, "Let $r$ be an odd prime.", "Let $r\\ge37$ be prime.")
     text = replace_once(text, r"Choose an $\mathbb F_r$-basis $\beta_1,\ldots,\beta_d$ of $K$.",
-        r"Choose a power basis $1,\vartheta,\ldots,\vartheta^{12}$ of $K/\mathbb F_r$.")
+        r"Choose a power basis $\beta_\nu=\vartheta^{\nu-1}$, $1\le\nu\le13$, of $K/\mathbb F_r$.")
     start = text.index(r"\begin{lemma}\label{norm:decomposition}")
     stop = text.index("For a label", start)
     text = text[:start]+DECOMPOSITION+text[stop:]

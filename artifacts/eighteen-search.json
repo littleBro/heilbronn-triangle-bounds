@@ -1,0 +1,99 @@
+{
+  "scope": "exact search only in the listed finite families; no global optimality claim",
+  "even_alphabet_search": {
+    "target": "850305600",
+    "initial_k": "48631121859501",
+    "domains_dimension_min_max": [
+      [
+        8,
+        10,
+        19
+      ],
+      [
+        9,
+        6,
+        13
+      ],
+      [
+        10,
+        4,
+        10
+      ],
+      [
+        11,
+        3,
+        8
+      ],
+      [
+        12,
+        3,
+        7
+      ]
+    ],
+    "size_multiplier": 2,
+    "histograms_evaluated": 5079,
+    "best_improvement": {
+      "k": "22266564609375",
+      "digit_sizes": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        10,
+        10,
+        10,
+        10
+      ],
+      "quarter_norm_index": 64,
+      "layer_count": "872130560"
+    }
+  },
+  "odd_and_even_alphabet_search": {
+    "target": "850305600",
+    "initial_k": "22266564609375",
+    "domains_dimension_min_max": [
+      [
+        8,
+        24,
+        34
+      ],
+      [
+        9,
+        15,
+        23
+      ],
+      [
+        10,
+        10,
+        17
+      ],
+      [
+        11,
+        7,
+        13
+      ],
+      [
+        12,
+        6,
+        11
+      ],
+      [
+        13,
+        4,
+        9
+      ],
+      [
+        14,
+        4,
+        7
+      ]
+    ],
+    "size_multiplier": 1,
+    "histograms_evaluated": 3262,
+    "best_improvement": null
+  },
+  "proof_boundary": "The witness has separate Lean proofs; the search procedure is not formalized."
+}
