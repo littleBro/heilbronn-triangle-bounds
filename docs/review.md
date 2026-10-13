@@ -3,41 +3,64 @@
 The current target is
 
     Delta(n) >= c n^(-2 + eta), for every sufficiently large n,
-    eta = 1 / (498 * 379^17 + 7) ≈ 2.92350666167202e-47.
+    eta = 1 / (498 * 39 * 35^8 + 7) = 1 / 43735923836718757.
 
 This is a conditional refinement of the pinned OpenAI family 191 argument.
-Read the retuning, slab-cap and central-energy sections of [the note](../notes/sphere-packing.tex)
-together with the [six-section source patch](../patches/central-sphere.patch).
-The original manuscript and comparator are retained in upstream/ at commit
-fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+Read the five-term determinant and mixed-radix section of [the note](../notes/sphere-packing.tex)
+and the [six-section source patch](../patches/rank-five.patch).
+All original manuscript files remain pinned at fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
 
 ## Evidence for each claim
 
 | Claim | Evidence | Boundary |
 | --- | --- | --- |
-| Enough distinct equal-energy words | Central.words_square, central_count_bound, central_capacity and central_family | Fully proved in Lean by symbolic moments and finite pigeonhole; no enumerated giant sphere |
-| Positions, row injections and exact matching | Central.central_packing_binomial, using the Sphere encoding and rigidity lemmas | Fully proved in Lean for T = binom(binom(51,13),3), k = 379^17 |
-| The exact T, capacity and gain | Central.lean, Tuned.tunedT_binomial and independent integer arithmetic | Local falling-factorial definition of binomial coefficients |
-| Digit and auxiliary scale inequalities | Tuned.lean, Slab.lean, certificates/central.json | Integer inequalities uniform in k; probability and lattice arguments are separate |
-| Slab cap size and short-relation exclusion | New written lemma and proof in the note and patched Section 5 | Finite-field geometry is not in Lean; small cases are independently checked |
-| Field norm and determinant summands for odd d = 13 | Pinned Section 3 and the written transfer | Not formalized here |
-| Lattice, orbit and weighted counts | Pinned Sections 2 and 4–7, with the slab lemma and changed scale checks | Relied upon; no complete independent theorem audit |
-| Deletion and all sufficiently large cardinalities | Written note and patched Section 8 | The asymptotic and geometric proof is not in Lean |
-| Current sphere parameters | Explicit A = 95, m = 17, central radius 10000 | Feasible witness only; the earlier dimension search used a different criterion |
-| Fresh reproduction | artifacts/repository-verification.json and its linked reports | Evidence is specific to the recorded sources and environment |
+| Integral five-term formula | RankFiveExpansion.rank_five | Known Krishna--Makam identity; proved over any commutative ring |
+| Antisymmetrized product is six times the norm | RankFiveExpansion.antisymmetrized_product and RankFiveNorm.norm_pattern_sum | Odd degree 13 is essential; the factor six is retained |
+| Five fixed words and 93,900,245 orbits | RankFiveOrbits.fixed_pattern, orbit_size, class_card | Plain rotation of five-letter words indexed by a group of order 13 |
+| T = 2,347,506,125 norm determinants | RankFiveNorm.finite_field_trace_norm | Degree 13, at least 25 base-field elements, characteristics 2, 3 and 13 excluded |
+| Homogeneous coordinates and distinct-label criterion | RankFivePolynomials.finite_field_trace_polynomials and prime_field_trace_labels | Proved for every prime r >= 37, using the actual Mathlib field norm |
+| Exact energy-119 coefficient 2,365,025,280 | MixedLayer.exact_layer_count | Nine kernel-checked histogram transitions tied to symbolic counting |
+| Mixed-radix rigidity and bounds | MixedSphere.sphere_matching and position_bounds | Radix 4A-1 separately in each coordinate |
+| Selection, injections and matching | RankFivePacking.trace_packing | T specified above, k = 39 * 35^8; layer capacity is proved |
+| Gain greater than 2.34 | RankFivePacking.trace_gain | Exact integer comparison against the preceding Frobenius checkpoint |
+| Scale inequalities | Tuned.lean, Slab.lean, certificates/rankfive.json | Uniform integer bounds; lattice and probability arguments remain separate |
+| Slab geometry and weighted counts | Written note, pinned manuscript Sections 2 and 4--7 | Not formalized in Lean; no complete independent audit of all upstream estimates |
+| Deletion and all sufficiently large n | Written transfer and patched Section 8 | Conditional geometric consequence; no practical threshold |
+| Reproduction | artifacts/repository-verification.json and linked reports | Specific to the recorded sources and environment |
 
-Lean declarations use the namespaces HeilbronnSphere, HeilbronnTuned,
-HeilbronnSlab and HeilbronnCentral.
-Only the standard logical axioms propext, Classical.choice and Quot.sound are
-permitted in these local proofs. Pure numerical comparisons use no axioms.
+New declarations use HeilbronnRankFive, HeilbronnMixedSphere,
+HeilbronnMixedLayer and HeilbronnRankFivePacking. The shared algebra audit
+covers fifteen Mathlib-based modules and 45 exported theorems. Only propext,
+Classical.choice and Quot.sound are permitted; no mathematical assumptions
+are introduced to stand in for the claimed norm or packing identities.
 
 ## The steps most useful to review
 
-The new finite step is the central-window count: the digit scores have zero
-sum and squared sum 343855008, so the word second moment is
-V = 17 * 190^16 * 343855008. Check the integer tail distance 10001 and
-V + 20001 T * 10001^2 <= 190^17 * 10001^2. The final Lean packing theorem
-depends on this count and does not assume a sufficiently large layer.
+- Check the five explicit products against the determinant. The formula is
+  from [Krishna and Makam, Section 3.1](https://arxiv.org/abs/1801.00496).
+- Expand the thirteen conjugates, then antisymmetrize columns. Odd degree
+  makes each signed permuted norm equal to the original norm, giving six
+  copies. Division by six is required and is covered by a negative control.
+- Rotate w by (a.w)(g) = w(a^-1 g). The determinant value transforms by a.
+  Exactly five words are constant; every other orbit has size thirteen.
+- Use the invariant projection L(z) = sum_a ell(a(z))/13 and weight each
+  representative by its orbit size divided by six. The general field theorem
+  explicitly assumes 6 and 13 nonzero. Cardinality alone would not imply this.
+- Reuse 25-node interpolation of the first two power-basis representatives,
+  followed by L(c_t z) in the third row. All five singleton classes also use
+  25 nodes. Coefficientwise linear maps retain degree-thirteen homogeneity.
+- Count the coefficient of z^119 in
+  (2 sum_{j=0}^9 z^(j(j+1)/2)) * (2 sum_{j=0}^8 z^(j(j+1)/2))^8.
+  Truncation above 119 is valid because every digit energy is nonnegative.
+  The independent multinomial calculation gives the same integer.
+- With half-alphabets [10,9,9,9,9,9,9,9,9], use radices [39,35,35,35,35,35,35,35,35].
+  Each digit sum stays below its own radix. Equal norms then force equality
+  of all three words. Selection and injectivity are proved, not assumed.
+
+The mixed sphere has squared norm 961 and enough words for T. Its parameters
+are an explicit feasible witness, without a global optimality claim.
+
+The retained slab transfer is unchanged:
 
 1. The conditional digit moment only needs theta <= 1/2. With
    L = 400 k^2 r^4, B is of order r^12 with fixed k-dependent constants.
@@ -61,11 +84,15 @@ independent peer review or unrestricted optimality.
 
 ## Previous results and attribution
 
-The ternary, d = 41 sphere, previous d = 13 retuning and slab variants retain their own
+The ternary, d = 41 sphere, d = 13 retuning, slab, central-layer, 37-node norm
+and bilinear-layer variants retain their own
 certificates, Lean files, patches and checkers. They are useful checkpoints and
 use their own parameters. The sphere method is classical Behrend, the moment
 count is elementary, and the slab is a subset of the classical elliptic
-paraboloid already used upstream.
+paraboloid already used upstream. The norm regrouping and interpolation use
+elementary algebra. The new descent uses classical polynomial-interpolation
+multiplication, within the framework of [bilinear complexity](https://arxiv.org/abs/1107.0336);
+novelty of this application is not established.
 
 The repository format was informed by
 [Swapnil Jain's integer-mult-kappa](https://github.com/Swapnil-jain/integer-mult-kappa)

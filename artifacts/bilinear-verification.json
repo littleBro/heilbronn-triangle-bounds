@@ -1,0 +1,156 @@
+{
+  "status": "pass",
+  "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+  "lean": "Lean (version 4.11.0, x86_64-w64-windows-gnu, commit ec3042d94bd1, Release)",
+  "upstream_commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+  "source_files_verified": 16,
+  "eta_approx": "3.61217890050488E-19",
+  "gain_from_norm_approx": "9.46187428722714E+0",
+  "arithmetic_negative_controls": 7,
+  "finite_controls": {
+    "fields": [
+      {
+        "p": 11,
+        "degree": 3,
+        "modulus_low_degree_first": [
+          4,
+          1,
+          0,
+          1
+        ],
+        "nodes": 5,
+        "basis_products": 9,
+        "determinants": 5
+      },
+      {
+        "p": 17,
+        "degree": 5,
+        "modulus_low_degree_first": [
+          3,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "nodes": 9,
+        "basis_products": 25,
+        "determinants": 5
+      },
+      {
+        "p": 41,
+        "degree": 13,
+        "modulus_low_degree_first": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "nodes": 25,
+        "basis_products": 169,
+        "determinants": 5
+      }
+    ],
+    "negative_controls": {
+      "too_few_nodes": 3,
+      "corrupted_element": 3,
+      "unchanged_third_row_detected": 12
+    }
+  },
+  "layer_controls": {
+    "energy": 86,
+    "count": "67169169408",
+    "independent_multinomial_count": "67169169408",
+    "small_exhaustive_lengths": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "lean_axiom_audit": [
+    "'HeilbronnSphere.sphere_matching' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSphere.position_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSphere.encode_injective' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSphere.right_injective' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnSphere.paper_capacity' does not depend on any axioms",
+    "'HeilbronnSphere.sphere_gain' does not depend on any axioms",
+    "'HeilbronnSphere.sphere_family' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSphere.packing_exists' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSphere.paper_packing' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnSphere.paperT_binomial' does not depend on any axioms",
+    "'HeilbronnSphere.paper_packing_binomial' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnExactLayer.table_recurrence' depends on axioms: [propext, Quot.sound]",
+    "'HeilbronnExactLayer.exact_layer_count' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnExactLayer.layer_capacity' does not depend on any axioms",
+    "'HeilbronnExactLayer.exact_layer_family' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnExactLayer.bilinear_packing' depends on axioms: [propext, Classical.choice, Quot.sound]",
+    "'HeilbronnExactLayer.bilinear_gain' does not depend on any axioms"
+  ],
+  "algebra_theorems_audited": 45,
+  "patch_applies": true,
+  "patched_sections": 6,
+  "evidence_sha256": {
+    "lean/Sphere.lean": "a09d087c8083cf526fb82e6b6e2798ddce8eb70655fb925efa927d6d197cebb1",
+    "lean/ExactLayerData.lean": "cf204869d28b915031a1cdca45ab0e7c3d04f7b67e9783fc2bc9941640aa5cd8",
+    "lean/ExactLayer.lean": "3dd99bbafcab799a976676f5fb727b54034af08214b962b05a126f7e803fab62",
+    "scripts/build_bilinear.py": "fbd4d5123072f23cbb076a8c9c9805ef95a2e80c50f3b2cea95ecca91964dc45",
+    "scripts/verify_bilinear.py": "237064de1bf6e7b2bb049b8d7ce10e5540e8f961e29b7039d67a65ce200657aa",
+    "scripts/bilinear_controls.py": "9b3df1cceed065af7d5db5c74dd9c4015b870a39a3f49476804645be28fb150e",
+    "scripts/verify_norm.py": "2b95c6575510727cc4a380ad354b35593e06eb85931c6a1f6936428dd6292ef4",
+    "scripts/build_norm.py": "70dec710e3f2439c507101bce444b779b5f58b7da2c6d7da9dfaa612421d2377",
+    "scripts/norm_controls.py": "0a412ee76509fc9f1f2dc7b28f34af1d6ec7231e07583a0d2a6f0f512c9646df",
+    "scripts/verify.py": "cf70186da5027bca1a6e01cf93802bf18724ec1a144be37675f00cfe8226b769",
+    "scripts/verify_slab.py": "e1c203687df6b55a360ae7fff06a074a8c70f46614cb8ddb5ca3fae0eca28ce9",
+    "scripts/verify_sphere.py": "7c1177b2db18418653d063768675d441db8e3976ebcfe60baad8b5d89e5c69cd",
+    "scripts/build_sphere.py": "9bc551e814838357b6db0ffd9c558cae5c4672a836429e607fbe323ad861f6b7",
+    "scripts/build_slab.py": "e279a61ef11d8dd4cfcb868f103869e1339e14c59869bebbc965d4b9fc74b1f7",
+    "scripts/build_tuned.py": "9102e8915e36727f1973c5925b40127f963d02614f6ce38936f8bc4d0c18530a",
+    "certificates/bilinear.json": "8d2b1f61e0221f4118ad03067142776a4a4f453a38162eb94ef95dd353087c09",
+    "certificates/norm.json": "27b59a15efb2b8fb4c925d554b4ce628fd5a9f4d5eb1137033578e8a7d6e6b06",
+    "certificates/central.json": "41f9889d0b318bcf51e1bc49c87fb76d0fffced60d0aa04ffca13538c5d26cf9",
+    "patches/bilinear-layer.patch": "d6d78f308c20c77e8005dd26a2620e8a92c867d270ff05b36a0f5f560a39cb8a",
+    "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
+    "notes/sphere-packing.tex": "faeef4533d980bb3cd0dd224804a7979fec03e74a958b08ff19b8c4545921fd0",
+    "README.md": "eb1aebf2a0dc0434c00657e9bdc2c1ebd994b0bf95bb20b753580c8514e2af73",
+    "docs/review.md": "3addaef2259a2e73ffb595d5bdd86b59997922bb43f1a2623e3d7737b68d705d",
+    "artifacts/sphere-latex-status.json": "de416c9d9f10c999b4d275c37022b46b11694e7c8a9b023718babdf760b60387",
+    "artifacts/algebra-verification.json": "8127abde196ff4cb8284bdd85acadd5733553bf32822dd6b9895ad9d768a7ca1",
+    "lean/NormExpansion.lean": "713d3bc94714a006ea0fe3b29fda382deb777b63014fd27d084a2824ed8f4e0b",
+    "lean/NormDescent.lean": "1fe8045a3bfcff2f7116c697cfc55c4b1b094244b09c3beed467e2def5b5466e",
+    "lean/NormAlgebra.lean": "018e9199ac2d5f0797f69d24422495865de2f4511636b60e26307bc36f4bcebc",
+    "lean/NormPolynomials.lean": "ac665bb9700618299fef003a81f5c08b3f213fe1d8d3d04d6b88eb0b0fa8dbda",
+    "lean/NormVandermonde.lean": "b6a40a0f2be7178b557c84ee506c45fbc636908c53e5b66e2eeee53a2c0bc49a",
+    "lean/BilinearDescent.lean": "e9004366ced4b7e7d5c406c97b2c621bc0a2654a8825fbe469d01b2de761d335",
+    "lean/BilinearNorm.lean": "26dd034b151aa7526ab6c206a24225172d6646d03ffde4fb260113f20df046e4",
+    "lean/FrobeniusOrbits.lean": "9671ae7d256027adad1be41bffcea419fd3503213fa6618b9db2704dc27ebde7",
+    "lean/FrobeniusNorm.lean": "c42631a2519fe11fb58e457fd1c4af8573d0275dd406c61e0ffe17cbd81bb77e",
+    "lean/FrobeniusDescent.lean": "5be75b6ebb62890dbff596e967dd5887fef0d023326a3472d1b6e3a6fcaf5557",
+    "lean/FrobeniusPolynomials.lean": "0b2f9f7b5c424d92f36cb7c32519b18018c1d853222dcb16a05b9c2af376fb8f",
+    "lean/RankFiveExpansion.lean": "8fe8ca04654874c5d975053730f0c33695c855cbd6e0de5c3ddb0eff948207ca",
+    "lean/RankFiveOrbits.lean": "9aef7899c7323a22df85bfef4db9691026680709c680f10d7147b180ea34d2a1",
+    "lean/RankFiveNorm.lean": "04e23a6825b7b3792ebede9ccd22d687ad1d59e7a6c916a7b1fd714273751292",
+    "lean/RankFivePolynomials.lean": "b1a954ae436f68fd4c13a51e94a910b4e04726e5fc432d387c5f090a0676eeaf",
+    "lakefile.lean": "11b5f84dbf5b4ae75f08eccab4a4625d467476a07d6b064aa6f18ce539e4042f",
+    "lake-manifest.json": "8bd77b3cd6efc5ceb88b72ee2f691cdbff5d768d88817b480b3c0cf547a9d3ad",
+    "lean-toolchain": "7c7da413860f9ec1f8741d6d9d1e803bda6c664f6d954fe15f1a05087dd066f0",
+    "scripts/prepare_mathlib.py": "7933e53832bffaec8175e990838e0108f8110db074b3e928d8e69c4c71d1547f",
+    "scripts/verify_algebra.py": "6064126edd844476b83c9cffbbc64128f6b66b8b2b84996814230dcb0219ecd2"
+  },
+  "not_established": [
+    "Lean proof of slab cap geometry or full geometric theorem",
+    "complete independent audit of upstream estimates",
+    "practical finite-n improvement",
+    "novelty, priority or global optimality"
+  ]
+}

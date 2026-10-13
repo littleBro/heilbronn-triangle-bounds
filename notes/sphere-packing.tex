@@ -14,18 +14,22 @@
 \begin{abstract}
 An elementary finite form of Behrend's classical sphere construction
 replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
-Retuning the dimension to \(d=13\), restricting the auxiliary elliptic
-paraboloid to a slab, and counting words in a central energy interval
-by their second moment gives the conditional paper exponent
+At dimension \(d=13\), the classical five-term determinant formula,
+Galois-orbit averaging and bilinear interpolation reduce the number of
+norm summands to \(T=25(5^{13}+60)/13\). An exactly counted mixed-radix
+sphere and the retained slab scales give the conditional paper exponent
 \[
- k=379^{17},\qquad
- \eta_{\rm central}=\frac{1}{498\cdot379^{17}+7}
-       \approx2.92350666167202\cdot10^{-47}.
+ k=39\cdot35^8,\qquad
+ \eta_{\rm rank\,5}=\frac{1}{498\cdot39\cdot35^8+7}
+       \approx2.28644993011544\cdot10^{-17}.
 \]
-This is approximately \(2.84000572124043\) times the previous slab-cap
-exponent. The earlier constructions are retained below as checkpoints.
-Lean proves the new moment estimate, layer selection and complete finite
-packing, its binomial count, and the inherited integer scale inequalities.
+This is about 2.344 times the preceding Galois-orbit exponent.
+The earlier constructions are retained below.
+Lean proves the group action, exact orbit count, norm decomposition, bilinear descent,
+homogeneous degree-13 coordinates and the distinct-label criterion.
+It also proves the exact layer count, complete finite packing and
+inherited integer scale inequalities. The algebra proof uses Mathlib;
+the packing and scale proofs use core Lean.
 The slab's finite-field geometry is proved in writing, not in Lean.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
@@ -50,6 +54,14 @@ Section~\ref{sec:retuned} explicitly changes \(d,T,k\) and the other scales.
 Section~\ref{sec:slab} retains that packing and improves the auxiliary cap.
 Section~\ref{sec:central} then reduces the alphabet from 202 to 190 digits
 by a second-moment count, while retaining the slab scales.
+Section~\ref{sec:compression} changes the determinant decomposition
+itself: its \(T\) is no longer the binomial count used by earlier variants.
+Section~\ref{sec:bilinear} reduces the interpolation count further and
+uses an exact sphere layer.
+Section~\ref{sec:frobenius} groups those terms by Galois symmetry and
+reduces the required word length from eleven to ten.
+Section~\ref{sec:rankfive} uses the known five-term determinant formula
+\cite{krishna-makam} and a mixed-radix sphere to improve it again.
 This is an application of the classical sphere idea of Behrend
 \cite{behrend}, not a new progression-free-set construction.
 Stronger variants are known \cite{ehps}; neither optimality nor
@@ -157,6 +169,7 @@ Sphere & \(40011^{29}\) & \(1.51508393214748\cdot10^{-138}\)\\
 Retuned, \(d=13\) & \(403^{17}\) & \(4.77320332233169\cdot10^{-48}\)\\
 Slab cap, \(d=13\) & \(403^{17}\) & \(1.02940168035828\cdot10^{-47}\)\\
 Central layer, \(d=13\) & \(379^{17}\) & \(2.92350666167202\cdot10^{-47}\)\\
+Compressed norm, \(d=13\) & \(47^{10}\) & \(3.81761455590365\cdot10^{-20}\)\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -640,12 +653,458 @@ optimality claim. It uses the classical sphere construction and an
 elementary second-moment count; no new progression-free-set method
 is claimed. Constants and the threshold for \(n\) remain unspecified.
 
+\section{Compressing the norm decomposition}\label{sec:compression}
+The preceding variants retain the upstream term count
+\(T_{\rm old}=\binom{\binom{51}{13}}3\). That count comes from expanding
+in all homogeneous monomials and grouping all triples of them.
+Here we use the product structure of the norm before expanding those
+monomials. This changes the algebraic input to the packing.
+
+Let \(d=13\), let \(r\ge37\) be prime and put
+\(K=\mathbb F_{r^d}\), \(\sigma(a)=a^r\).
+Choose \(\vartheta\in K\setminus\mathbb F_r\). Since \(d\) is prime,
+its Frobenius orbit has length \(d\); its minimal polynomial \(P\)
+therefore has degree \(d\), and
+\(K=\mathbb F_r[\vartheta]\cong\mathbb F_r[Y]/(P)\).
+Use the power basis \(\beta_\nu=\vartheta^{\nu-1}\).
+As in upstream Section 3, for \(3d\) variables grouped as \(X_{i\nu}\), set
+\[
+ Z_i(X)=\sum_{\nu=1}^d\beta_\nu X_{i\nu},\qquad
+ \mathcal N=\prod_{v=0}^{d-1}
+   \det\bigl(\sigma^v Z_i(X^{(j)})\bigr)_{i,j=1}^3.
+\]
+Here \(\sigma\) fixes the variables and acts on coefficients only.
+Thus \(\mathcal N\) has coefficients in \(\mathbb F_r\).
+
+\begin{lemma}\label{lem:compression}
+The polynomial \(\mathcal N\) is a sum of
+\(T=(3d-2)6^{d-1}=80540946432\) determinants
+\(\det(f_{ia}(X^{(j)}))\), where each \(f_{ia}\) is a homogeneous
+degree-\(d\) polynomial over \(\mathbb F_r\), with zero polynomials allowed.
+\end{lemma}
+\begin{proof}
+Permutations in \(S_3\) map column indices to row indices.
+For \(\rho=(\rho_1,\ldots,\rho_{d-1})\in S_3^{d-1}\), set
+\(\rho_0=\mathrm{id}\) and
+\[
+ F_{i,\rho}(X)=\prod_{v=0}^{d-1}\sigma^v Z_{\rho_v(i)}(X),\qquad
+ \epsilon_\rho=\prod_{v=1}^{d-1}\operatorname{sgn}(\rho_v).
+\]
+The product of determinant expansions has permutation tuples
+\((\pi_0,\ldots,\pi_{d-1})\). Normalize by
+\(\tau=\pi_0\), \(\rho_v=\pi_v\tau^{-1}\).
+This change of indices is bijective, with inverse \(\pi_v=\rho_v\tau\).
+The original sign becomes
+\[
+ \prod_v\operatorname{sgn}(\pi_v)
+  =(\operatorname{sgn}\tau)^d\epsilon_\rho
+  =\operatorname{sgn}(\tau)\epsilon_\rho.
+\]
+The last equality uses odd \(d\). Summing over \(\tau\) gives
+\begin{equation}\label{eq:compressed-extension}
+ \mathcal N=\sum_{\rho\in S_3^{d-1}}\epsilon_\rho
+       \det\bigl(F_{i,\rho}(X^{(j)})\bigr)_{i,j=1}^3.
+\end{equation}
+This step uses no division by \(6\). It has \(6^{d-1}\) summands
+over the extension field, not yet over the base field.
+
+Represent each \(K\)-coefficient in the power basis to obtain
+\(F_{i,\rho}(X)=\widehat F_{i,\rho}(\vartheta,X)\) with
+\(\deg_Y\widehat F_{i,\rho}<d\). Reducing coefficients modulo \(P\)
+does not change their homogeneity in \(X\).
+Set
+\[
+ H_\rho(Y)=\det\bigl(\widehat F_{i,\rho}(Y,X^{(j)})\bigr)_{i,j=1}^3.
+\]
+Its degree in \(Y\) is at most \(3d-3\).
+Let \(\ell:K\to\mathbb F_r\) take the coefficient of \(1\) in the
+power basis, extended coefficientwise to polynomials in \(X\).
+It is linear and fixes every element of \(\mathbb F_r\); it need not
+preserve products or determinants.
+
+For the \(3d-2\) distinct base-field elements \(t=0,\ldots,3d-3\), put
+\[
+ L_t(Y)=\prod_{\substack{0\le u\le3d-3\\u\ne t}}\frac{Y-u}{t-u},
+ \qquad \lambda_t=\ell(L_t(\vartheta)).
+\]
+All denominators are nonzero because \(r\ge3d-2\).
+Lagrange interpolation is an identity in the polynomial coefficient
+ring \(\mathbb F_r[X^{(1)},X^{(2)},X^{(3)}]\). Applying \(\ell\)
+after evaluating it at \(Y=\vartheta\) gives
+\[
+ \ell(H_\rho(\vartheta))
+  =\sum_{t=0}^{3d-3}\lambda_t
+      \det\bigl(\widehat F_{i,\rho}(t,X^{(j)})\bigr)_{i,j=1}^3.
+\]
+Since \(\mathcal N\) already has base-field coefficients,
+\(\ell(\mathcal N)=\mathcal N\). Apply this to
+\eqref{eq:compressed-extension}, and for \(a=(\rho,t)\) take
+\[
+ f_{1a}=\epsilon_\rho\lambda_t\widehat F_{1,\rho}(t,X),\quad
+ f_{2a}=\widehat F_{2,\rho}(t,X),\quad
+ f_{3a}=\widehat F_{3,\rho}(t,X).
+\]
+These are the required \((3d-2)6^{d-1}\) determinants over
+\(\mathbb F_r\). Some terms may be zero; keeping them gives the
+fixed count independently of \(r\).
+\end{proof}
+
+The remaining interfaces are preserved. Evaluating at the coordinates
+of \((1,\xi,\xi^2)\) gives the same norm of a Vandermonde determinant,
+which is nonzero for three distinct labels. The coefficient of the
+designated digit degree is still exactly that norm modulo \(r\).
+The bound \(6k^2L^3\) counts digit positions and is independent of the
+chosen polynomial decomposition. The conditional digit lemma in
+upstream Section 4 explicitly permits arbitrary prescribed functions
+of the labels; the number of labels is still \(r^{13}\).
+Hence its moment and collision bounds are unchanged.
+The restriction \(r\ge37\) only changes a fixed initial threshold.
+
+Use the full-range sphere bound with
+\[
+ m=10,\quad A=12,\quad s=24,\quad b=47,\quad Q=661,\quad
+ TQ\le24^{10},\quad k=47^{10}.
+\]
+The parameter \(m\) is the word length; the field degree remains \(d=13\).
+Lemma~\ref{lem:sphere} proves the complete packing.
+The argument in Proposition~\ref{prop:slab} now applies with this fixed
+smaller \(k\), giving, under the same upstream geometric estimates,
+\[
+ \Delta(n)\ge c n^{-2+\eta_{\rm norm}},\qquad
+ \eta_{\rm norm}=\frac1{498\cdot47^{10}+7}
+\]
+for every sufficiently large \(n\).
+The gain over \(\eta_{\rm central}\) is approximately
+\(1.30583405399879\cdot10^{27}\).
+The new algebraic decomposition and finite packing are proved in Lean.
+The geometric consequence still relies on the written slab, lattice,
+probability and asymptotic transfer arguments.
+The regrouping and interpolation are elementary; novelty, global
+optimality and a practical finite-size improvement are not established.
+
+\section{Bilinear descent and an exact layer}\label{sec:bilinear}
+The preceding construction uses the same evaluation functional in all
+three rows. A row-dependent linear map reduces its interpolation count
+from \(3d-2\) to \(2d-1\). This is elementary polynomial-interpolation
+multiplication, within the classical framework of bilinear complexity
+\cite{bilinear}; no novelty claim is made for the multiplication method.
+
+\begin{lemma}\label{lem:bilinear-descent}
+Let \(K/F\) have power basis \(1,\vartheta,\ldots,\vartheta^{d-1}\),
+let \(\ell:K\to F\) be any \(F\)-linear functional, and choose
+\(2d-1\) distinct elements \(t\in F\). Write \(\widehat x(Y)\) for
+the degree-less-than-\(d\) representative of \(x\in K\), and let
+\(c_t=L_t(\vartheta)\), where \(L_t\) are the Lagrange polynomials.
+For every \(3\)-by-\(3\) matrix \(M\) over \(K\),
+\[
+ \ell(\det M)=\sum_t
+ \det\begin{pmatrix}
+  \widehat M_{11}(t)&\widehat M_{12}(t)&\widehat M_{13}(t)\\
+  \widehat M_{21}(t)&\widehat M_{22}(t)&\widehat M_{23}(t)\\
+  \ell(c_tM_{31})&\ell(c_tM_{32})&\ell(c_tM_{33})
+ \end{pmatrix}.
+\]
+\end{lemma}
+\begin{proof}
+The polynomial \(\widehat x(Y)\widehat y(Y)\) has degree at most
+\(2d-2\). Interpolate it, then evaluate at \(\vartheta\), to obtain
+\[
+ xy=\sum_t\widehat x(t)\widehat y(t)c_t.
+\]
+Multiply by \(z\) and apply \(\ell\):
+\[
+ \ell(xyz)=\sum_t\widehat x(t)\widehat y(t)\ell(c_tz).
+\]
+Apply this formula to each of the six signed terms in \(\det M\).
+Collecting the terms at each node gives the displayed determinant.
+\end{proof}
+
+Apply the lemma with the constant-coordinate functional, which fixes
+\(F\), to each extension-field determinant in
+\eqref{eq:compressed-extension}. For \(a=(\rho,t)\), use
+\[
+ f_{1a}=\epsilon_\rho\widehat F_{1,\rho}(t,X),\qquad
+ f_{2a}=\widehat F_{2,\rho}(t,X),\qquad
+ f_{3a}=\ell(c_tF_{3,\rho}(X)).
+\]
+All maps extend coefficientwise and preserve homogeneity of degree
+\(d\). The exact norm identity therefore holds with
+\[
+ T=(2d-1)6^{d-1}=25\cdot6^{12}=54\,419\,558\,400.
+\]
+The third row's map is essential: replacing it by the old evaluation
+map at only 25 nodes is generally false. The finite checker includes
+counterexamples to that substitution. The new Lean theorem holds for
+every prime \(r\ge25\); the manuscript patch keeps the sufficient
+restriction \(r\ge37\), leaving the later argument unchanged.
+
+Now take \(m=11\), \(s=14\), \(A=7\), and \(b=27\). A digit
+\(x\in\{0,\ldots,13\}\) has energy index
+\(j(x)=((2x-13)^2-1)/8\). Thus its generating polynomial is
+\[
+ D(z)=2(1+z+z^3+z^6+z^{10}+z^{15}+z^{21}).
+\]
+For \(c_n(e)=[z^e]D(z)^n\), the exact recurrence is
+\[
+ c_0(e)=\begin{cases}1&e=0,\\0&e>0,\end{cases}
+ \qquad
+ c_{n+1}(e)=2\sum_{j=0}^6 c_n(e-j(j+1)/2),
+\]
+with \(c_n(e)=0\) when \(e<0\). It gives
+\[
+ c_{11}(86)=67\,169\,169\,408>T.
+\]
+Only energies 0 through 86 are needed: all digit energies are
+nonnegative. The twelve rows of 87 counts are recorded in the
+certificate and in \texttt{ExactLayerData.lean}. The independent
+checker also obtains this count from
+\[
+ 2^{11}\!\!\sum_{\substack{a_0+\cdots+a_6=11\\
+                   \sum_{j=0}^6 a_jj(j+1)/2=86}}
+       \frac{11!}{a_0!\cdots a_6!}.
+\]
+Words at energy index 86 have squared centered norm
+\(11+8\cdot86=699\). Select \(T\) distinct words from this layer.
+The previous midpoint-rigidity and carry-free encoding arguments
+provide the complete packing with
+\[
+ k=27^{11}=5\,559\,060\,566\,555\,523.
+\]
+Proposition~\ref{prop:slab} retains all its hypotheses and yields
+\[
+ \eta_{\rm bilinear}=\frac1{498\cdot27^{11}+7}
+     =\frac1{2\,768\,412\,162\,144\,650\,461}.
+\]
+The exact gain over \(\eta_{\rm norm}\) lies between 9.46 and 9.47.
+These are explicit feasible parameters, with no unrestricted
+optimality claim. The geometric conclusion remains conditional on
+the same upstream estimates as the preceding checkpoints.
+
+\section{Galois orbits and invariant projection}\label{sec:frobenius}
+Retain \(d=13\), prime \(r\ge37\), and \(K=\mathbb F_{r^{13}}\).
+Let \(G=\operatorname{Gal}(K/\mathbb F_r)\) and
+\(W=\{w:G\to S_3:w(1)=1\}\). Thus \(|G|=13\) and \(|W|=6^{12}\).
+The terms of \eqref{eq:compressed-extension} can be indexed by \(W\):
+\[
+ F_{i,w}(X)=\prod_{g\in G}g(Z_{w(g)i}(X)),\quad
+ \epsilon_w=\prod_{g\in G}\operatorname{sgn}(w(g)),\quad
+ C_w=\epsilon_w\det(F_{i,w}(X^{(j)}))_{i,j=1}^3.
+\]
+In particular \(\mathcal N=\sum_{w\in W}C_w\).
+
+\begin{lemma}\label{lem:galois-orbits}
+The formula
+\[
+ (a\cdot w)(g)=w(a^{-1}g)w(a^{-1})^{-1}
+\]
+defines an action on \(W\), and \(C_{a\cdot w}=a(C_w)\), with
+automorphisms acting on coefficients. There is exactly one fixed
+pattern, and the number of orbits is
+\[
+ Q=1+\frac{6^{12}-1}{13}=167\,444\,796.
+\]
+\end{lemma}
+\begin{proof}
+Substitution verifies the identity and composition laws. Put
+\(h=w(a^{-1})\); reindexing the product by \(g=ag'\) gives
+\[
+ F_{i,a\cdot w}=a(F_{h^{-1}i,w}),\qquad
+ \epsilon_{a\cdot w}=\epsilon_w\operatorname{sgn}(h)^{13}
+                    =\epsilon_w\operatorname{sgn}(h).
+\]
+The determinant of the row-permuted matrix has a second factor
+\(\operatorname{sgn}(h)\); their product is one. This proves equivariance.
+
+By orbit-stabilizer, every orbit has size one or thirteen. If \(w\)
+is fixed, its invariance implies \(w(uv)=w(v)w(u)\), so
+\(w(g)^{13}=w(g^{13})=w(1)=1\). Every permutation of three letters
+also has sixth power one. Since \(13=2\cdot6+1\), we get \(w(g)=1\).
+The constant identity pattern is indeed fixed. The remaining
+\(6^{12}-1\) patterns form orbits of size thirteen, giving the count.
+\end{proof}
+
+Let \(\ell\) be the constant-coordinate functional in the power basis
+and define its invariant average
+\[
+ L(z)=\frac1{13}\sum_{a\in G}\ell(a(z)).
+\]
+This is well-defined because \(r\ne13\). It is linear, fixes
+\(\mathbb F_r\), and satisfies \(L(a(z))=L(z)\). Extend it
+coefficientwise to polynomials. For representatives \(w_q\) and
+orbit sizes \(n_q\), Lemma~\ref{lem:galois-orbits} gives
+\[
+ \mathcal N=L(\mathcal N)=\sum_{q\in W/G}n_qL(C_{w_q}).
+\]
+Both the invariant average and the orbit weights are necessary;
+using \(\ell\) directly or omitting \(n_q\) is generally false.
+
+Apply Lemma~\ref{lem:bilinear-descent} with this \(L\) and the 25
+nodes \(0,\ldots,24\). With \(c_t=L_t(\vartheta)\) and \(a=(q,t)\), set
+\[
+ f_{1a}=n_q\epsilon_{w_q}\widehat F_{1,w_q}(t,X),\qquad
+ f_{2a}=\widehat F_{2,w_q}(t,X),\qquad
+ f_{3a}=L(c_tF_{3,w_q}(X)).
+\]
+These are homogeneous degree-13 polynomials over \(\mathbb F_r\), and
+\[
+ \mathcal N=\sum_a\det(f_{ia}(X^{(j)})),\qquad
+ T=25Q=4\,186\,119\,900.
+\]
+We retain 25 nodes even for the singleton orbit, including any zero
+terms. This uniform count is used throughout the certificate and
+formal proof. The same family works for every label triple. Its
+evaluation on \((1,\xi,\xi^2)\) is the exact Vandermonde norm, nonzero
+if and only if the three labels are distinct. The downstream interface
+review in Section~\ref{sec:compression} therefore applies unchanged.
+
+For the same digit polynomial \(D(z)\) as in Section~\ref{sec:bilinear},
+the checked recurrence also gives
+\[
+ [z^{80}]D(z)^{10}=5\,058\,395\,136>T.
+\]
+These words have squared centered norm \(10+8\cdot80=650\).
+Selecting \(T\) of them gives the complete sphere packing with
+\[
+ k=27^{10}=205\,891\,132\,094\,649.
+\]
+Proposition~\ref{prop:slab}, with its same upstream assumptions, yields
+\[
+ \Delta(n)\ge c n^{-2+\eta_{\rm Frobenius}},\qquad
+ \eta_{\rm Frobenius}=\frac1{498\cdot27^{10}+7}
+   =\frac1{102\,533\,783\,783\,135\,209}
+\]
+for every sufficiently large \(n\). The exact gain over the preceding
+checkpoint is strictly between 26.99 and 27: if
+\(D=498\cdot27^{10}+7\), its old denominator is \(27D-182\).
+No unrestricted packing optimum or practical finite-size gain is claimed.
+The new algebra and packing are formalized; the slab geometry and full
+asymptotic geometric theorem remain conditional on the written transfer.
+
+\section{Five-term determinant and mixed-radix sphere}\label{sec:rankfive}
+The determinant formula used here is due to Krishna--Makam
+\cite{krishna-makam}; no novelty for that formula is claimed.
+We apply it to the degree-thirteen norm and retain every scale and
+geometric assumption of Section~\ref{sec:slab}.
+
+\begin{lemma}\label{rankfive:decomposition}
+For $d=13$ there exist homogeneous degree-$d$ polynomials
+$f_{ia}\in\mathbb F_r[X]$ (allowing zero), for $1\le i\le3$ and
+$0\le a<T=25(5^{13}+60)/13=2\,347\,506\,125$, such that
+\begin{equation}\label{rankfive:determinant-sum}
+ \mathcal N(X^{(1)},X^{(2)},X^{(3)})
+ =\sum_{a=0}^{T-1}\det\bigl(f_{ia}(X^{(j)})\bigr)_{1\le i,j\le3}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Use the integral five-term determinant formula of Krishna--Makam,
+\emph{On the tensor rank of $3\times3$ permanent and determinant},
+arXiv:1801.00496, Section 3.1. Write its three linear forms as rows:
+\[
+\begin{array}{c|ccc}
+t&l_{t1}(Z)&l_{t2}(Z)&l_{t3}(Z)\\\hline
+0&Z_2+Z_3&Z_1&Z_2\\
+1&-Z_1-Z_3&Z_2&Z_1\\
+2&-Z_2&Z_1+Z_3&Z_2+Z_3\\
+3&Z_2-Z_1&Z_3&Z_1+Z_2+Z_3\\
+4&Z_1&Z_2+Z_3&Z_1+Z_3
+\end{array}
+\]
+Then $\det(Z^{(1)},Z^{(2)},Z^{(3)})
+=\sum_{t=0}^4\prod_{i=1}^3 l_{ti}(Z^{(i)})$.
+Let $G=\operatorname{Gal}(K/\mathbb F_r)$ and $W=\{0,\ldots,4\}^G$.
+Put $H_{i,w}(X)=\prod_{g\in G}g(l_{w(g),i}(Z(X)))$.
+Expand the product of the thirteen conjugate determinants with the
+five-term formula, and antisymmetrize the three columns. Since $13$
+is odd, the norm changes by the sign of the column permutation.
+Consequently the exact identity is
+\[
+ 6\mathcal N=\sum_{w\in W}D_w,\qquad
+ D_w=\det(H_{i,w}(X^{(j)}))_{i,j=1}^3.
+\]
+The factor $6$ is essential. All divisions below are valid for prime
+$r\ge37$. Rotate words by $(a\cdot w)(g)=w(a^{-1}g)$.
+Reindexing the product gives $D_{a\cdot w}=a(D_w)$.
+A fixed word is constant. Thus exactly five words are fixed, and
+every other orbit has size $13$, giving
+\[
+ Q=5+\frac{5^{13}-5}{13}=93\,900\,245.
+\]
+For the constant-coordinate functional $\ell$ of a power basis,
+$L(z)=13^{-1}\sum_{a\in G}\ell(a(z))$ fixes the base field and is
+$G$-invariant. With representatives $w_q$ and orbit sizes $n_q$,
+\[
+ \mathcal N=\sum_q \frac{n_q}{6}L(D_{w_q}).
+\]
+Let $\widehat x(Y)$ be the degree-less-than-$13$ representative of
+$x\in K=\mathbb F_r[\vartheta]$. Interpolation at the $25$ distinct
+nodes $t=0,\ldots,24$, with $c_t=L_t(\vartheta)$, gives
+$xy=\sum_t\widehat x(t)\widehat y(t)c_t$.
+Hence $L(xyz)=\sum_t\widehat x(t)\widehat y(t)L(c_tz)$.
+Apply this to the six products in each determinant. For each $(q,t)$,
+the coordinate rows are
+\[
+ \frac{n_q}{6}\widehat H_{1,w_q}(t,X),\qquad
+ \widehat H_{2,w_q}(t,X),\qquad L(c_tH_{3,w_q}(X)).
+\]
+Every coordinate is homogeneous of degree $13$. All $Q$ classes,
+including the five singletons, receive $25$ nodes, proving the claim.
+\end{proof}
+
+Use a sphere with nine coordinates: one has alphabet
+$\{0,\ldots,19\}$ and radix $39$, and eight have alphabet
+$\{0,\ldots,17\}$ and radix $35$. For half-alphabets
+$(A_0,\ldots,A_8)=(10,9,\ldots,9)$, set
+\[
+ b_j=4A_j-1,\quad u(x)=\sum_{j=0}^8 x_j\prod_{h<j}b_h,
+ \quad k=\prod_j b_j=39\cdot35^8=87\,823\,140\,234\,375.
+\]
+Center the coordinates as $y_j=2x_j-(2A_j-1)$ and let
+$J(x)=\sum_j (y_j^2-1)/8$. The exact coefficient is
+\[
+ [z^{119}]\left(2\sum_{a=0}^9z^{a(a+1)/2}\right)
+ \left(2\sum_{a=0}^8z^{a(a+1)/2}\right)^8
+ =2\,365\,025\,280>T.
+\]
+This is checked by the recurrence $C_{A::S}(e)=
+2\sum_{a=0}^{A-1}C_S(e-a(a+1)/2)$, with negative indices zero
+and $C_{[]}(e)=\mathbf1_{e=0}$. Nine transitions of a table with
+$0\le e\le119$ are checked by the Lean kernel. Select any $T$ distinct
+words in the layer $J=119$, whose common squared norm is $9+8\cdot119=961$.
+For each selected word put $v(x)=k-1-2u(x)$. Then
+$0\le u(x),v(x)<k$, both maps are injective, and
+\[
+ u(x)+u(y)+v(z)=k-1\quad\Longleftrightarrow\quad x=y=z.
+\]
+Indeed, the left side gives $u(x)+u(y)=2u(z)$. Reduction modulo the
+first radix, then division and induction, gives coordinatewise
+$x_j+y_j=2z_j$, since both digit sums are less than $b_j$.
+Equal squared norms imply $x=y=z$ by strict convexity. The bound
+$2u(x)+1\le k$ and injectivity follow by the same radix induction.
+All these finite packing claims, including selection from the exact
+layer count, are proved in Lean. Enumerate the selected words by
+$0\le a<T$ and write their two positions as $u_a,v_a$.
+
+The full finite packing, polynomial norm decomposition and distinct-label
+criterion for every prime \(r\ge37\) are proved in Lean. In the general
+finite-field theorem the characteristic must differ from \(2,3,13\):
+base-field cardinality alone does not justify division by six or thirteen.
+Substitution into the unchanged slab transfer gives
+\[
+ \eta_{\rm rank\,5}=\frac{1}{43\,735\,923\,836\,718\,757},\qquad
+ 2.34<\frac{\eta_{\rm rank\,5}}{\eta_{\rm Frobenius}}<2.35.
+\]
+These are comparisons of asymptotic exponents. No practical threshold,
+point configuration or global optimality is claimed.
+
 \section{Verification and remaining boundary}
-For the current result, run \texttt{python scripts/build\_central.py},
-then \texttt{python scripts/verify\_central.py}. The ternary,
-sphere-only, retuned, slab and central-layer patches are five alternatives applied
+First prepare the pinned algebra dependencies with
+\texttt{python scripts/prepare\_mathlib.py}.
+For the current result, run \texttt{python scripts/build\_rankfive.py},
+then \texttt{python scripts/verify\_rankfive.py}. The ternary,
+sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
+Frobenius-orbit and rank-five patches are nine alternatives applied
 directly to the unchanged manuscript, not successive patches.
-The retuned, slab and central patches update Sections 3--8, including the full deletion
+The retuned, slab, central, norm, bilinear and Frobenius patches update Sections 3--8, including the full deletion
 and interpolation argument.
 The earlier sphere checks remain available through
 \texttt{python scripts/verify\_sphere.py}.
@@ -728,6 +1187,108 @@ coordinates, propagates the moments, checks six small Cartesian products
 and rejects six corruptions of the certificate. It rebuilds all Lean
 dependencies and audits the final theorem's logical axioms.
 
+\texttt{lean/NormCompression.lean} checks the six permutations, their
+composition and signs, the normalization bijection in every tuple
+length, and its sign identity for 13 factors. It proves the complete
+packing with \(T=37\cdot6^{12}\), \(k=47^{10}\), and the exact gain
+enclosure. The field algebra is proved in five separate modules:
+\begin{enumerate}
+\item \texttt{NormExpansion.lean} proves the symbolic product-of-thirteen
+determinants identity over any commutative ring. Relative permutations
+are reindexed by an equivalence; no enormous sum is evaluated.
+\item \texttt{NormDescent.lean} constructs polynomial representatives
+as a linear map from a power basis, proves their evaluation and degree
+bounds, and proves the 37-node interpolation descent. The constant
+coordinate projection is proved to fix the base field.
+\item \texttt{NormAlgebra.lean} identifies the product with Mathlib's
+\emph{actual field norm}. Its final theorem supplies the power basis,
+automorphism enumeration and interpolation nodes from finite-field
+hypotheses, and produces one family of \(37\cdot6^{12}\) coordinate
+functions working simultaneously for every label triple.
+\item \texttt{NormPolynomials.lean} supplies homogeneous degree-13
+polynomials over the base field, in \(3\cdot13\) coordinates. Its final
+theorem proves their homogeneity and the exact norm identity for all
+triples of coordinate assignments. Coefficient projection commutes
+with evaluation at base-field coordinates because it is linear.
+\item \texttt{NormVandermonde.lean} proves that the determinant sum
+is nonzero if and only if the three labels are distinct. The final
+specialization uses \(\mathbb F_r\) and the constructed extension
+\(\mathbb F_{r^{13}}\), for every prime \(r\ge37\).
+\end{enumerate}
+These proofs assume neither the compressed norm identity nor a descent
+theorem as hypotheses. The polynomial result is stated as homogeneity
+and a universally quantified evaluation identity. The functional
+result also covers the arbitrary label functions allowed in upstream
+Section~4. Mathlib is pinned to commit
+\texttt{20c73142afa995ac9c8fb80a9bb585a55ca38308};
+the dependency lock contains all seven exact revisions.
+\texttt{scripts/verify\_algebra.py} rebuilds these five modules, the
+two bilinear modules, four Frobenius modules and four rank-five modules, auditing 45
+exported theorems in total. Their only logical
+axioms are \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. Each compilation is limited to one thread,
+2048 MB and 120 seconds.
+
+The independent checker tests the written decomposition in
+\(\mathbb F_{11^3}\) and \(\mathbb F_{17^5}\), with four matrices in each
+field, including Vandermonde labels. It also checks interpolation on
+all 37 basis monomials and four matrices in \(\mathbb F_{41^{13}}\).
+The degree-13 norm expansion is not enumerated. The saved field
+polynomials are checked for irreducibility. Negative controls detect
+omitted signs, entrywise projection, insufficient nodes, corrupted
+weights and the even-degree sign error. These finite controls supplement
+the universal Lean argument.
+
+\texttt{BilinearDescent.lean} proves two-factor interpolation at 25
+nodes, the three-factor projection formula and the determinant descent.
+\texttt{BilinearNorm.lean} combines it with the original orbit
+regrouping and proves the functional norm identity, homogeneous
+polynomial form and distinct-label specialization. The hypotheses
+supply only the fields and their degree and cardinality, not a desired
+decomposition. \texttt{ExactLayer.lean} symbolically enumerates digit
+words, proves their nonduplication and the counting recurrence, and
+checks every row of the finite table with the Lean kernel. It then
+selects the words and proves \texttt{bilinear\_packing}. No count-table
+entry or layer-capacity hypothesis is assumed. The count table is
+checked by list equalities in eleven separate transitions, within
+the same one-thread, 2048 MB and 120-second compilation limits.
+
+The new finite controls check all basis products and five determinants
+in each of the degree-3, degree-5 and degree-13 extensions used above.
+They detect insufficient nodes, a corrupted interpolation element and
+an incorrect third-row map. The layer is independently checked by a
+full energy distribution, the multinomial formula and exhaustive
+products of lengths 0 through 3. Seven corrupted certificates are
+rejected. These checks supplement the universal Lean proofs.
+
+\texttt{FrobeniusOrbits.lean} proves the normalized group action,
+the unique fixed pattern, the exact count of quotient classes and
+the weighted sum of an invariant function over representatives.
+\texttt{FrobeniusNorm.lean} proves signed determinant equivariance,
+identifies their sum with the actual field norm, and constructs the
+invariant projection fixing the base field.
+\texttt{FrobeniusDescent.lean} proves bilinear determinant descent for
+an arbitrary linear functional and the complete orbit-weighted norm
+identity. Its finite-field theorem supplies the basis and nodes.
+\texttt{FrobeniusPolynomials.lean} proves homogeneous coordinates and
+the distinct-label specialization for every prime \(r\ge37\).
+The general theorem includes both a base-field cardinality bound and
+\(13\ne0\) in that field; cardinality alone would not exclude
+characteristic 13. \texttt{FrobeniusPacking.lean} reuses the previously
+checked table to prove the energy-80 count, word selection, packing
+and strict gain enclosure.
+
+Independent finite controls enumerate all normalized patterns in
+degrees 3 and 5, checking signed equivariance and full weighted norm
+sums on two matrices in each field. Degree 3 has three fixed patterns,
+providing a check against an invalid generalization of the orbit count.
+In degree 13, nine patterns per matrix are sampled and all thirteen
+basis vectors are checked for projection invariance; the enormous
+pattern set is not enumerated. Negative controls detect omission of
+orbit weights and replacement of the average by the constant coordinate.
+The new layer is also counted by an independent multinomial sum,
+and nine corrupted certificates are rejected.
+
 The retuned verifier rebuilds the imported sphere proof before checking
 the new file, audits their logical axioms, independently derives the
 rational exponent from the scales, and verifies all 16 upstream files.
@@ -737,6 +1298,36 @@ stated sufficient estimates: \(d=11\), \(q\asymp h^{13}\),
 to \(399\) while still asserting \(\theta\le1/2\).
 These controls show failures of the chosen bounds, not impossibility
 of those parameters under a different argument.
+
+
+\texttt{RankFiveExpansion.lean} proves the integral five-term identity
+and its thirteen-factor antisymmetrization. \texttt{RankFiveOrbits.lean}
+proves the plain rotation action, five fixed patterns and exact class count.
+\texttt{RankFiveNorm.lean} combines the actual field norm with orbit weights
+and the required factor \(1/6\). \texttt{RankFivePolynomials.lean} proves
+homogeneity and the distinct-label specialization. The shared algebra
+rebuild is run once within the complete verification process; standalone
+checks still perform a fresh rebuild.
+
+\texttt{MixedSphere.lean} proves sphere rigidity and mixed-radix matching
+for a list of half-alphabets. \texttt{MixedLayerCounting.lean} connects
+symbolic word enumeration to the counting recurrence. The nine checked
+transitions of the 120-entry histogram are divided into three modules to
+keep each compilation within the stated limits. \texttt{MixedLayer.lean}
+identifies the exact coefficient, and \texttt{RankFivePacking.lean}
+proves word selection, the complete packing and the lower gain bound.
+No table entry or capacity premise is assumed.
+
+Independent checks enumerate all five-letter patterns in degrees three
+and five, sample degree thirteen, and test the integral determinant
+formula in characteristics two, three, five and forty-one. Negative
+controls reject a missing factor \(1/6\), missing orbit weights and a
+non-invariant projection. A full histogram and a separate multinomial
+calculation agree on the packing count. Exhaustive small mixed spheres
+pass matching checks. In contrast, the equal-norm words
+\((0,6),(13,6),(0,7)\) in the fourteen-digit alphabet encode in radix
+26 as \(156,169,182\), a nonconstant arithmetic progression: simply
+allowing carries is invalid. Eight corrupted certificates are rejected.
 
 The complete geometric theorem, practical point generation, novelty,
 priority, and unrestricted optimality remain outside the established
@@ -755,5 +1346,12 @@ No Three Terms in Arithmetical Progression}, PNAS 32 (1946), 331--332.
 \emph{Improving Behrend's construction: Sets without arithmetic
 progressions in integers and over finite fields}, 2024.
 \url{https://arxiv.org/abs/2406.12290}.
+\bibitem{bilinear} H. Randriambololona,
+\emph{Bilinear complexity of algebras and the Chudnovsky--Chudnovsky
+interpolation method}, 2012.
+\url{https://arxiv.org/abs/1107.0336}.
+\bibitem{krishna-makam} S. Krishna and V. Makam,
+\emph{On the tensor rank of $3\times3$ permanent and determinant}, 2018,
+Section 3.1. \url{https://arxiv.org/abs/1801.00496}.
 \end{thebibliography}
 \end{document}

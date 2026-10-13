@@ -21,7 +21,12 @@ Keep the saved files under upstream/ unchanged and preserve earlier witnesses.
 
 Run the complete local verification:
 
+    python scripts/prepare_mathlib.py
     python scripts/verify_all.py
+
+Dependency preparation is needed once per fresh checkout. Changes to
+lakefile.lean, lake-manifest.json or the preparation script change the trusted
+build inputs and need review alongside workflow changes.
 
 Commit regenerated certificates and patches together with their sources.
 Verification reports record the environment in which they ran. A numerical

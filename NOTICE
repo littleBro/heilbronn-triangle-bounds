@@ -24,6 +24,11 @@ Its revised integer scale inequalities are formalized in lean/Slab.lean.
 The geometric transfer remains a written conditional argument.
 No priority or unrestricted optimality claim is made.
 
+The five-term determinant formula is from Siddharth Krishna and Visu Makam,
+"On the tensor rank of 3 x 3 permanent and determinant", Section 3.1,
+arXiv:1801.00496 (2018). Its identity and the local degree-thirteen
+antisymmetrization are independently proved in lean/RankFiveExpansion.lean.
+
 Local author: Ivan Blinov (@littleBro).
 Research, implementation and drafting used substantial OpenAI Codex assistance.
 The repository organization was informed by Swapnil Jain's integer-mult-kappa

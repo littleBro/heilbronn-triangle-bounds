@@ -1,0 +1,477 @@
+--- a/build/sections/03-norm-digits.tex
++++ b/build/sections/03-norm-digits.tex
+@@ -11,10 +11,9 @@
+ 
+ Fix
+ \begin{equation}\label{norm:fixed-parameters}
+- d=41,\qquad M=\binom{4d-1}{d},\qquad
+- T=\binom{M}{3},\qquad k=T^2+1.
+-\end{equation}
+-Let $r$ be an odd prime.  We recall the elementary finite-field facts
++ d=13,\qquad T=25(5^{13}+60)/13,\qquad m=9,\qquad k=39\cdot35^8.
++\end{equation}
++Let $r\ge37$ be prime.  We recall the elementary finite-field facts
+ needed here; see \cite[Chapter~2]{LidlNiederreiter1994} for background.
+ In a splitting field over $\mathbb F_r$, the roots of
+ $X^{r^d}-X$ form a field: the Frobenius identity shows closure under
+@@ -26,7 +25,7 @@
+ the $r$ roots of $X^r-X$, namely $\mathbb F_r$.
+ For $t\in K$, the product $\prod_{j=0}^{d-1}t^{r^j}$ is therefore fixed
+ by Frobenius and belongs to $\mathbb F_r$; it is nonzero if $t\ne0$.
+-Choose an $\mathbb F_r$-basis $\beta_1,\ldots,\beta_d$ of $K$.
++Choose a power basis $1,\vartheta,\ldots,\vartheta^{12}$ of $K/\mathbb F_r$.
+ For a group $X=(X_{i\nu})_{1\le i\le3,\,1\le\nu\le d}$ of $3d$
+ variables, define
+ \[
+@@ -59,40 +58,67 @@
+ \eqref{norm:polynomial}.  Since $d$ is odd, $\mathcal N$ is alternating.
+ 
+ \begin{lemma}\label{norm:decomposition}
+-There exist homogeneous degree-$d$ polynomials $f_{ia}\in\mathbb F_r[X]$
+-(allowing the zero polynomial), for
+-$1\le i\le3$ and $0\le a<T$, such that
++For $d=13$ there exist homogeneous degree-$d$ polynomials
++$f_{ia}\in\mathbb F_r[X]$ (allowing zero), for $1\le i\le3$ and
++$0\le a<T=25(5^{13}+60)/13=2\,347\,506\,125$, such that
+ \begin{equation}\label{norm:determinant-sum}
+  \mathcal N(X^{(1)},X^{(2)},X^{(3)})
+-   =\sum_{a=0}^{T-1}
+-      \det\bigl(f_{ia}(X^{(j)})\bigr)_{1\le i,j\le3}.
+-\end{equation}
+-For each $a$, the three polynomials are obtained from three distinct
+-degree-$d$ monomials by multiplying the first by a scalar that may be zero.
++ =\sum_{a=0}^{T-1}\det\bigl(f_{ia}(X^{(j)})\bigr)_{1\le i,j\le3}.
++\end{equation}
+ \end{lemma}
+-
+ \begin{proof}
+-List the degree-$d$ monomials in $3d$ variables as $m_1,\ldots,m_M$.
+-Expand $\mathcal N$ in products
+-$m_p(X^{(1)})m_q(X^{(2)})m_s(X^{(3)})$.
+-If two of $p,q,s$ coincide, the coefficient equals its negative under the
+-corresponding transposition, and hence is zero because $r$ is odd.
+-For each $p<q<s$, let $c_{pqs}$ be the coefficient of
+-$m_p(X^{(1)})m_q(X^{(2)})m_s(X^{(3)})$.
+-Alternation identifies the other five coefficients with the signs in
+-\[
+- c_{pqs}\det
+- \begin{pmatrix}
+-  m_p(X^{(1)})&m_p(X^{(2)})&m_p(X^{(3)})\\
+-  m_q(X^{(1)})&m_q(X^{(2)})&m_q(X^{(3)})\\
+-  m_s(X^{(1)})&m_s(X^{(2)})&m_s(X^{(3)})
+- \end{pmatrix}.
+-\]
+-Enumerate the $T$ triples $p<q<s$ by $a$, and take
+-\[
+- (f_{1a},f_{2a},f_{3a})=(c_{pqs}m_p,m_q,m_s).
+-\]
+-This argument uses no division by $3!$, so it applies also when $r=3$.
++Use the integral five-term determinant formula of Krishna--Makam,
++\emph{On the tensor rank of $3\times3$ permanent and determinant},
++arXiv:1801.00496, Section 3.1. Write its three linear forms as rows:
++\[
++\begin{array}{c|ccc}
++t&l_{t1}(Z)&l_{t2}(Z)&l_{t3}(Z)\\\hline
++0&Z_2+Z_3&Z_1&Z_2\\
++1&-Z_1-Z_3&Z_2&Z_1\\
++2&-Z_2&Z_1+Z_3&Z_2+Z_3\\
++3&Z_2-Z_1&Z_3&Z_1+Z_2+Z_3\\
++4&Z_1&Z_2+Z_3&Z_1+Z_3
++\end{array}
++\]
++Then $\det(Z^{(1)},Z^{(2)},Z^{(3)})
++=\sum_{t=0}^4\prod_{i=1}^3 l_{ti}(Z^{(i)})$.
++Let $G=\operatorname{Gal}(K/\mathbb F_r)$ and $W=\{0,\ldots,4\}^G$.
++Put $H_{i,w}(X)=\prod_{g\in G}g(l_{w(g),i}(Z(X)))$.
++Expand the product of the thirteen conjugate determinants with the
++five-term formula, and antisymmetrize the three columns. Since $13$
++is odd, the norm changes by the sign of the column permutation.
++Consequently the exact identity is
++\[
++ 6\mathcal N=\sum_{w\in W}D_w,\qquad
++ D_w=\det(H_{i,w}(X^{(j)}))_{i,j=1}^3.
++\]
++The factor $6$ is essential. All divisions below are valid for prime
++$r\ge37$. Rotate words by $(a\cdot w)(g)=w(a^{-1}g)$.
++Reindexing the product gives $D_{a\cdot w}=a(D_w)$.
++A fixed word is constant. Thus exactly five words are fixed, and
++every other orbit has size $13$, giving
++\[
++ Q=5+\frac{5^{13}-5}{13}=93\,900\,245.
++\]
++For the constant-coordinate functional $\ell$ of a power basis,
++$L(z)=13^{-1}\sum_{a\in G}\ell(a(z))$ fixes the base field and is
++$G$-invariant. With representatives $w_q$ and orbit sizes $n_q$,
++\[
++ \mathcal N=\sum_q \frac{n_q}{6}L(D_{w_q}).
++\]
++Let $\widehat x(Y)$ be the degree-less-than-$13$ representative of
++$x\in K=\mathbb F_r[\vartheta]$. Interpolation at the $25$ distinct
++nodes $t=0,\ldots,24$, with $c_t=L_t(\vartheta)$, gives
++$xy=\sum_t\widehat x(t)\widehat y(t)c_t$.
++Hence $L(xyz)=\sum_t\widehat x(t)\widehat y(t)L(c_tz)$.
++Apply this to the six products in each determinant. For each $(q,t)$,
++the coordinate rows are
++\[
++ \frac{n_q}{6}\widehat H_{1,w_q}(t,X),\qquad
++ \widehat H_{2,w_q}(t,X),\qquad L(c_tH_{3,w_q}(X)).
++\]
++Every coordinate is homogeneous of degree $13$. All $Q$ classes,
++including the five singletons, receive $25$ nodes, proving the claim.
+ \end{proof}
+ 
+ For a label $\xi\in K$, set $z(\xi)=(1,\xi,\xi^2)^{\mathsf T}$ and
+@@ -106,7 +132,7 @@
+ \end{equation}
+ whenever the three labels are distinct.
+ Although the basis and the coefficients $f_{ia}$ may depend on $r$, the
+-numbers $d,M,T,k$ in \eqref{norm:fixed-parameters} do not.
++numbers $d,T,k$ in \eqref{norm:fixed-parameters} do not.
+ 
+ \subsection{Encoding the polynomial in a base expansion}
+ 
+@@ -120,7 +146,7 @@
+ $n<p\le2n$.
+ \end{lemma}
+ 
+-Set $L=r^{10}$.  For all sufficiently large $r$, apply
++Set $L=400k^2r^4$.  For all sufficiently large $r$, apply
+ Lemma~\ref{norm:prime-interval} with $n=100k^2L^3$ to choose a prime
+ $B$ satisfying
+ \begin{equation}\label{norm:base}
+@@ -129,22 +155,40 @@
+  \tau=\left\lfloor\frac{B^{k-1}}2\right\rfloor,
+  \qquad R_h=\mathbb Z/h\mathbb Z.
+ \end{equation}
+-For $0\le a<T$, designate positions in rows $1,2,3$, respectively, by
+-\begin{equation}\label{norm:positions}
+- i_a=a,\qquad j_a=Ta,\qquad \ell_a=T^2-(T+1)a.
+-\end{equation}
+-These positions lie in $\{0,\ldots,k-1\}$ and are distinct within each
+-row: they lie respectively in the intervals $[0,T-1]$, $[0,T^2-T]$,
+-and $[1,T^2]$.  The only designated positions whose sum is $k-1$ are
+-the matched triples:
+-\begin{equation}\label{norm:matching}
+- i_a+j_{a'}+\ell_{a''}=k-1
+- \quad\Longleftrightarrow\quad a=a'=a''.
+-\end{equation}
+-To prove the forward implication, rewrite the equation as
+-$a+Ta'=(T+1)a''$.  Reduction modulo $T$, together with
+-$0\le a,a''<T$, gives $a=a''$; substitution then gives $a'=a''$.
+-The reverse implication follows from \eqref{norm:positions}.
++Use a sphere with nine coordinates: one has alphabet
++$\{0,\ldots,19\}$ and radix $39$, and eight have alphabet
++$\{0,\ldots,17\}$ and radix $35$. For half-alphabets
++$(A_0,\ldots,A_8)=(10,9,\ldots,9)$, set
++\[
++ b_j=4A_j-1,\quad u(x)=\sum_{j=0}^8 x_j\prod_{h<j}b_h,
++ \quad k=\prod_j b_j=39\cdot35^8=87\,823\,140\,234\,375.
++\]
++Center the coordinates as $y_j=2x_j-(2A_j-1)$ and let
++$J(x)=\sum_j (y_j^2-1)/8$. The exact coefficient is
++\[
++ [z^{119}]\left(2\sum_{a=0}^9z^{a(a+1)/2}\right)
++ \left(2\sum_{a=0}^8z^{a(a+1)/2}\right)^8
++ =2\,365\,025\,280>T.
++\]
++This is checked by the recurrence $C_{A::S}(e)=
++2\sum_{a=0}^{A-1}C_S(e-a(a+1)/2)$, with negative indices zero
++and $C_{[]}(e)=\mathbf1_{e=0}$. Nine transitions of a table with
++$0\le e\le119$ are checked by the Lean kernel. Select any $T$ distinct
++words in the layer $J=119$, whose common squared norm is $9+8\cdot119=961$.
++For each selected word put $v(x)=k-1-2u(x)$. Then
++$0\le u(x),v(x)<k$, both maps are injective, and
++\[
++ u(x)+u(y)+v(z)=k-1\quad\Longleftrightarrow\quad x=y=z.
++\]
++Indeed, the left side gives $u(x)+u(y)=2u(z)$. Reduction modulo the
++first radix, then division and induction, gives coordinatewise
++$x_j+y_j=2z_j$, since both digit sums are less than $b_j$.
++Equal squared norms imply $x=y=z$ by strict convexity. The bound
++$2u(x)+1\le k$ and injectivity follow by the same radix induction.
++All these finite packing claims, including selection from the exact
++layer count, are proved in Lean. Enumerate the selected words by
++$0\le a<T$ and write their two positions as $u_a,v_a$.
++
+ 
+ A random column $c=(c_1,c_2,c_3)^{\mathsf T}\in R_h^3$ is now defined
+ as follows.  First choose $\xi$ uniformly from $K$.  For each row
+@@ -159,7 +203,7 @@
+ \begin{equation}\label{norm:column}
+  c_i=\sum_{v=0}^{k-1}c_{iv}B^v\pmod h.
+ \end{equation}
+-Every required residue has exactly $L/r=r^9$ possible digits, including
++Every required residue has exactly $L/r=400k^2r^3$ possible digits, including
+ the zero residue.  In particular a digit prescribed to be zero modulo
+ $r$ is still a positive integer.  Since $L<B$, the lowest digit is a
+ unit modulo $B$; thus every entry of $c$ is a unit in $R_h$.
+--- a/build/sections/04-orbits.tex
++++ b/build/sections/04-orbits.tex
+@@ -205,12 +205,12 @@
+ and \eqref{orb:tail} give \eqref{orb:moment}.
+ \end{proof}
+ 
+-For the parameters $L=r^{10}$ and $B\leq200k^2L^3$ of the digit
++For the parameters $L=400k^2r^4$ and $B\leq200k^2L^3$ of the digit
+ construction, we have
+ \[
+- \theta\leq200k^2r^{-6}.
+-\]
+-Thus, for fixed $k$ and all sufficiently large $r$,
++ \theta\leq200k^2r^4/L=\frac12.
++\]
++Thus, uniformly for every allowed $r$,
+ \begin{equation}
+  \mathbb E[D\mid\lambda_1,\lambda_2,\lambda_3]\leq2
+  \quad\text{for every fixed triple of labels.}
+--- a/build/sections/05-auxiliary-cap.tex
++++ b/build/sections/05-auxiliary-cap.tex
+@@ -7,9 +7,9 @@
+ distinct residue columns and gives bounds for the probability of each
+ remaining triple, including triples with equal residue columns.
+ 
+-Retain the main modulus $h\ge 2$, and choose a prime $q$ with
++Retain the main modulus $h\ge 10$, and choose a prime $q$ with
+ \begin{equation}\label{aux:parameters}
+- H=h^2,\qquad h^{100}<q\le 2h^{100},\qquad
++ H=2h,\qquad h^6<q\le 2h^6,\qquad
+  w=\left\lfloor\frac{q}{1000H^2}\right\rfloor.
+ \end{equation}
+ Lemma~\ref{norm:prime-interval} supplies such a prime for all sufficiently
+@@ -24,12 +24,13 @@
+ The following construction uses an affine part of a classical elliptic
+ quadric, a cap with no three collinear points; see
+ Barlotti~\cite[p.~248]{Barlotti1956}. The proof also gives the required
+-intersection with a small box.
++restriction to a slab. Only the first coordinate is restricted,
++as required by the short-relation argument below.
+ 
+ \begin{lemma}\label{aux:cap}
+ Let $q$ be an odd prime and $1\le w\le q$ an integer.  There is a set
+-$S\subset\{0,\ldots,w-1\}^3\subset\mathbb F_q^3$ with
+-$|S|\ge w^3/q$ such that no affine line contains three distinct points
++$S\subset\{0,\ldots,w-1\}\times\mathbb F_q^2$ with
++$|S|=wq$ such that no affine line contains three distinct points
+ of $S$.
+ \end{lemma}
+ 
+@@ -47,17 +48,19 @@
+ Thus $\Gamma$, and every translate of it, has the asserted line
+ property.
+ 
+-For a uniform $b\in\mathbb F_q^3$, every point belongs to
+-$b+\Gamma$ with probability $|\Gamma|/q^3=1/q$.  Therefore the average
+-of $|(b+\Gamma)\cap\{0,\ldots,w-1\}^3|$ is $w^3/q$.
+-Choose a translate attaining at least this average and take its
+-intersection with the box.
++Take the following subset of the same paraboloid:
++\[
++ S=\{(x,y,Q(x,y)):0\le x<w,\ y\in\mathbb F_q\}.
++\]
++The first two coordinates distinguish its $wq$ points. As a subset of
++$\Gamma$, it has no three distinct collinear points. The second and
++third coordinates need no small integer representatives.
+ \end{proof}
+ 
+ Fix one such set $S$ for the parameters in \eqref{aux:parameters}, and
+ write $s=|S|$.  In particular,
+ \begin{equation}\label{aux:cap-size}
+- s\ge\frac{w^3}{q}\ge\frac{q^2}{2000^3H^6}.
++ s=wq\ge\frac{q^2}{2000H^2}.
+ \end{equation}
+ The set $S$ is fixed before any random choices are made.
+ 
+@@ -88,7 +91,7 @@
+ \begin{lemma}\label{aux:random-set}
+ Let $H\ge1$ be an integer, let $q\ge2000H^2$ be prime, and put
+ $w=\lfloor q/(1000H^2)\rfloor$.  Suppose
+-$S\subset\{0,\ldots,w-1\}^3$ contains no three distinct collinear
++$S\subset\{0,\ldots,w-1\}\times\mathbb F_q^2$ contains no three distinct collinear
+ points.  The set $\mathcal A$ in \eqref{aux:allowed-shifts} has at least
+ $q^3/2$ elements.  For every $a\in\mathcal A$ and every invertible
+ $G_q$, the set $V$ in \eqref{aux:set-definition} has $|S|$ elements,
+--- a/build/sections/06-sampling.tex
++++ b/build/sections/06-sampling.tex
+@@ -8,7 +8,7 @@
+ 
+ Set
+ \begin{equation}\label{sam:box}
+- N=(hq)^{10},\qquad
++ N=(hq)^4,\qquad
+  \mathcal B=\bigl([0,N)^2\times[N,2N)\bigr)\cap\mathbb Z^3.
+ \end{equation}
+ For $u\in\mathcal B$, define its projection by
+--- a/build/sections/07-zero-determinants.tex
++++ b/build/sections/07-zero-determinants.tex
+@@ -15,7 +15,7 @@
+ \]
+ Thus $C$ has diagonal form $(1,D,E)$ over $\mathbb Z/h\mathbb Z$,
+ $[\mathbb Z^3:\Lambda]=I$, and $E\mathbb Z^3\subseteq\Lambda$.
+-Recall also $H=h^2$, $q>h^{100}$, the box
++Recall also $H=2h$, $q>h^6$, the box
+ $\mathcal B=[0,N)^2\times[N,2N)\cap\mathbb Z^3$, and the weight
+ $W(A)$ from \eqref{aux:weight}.  For a column $u\in\mathcal B$, its
+ projection means $(u_1/u_3,u_2/u_3)$.
+@@ -121,8 +121,7 @@
+  \ll R^3 B^{b+e}=R^3I.
+ \end{align*}
+ The exponents in the last sum strictly increase to $b+e$, so its
+-bound is uniform in $B$.  Finally, $h\ge2$ implies
+-$H/2=h^2/2\ge h$.
++bound is uniform in $B$.  Finally, $H/2=h$ by the choice $H=2h$.
+ \end{proof}
+ 
+ \begin{proof}[Proof of Proposition~\ref{zero:weighted-zero}]
+@@ -192,10 +191,10 @@
+ $g(x)^3\le Ih^2$, and $W(A)\ll(q^3/s)^2$, the contribution is at most
+ \begin{equation}\label{zero:equal-additional}
+  \ll \frac{N^6}{I^2}\,h^2q^{-3}(q^3/s)^2
+- \ll \frac{N^6}{I^2}\,\frac{h^{26}}q
++ \ll \frac{N^6}{I^2}\,\frac{h^6}q
+  \ll \frac{N^6}{I^2}.
+ \end{equation}
+-Here and below we use $q^3/s\ll qH^6=qh^{12}$ and $q>h^{100}$.
++Here and below we use $q^3/s\ll qH^2=4qh^2$ and $q>h^6$.
+ This argument includes matrices of every rank modulo $q$.
+ 
+ \paragraph{An equal pair without an additional equation.}
+@@ -216,7 +215,7 @@
+ $W(A)\ll q^3/s$ now gives
+ \begin{equation}\label{zero:special-rank-two}
+  \ll \frac{N^6}{I^2}\,h^2q^{-2}(q^3/s)
+- \ll \frac{N^6}{I^2}\,\frac{h^{14}}q
++ \ll \frac{N^6}{I^2}\,\frac{h^4}q
+  \ll \frac{N^6}{I^2}
+ \end{equation}
+ for the contribution of the shell.
+@@ -242,7 +241,7 @@
+ the weighted contribution is at most
+ \begin{equation}\label{zero:special-rank-one}
+  \ll \frac{N^6}{I^2}\,h^2q^{-4}(q^3/s)^2
+- \ll \frac{N^6}{I^2}\,\frac{h^{26}}{q^2}
++ \ll \frac{N^6}{I^2}\,\frac{h^6}{q^2}
+  \ll \frac{N^6}{I^2}.
+ \end{equation}
+ 
+--- a/build/sections/08-alteration.tex
++++ b/build/sections/08-alteration.tex
+@@ -13,9 +13,13 @@
+ no such lemma is needed below.
+ 
+ \begin{proof}[Proof of Theorem~\ref{intro:main}]
+-Keep the parameters constructed above, with $d=41$, and set
++Keep the parameters constructed above, with $d=13$.  Define
++\[
++ \rho=498k+6,\qquad \gamma=\frac{\rho}{2\rho+1}.
++\]
++Thus $0<\gamma<1/2$ and $2\gamma-1=-1/(2\rho+1)<0$.  Set
+ \begin{equation}\label{alt:sample-size}
+- a_r=r\sqrt{N^3/\tau},\qquad n_r=\lfloor a_r\rfloor.
++ a_r=r^\gamma\sqrt{N^3/\tau},\qquad n_r=\lfloor a_r\rfloor.
+ \end{equation}
+ Here $k\ge2$ and $B$ is an odd prime, so $\tau\ge1$.  Take $2n_r$ samples
+ with the shared random choices and independent conditional draws specified
+@@ -31,21 +35,23 @@
+ \end{equation}
+ No independence between the counted events is needed.
+ 
+-Both terms tend to zero.  Indeed, $N=(hq)^{10}$ and $\tau\ge1$ give
++Both terms tend to zero.  Indeed, $N=(hq)^4$ gives
+ \[
+- n_r(hq)^6N^{-3}\le r\tau^{-1/2}(hq)^{-9}=o(1).
++ n_r(hq)^6N^{-3}\le r^\gamma\tau^{-1/2}.
+ \]
++Since $B^{k-1}\ge3$, we have $\tau\ge B^{k-1}/3$.
++Also $B\asymp_k r^{12}$ and $k\ge2$, so the last bound is
++$O_k(r^{\gamma-6(k-1)})=o(1)$.
+ For the other term, the definition of $n_r$ gives
+ \[
+- n_r^2(\log(2N))^2\frac{h}{N^3r^d}
+- \le (\log(2N))^2\frac{h}{\tau}r^{2-d}.
++ n_r^2(\log(2N))^2\frac{h}{N^3r^{13}}
++ \le(\log(2N))^2\frac{h}{\tau}r^{2\gamma-13}.
+ \]
+-Since $B^{k-1}\ge3$, the definition of $\tau$ implies
+-$\tau\ge B^{k-1}/3$, and hence $h/\tau\le3B=O_k(r^{30})$.
+-The bounds $B=O_k(r^{30})$, $q\le2h^{100}$, and $N=(hq)^{10}$
+-also give $\log(2N)=O_k(\log r)$. Thus the second term in
+-\eqref{alt:expected-events} is
+-$O_k((\log r)^2r^{-9})=o(1)$.
++Here $h/\tau\le3B=O_k(r^{12})$.
++The bounds $q\le2h^6$ and $N=(hq)^4$ give
++$\log(2N)=O_k(\log r)$.  Thus the second term is
++$O_k((\log r)^2r^{2\gamma-1})=o(1)$.
++The negative exponent is fixed independently of $r$, although very small.
+ Thus $\mathbb EZ=o(n_r)$.
+ 
+ For sufficiently large $r$, choose an outcome with $Z<n_r$.  For each
+@@ -70,49 +76,49 @@
+ \begin{equation}\label{alt:area-bound}
+  \Delta(P_r)\ge\frac{\tau}{16N^3}.
+ \end{equation}
+-Also $\tau<h$ and $N\ge h^{10}$ give
+-$a_r>rh^{29/2}\to\infty$.  Hence $n_r\to\infty$ and eventually
++Also $\tau<h$ and $N\ge h^4$ give
++$a_r>r^\gamma h^{11/2}\to\infty$.  Hence $n_r\to\infty$ and eventually
+ $n_r\ge a_r/2$.  Combining this with \eqref{alt:area-bound} yields
+ \begin{equation}\label{alt:scaled-area}
+- n_r^2\Delta(P_r)\ge\frac{r^2}{64}.
++ n_r^2\Delta(P_r)\ge\frac{r^{2\gamma}}{64}.
+ \end{equation}
+ 
+ We now express both the cardinality and the area bound in terms of $r$.
+ The parameter choices give
+ \[
+  \begin{gathered}
+-  100k^2r^{30}<B\le200k^2r^{30},\qquad h=B^k,\\
+-  h^{100}<q\le2h^{100},\qquad N^{3/2}=(hq)^{15},\\
++  100k^2(400k^2)^3r^{12}<B\le200k^2(400k^2)^3r^{12},\qquad h=B^k,\\
++  h^6<q\le2h^6,\qquad N^{3/2}=(hq)^6,\\
+   B^{k-1}/3\le\tau\le B^{k-1}/2.
+  \end{gathered}
+ \]
+ Consequently, if
+ \[
+- \beta=1515k-\frac{k-1}{2}=\frac{3029k+1}{2},
++ \beta=42k-\frac{k-1}{2}=\frac{83k+1}{2},
+ \]
+ then
+ \[
+- \sqrt{2}\,rB^\beta<a_r\le2^{15}\sqrt{3}\,rB^\beta.
++ \sqrt{2}\,r^\gamma B^\beta<a_r\le2^6\sqrt{3}\,r^\gamma B^\beta.
+ \]
+ Since $a_r/2\le n_r\le a_r$ for sufficiently large $r$, there are fixed
+ constants $A_k,D_k>0$ such that
+ \begin{equation}\label{alt:cardinality-growth}
+  A_kr^\alpha\le n_r\le D_kr^\alpha,
+- \qquad \alpha=1+30\beta=45435k+16,
++ \qquad \alpha=\gamma+12\beta=\rho+\gamma,
+ \end{equation}
+ for every sufficiently large prime $r$. In particular, put
+ \begin{equation}\label{alt:exponent}
+- \eta=\frac2\alpha=\frac{2}{45435k+16}.
++ \eta=\frac{2\gamma}{\alpha}=\frac1{\rho+1}=\frac1{498k+7}.
+ \end{equation}
+ The upper bound in \eqref{alt:cardinality-growth} gives
+-$r^2\ge D_k^{-\eta}n_r^\eta$. Combining this with
++$r^{2\gamma}\ge D_k^{-\eta}n_r^\eta$. Combining this with
+ \eqref{alt:scaled-area}, we obtain
+ \begin{equation}\label{alt:prime-area}
+  \Delta(P_r)\ge c_*n_r^{-2+\eta},
+  \qquad c_*=\frac1{64D_k^\eta}>0.
+ \end{equation}
+ Thus the same cardinality estimate that will permit interpolation also
+-converts the factor $r^2$ into a fixed power of the number of points.
++converts the factor $r^{2\gamma}$ into a fixed power of the number of points.
+ 
+ For a sufficiently large integer $n$, put
+ $m=\lceil(n/A_k)^{1/\alpha}\rceil$.
+@@ -132,6 +138,6 @@
+ \]
+ Taking $c_1=c_*C_k^{-2+\eta}$ proves Theorem~\ref{intro:main}.
+ All constants are absolute because $k$ is fixed independently of $r$ and
+-$n$. The formula \eqref{alt:exponent} is explicit; no attempt has been
+-made to optimize the construction parameters.
++$n$. The formula \eqref{alt:exponent} is explicit.  These choices improve
++the earlier scales; no unrestricted optimality claim is made.
+ \end{proof}
