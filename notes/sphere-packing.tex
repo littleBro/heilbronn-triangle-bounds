@@ -17,26 +17,30 @@ replaces the digit packing in the pinned OpenAI Heilbronn manuscript.
 Give the first two matrix rows digit range $r$ and the third range
 $400k^2r^4$. The determinant coefficient bound uses their product, so
 the base grows as $r^6$, while the conditional divisor moment stays bounded.
-This allows degree $d=7$. Three pairs of conjugates, one singleton, and
-thirteen-node descent give $T=13\cdot18^3=75\,816$ over primes
-$r\equiv1\pmod3$. An exact sphere layer and the retained slab cap give
+Adding low-position label tags and retaining the small-determinant event
+in the divisor estimate now allows degree $d=5$. Two conjugate pairs,
+one singleton, and nine-node descent give $T=9\cdot18^2=2\,916$ over primes
+$r\equiv1\pmod3$. A shifted exact sphere layer and the retained slab cap give
 \[
- k=63\,412\,811,\qquad
- \eta_{\rm row}=\frac{1}{15\,789\,789\,943}
-       \approx6.33320648095971\cdot10^{-11}.
+ k=1\,166\,895,\qquad
+ \eta_5=\frac{1}{145\,278\,430}
+       \approx6.8833\cdot10^{-9}.
 \]
-This exponent is about $702\,273$ times the degree-thirteen eighteen-form
-exponent, or $685\,209$ times its translated-interval refinement.
+This exponent is about $108.69$ times the degree-seven exponent.
 The prime number theorem in the fixed progression supplies the required
 bounded-ratio interpolation to every sufficiently large cardinality.
 The earlier constructions are retained below.
-Lean proves the new degree-seven norm decomposition, bilinear descent,
+Lean proves the new degree-five norm decomposition, bilinear descent,
 homogeneous coordinates and the distinct-label criterion.
-It also proves the exact layer count, complete finite packing and
-inherited integer scale inequalities. The algebra proof uses Mathlib;
+It also proves the exact layer count, shifted finite packing, tag support
+separation, repeated-column factorization and integer scale inequalities.
+The algebra proof uses Mathlib;
 the packing and scale proofs use core Lean.
-The new conditional row-digit probability lemma, slab geometry,
-and prime-progression interpolation are written arguments, not Lean proofs.
+The finite fresh-digit probability theorem is now proved in Lean, including
+joint tails, tag valuation, carries, column reindexing and label averaging.
+Its instantiation from the norm packing and its identification with the
+upstream Smith divisor remain written connections. Slab geometry and
+prime-progression interpolation are also outside the formal proof.
 The full geometric consequence remains conditional on the upstream estimates.
 \end{abstract}
 
@@ -1575,10 +1579,211 @@ These finite checks support implementation review and do not replace
 the written probability proof. The complete verifier also rejects ten
 corrupted certificates and checks the actual patched manuscript references.
 
+\section{Label tags, a fresh digit, and degree five}\label{sec:five}
+The degree-seven bound discards information by replacing the event of a
+small determinant residue with the event of any repeated label.
+We retain the small-residue event and add a short encoding of the label.
+The scales $L_1=L_2=r$, $L_3=400k^2r^4$, $B\asymp_k r^6$, $H=2h$,
+$q\asymp h^6$, and $N=(hq)^4$ remain as in Section~\ref{sec:rowdigits}.
+All constants below may depend on the fixed $k$.
+
+\subsection{A norm support with room for tags}
+For $d=5$, two conjugate pairs and a singleton give $18^2$ extension-field
+determinants, with normalization $3^{-2}$. Products of two power-basis
+representatives have degree at most eight, so nine interpolation nodes give
+$T=9\cdot18^2=2916$. The same split-prime restriction and root-existence
+proof apply. The full norm identity and homogeneous degree-five norm
+coordinates are proved in \texttt{FiveDescent.lean}, \texttt{FiveNorm.lean},
+and \texttt{FivePolynomials.lean}.
+
+Use half-alphabets $(2,2,2,2,1,1,1,1,1)$. The energy-two layer has
+$2^9\binom42=3072>T$ words of squared norm $25$. Let
+\[
+ K_0=3^5 7^4=583443,\quad S=(K_0-1)/2+5=291726,\quad
+ k=K_0+2S=1166895.
+\]
+Select $T$ layer words with mixed-radix encodings $u_a$ and put
+\[
+ i_a=j_a=S+u_a,\qquad \ell_a=K_0-1-2u_a.
+\]
+The unshifted matching property gives
+$i_a+j_b+\ell_c=k-1$ exactly when $a=b=c$.
+Also $u_a\le(K_0-1)/2$ and $\ell_a<K_0$.
+
+Keep the prescribed norm residues at these positions. In row one,
+prescribe residue $1$ at position zero. If
+$\xi=\sum_{s=0}^{4}\lambda_s\beta_{s+1}$, prescribe residue $\lambda_s$
+at row two, position $s$. Every other residue is zero. These tags are
+disjoint from the norm positions in their rows. Any determinant monomial
+using a tag has position sum at most
+\[
+ (d-1)+(S+(K_0-1)/2)+(K_0-1)=k-2.
+\]
+Thus the coefficient at $k-1$ still equals the norm modulo $r$, and
+three distinct labels still exclude a small determinant residue.
+The tag residues are extra data; no homogeneity claim is made for them.
+Lean proves the exact layer count, shifted packing, and support inequality.
+
+\subsection{The joint divisor and small-residue estimate}
+Write $M=L_3/r=400k^2r^3$ and $\theta=B/M^2\le1/2$.
+Let $J$ mean that $\det C$ has an integer representative in $[-\tau,\tau]$,
+where $\tau=\lfloor B^{k-1}/2\rfloor$. For the integer determinant
+polynomial $F(Y)=\sum F_uY^u$, the row-product bound gives
+$|F_u|\le6k^2L_1L_2L_3$ and hence
+\[
+ \left|\sum_{u=0}^{k-1}F_uB^u\right|<h/2,\qquad
+ \left|\sum_{u=0}^{k-2}F_uB^u\right|\le\frac3{50}(B^{k-1}-1).
+\]
+Consequently $J$ implies the integer equality $F_{k-1}=0$: otherwise
+the centered representative has magnitude at least
+$(47B^{k-1}+3)/50>\tau$.
+
+\begin{lemma}\label{lem:five-collision}
+For every fixed label triple with exactly two equal labels, the tagged
+construction satisfies
+\[
+ \mathbb E[D\mathbf1_J\mid\text{labels}]\le2/M.
+\]
+For independent uniform labels in $\mathbb F_{r^5}$,
+\[
+ \mathbb E[D\mathbf1_J]\le6/(Mr^5)+2/r^{10}=O_k(r^{-8}).
+\]
+\end{lemma}
+\begin{proof}
+Permute the columns to labels $(\lambda,\lambda,\mu)$, $\lambda\ne\mu$.
+This preserves $D$ and $J$. Since the first two row lengths equal $r$,
+their positive digits are deterministic functions of the label.
+Write their digit polynomials as $A_\lambda,Q_\lambda$ and
+$A_\mu,Q_\mu$, and the three random third-row polynomials as $Z_1,Z_2,Z_3$.
+Then
+\[
+ F(Y)=U(Y)(Z_1(Y)-Z_2(Y)),\qquad
+ U=A_\lambda Q_\mu-A_\mu Q_\lambda.
+\]
+Lean proves this determinant factorization over any commutative ring.
+Let $a<d$ be the first differing label coordinate. Below degree $d$,
+both $A$ polynomials have coefficients $1,r,r,\ldots$, while the $Q$
+coefficients are positive representatives of the label coordinates.
+Thus $U$ vanishes below degree $a$, and $0<|U_a|<r<B$.
+The top-row minor $U(B)$ therefore has valuation exactly $a$.
+The Smith minor criterion gives $b\le a$ for $D=B^b$.
+
+Put $v=k-1-a$. Since $k\ge2d$, one has $v\ge d>a$.
+The equation $F_{k-1}=0$ is linear in the digit of $Z_2$ at $v$,
+with nonzero integer coefficient $-U_a$. Conditional on all other
+third-row digits, it admits at most one of the $M$ allowed values.
+Hence $\Pr(J\mid\text{labels})\le1/M$.
+
+For $1\le j\le a$, condition on the complete first column and on the
+digits of $Z_2,Z_3$ at positions at least $j$, except the digit of
+$Z_2$ at $v$. The deterministic top two rows are already fixed.
+If $b\ge j$, the two third-row Schur congruences force the first $j$
+digits of both $Z_2$ and $Z_3$, with joint probability at most $M^{-2j}$.
+Expose those low digits next. The digit at $v\ge j$ is untouched and
+still uniform on its $M$ choices; the coefficient equation admits at
+most one. Therefore
+\[
+ \Pr(b\ge j,\ J\mid\text{labels})\le M^{-(2j+1)}.
+\]
+This is a joint estimate, not a product of unproved independent events.
+The divisor tail identity, truncated using $b\le a$, gives
+\[
+ \mathbb E[D\mathbf1_J\mid\text{labels}]
+ \le M^{-1}\left(1+\sum_{j=1}^a\theta^j\right)\le2/M.
+\]
+Exactly two equal labels have probability at most $3r^{-5}$.
+All three equal labels have probability $r^{-10}$; their top two rows
+have identical columns and determinant zero, but the retained conditional
+moment bound is still at most two. Distinct labels make $J$ impossible.
+These three cases prove the second assertion.
+\end{proof}
+
+The finite probability argument now has a Lean proof. The sample space is
+the full product of independent, uniformly chosen finite digit indices;
+probabilities and expectations are exact rational averages.
+\texttt{FiveDigits.lean} proves that the residue-class parameterization
+exhausts the allowed positive digits. \texttt{FiveJointTail.lean} proves
+the joint tail by an injection into the assignments of the remaining
+digits: the Schur congruences determine $2j$ low digits, and the coefficient
+equation determines one disjoint digit. No independence between the two
+events, and no probability estimate, is assumed as a premise.
+
+\texttt{FiveTags.lean} proves the first nonzero tag-minor coefficient and
+its exact base valuation. It defines $b$ as the largest $j\le k$ for which
+all actual $2\times2$ integer minors are divisible by $B^j$.
+\texttt{FiveCoefficientBounds.lean} proves the $6k^2L_1L_2L_3$ bound,
+and \texttt{FiveCarry.lean} proves that a small determinant residue
+forces the coefficient at $k-1$ to vanish.
+The theorem in \texttt{FiveTagged.lean} therefore gives $2/M$ for the
+actual small-residue event, with explicit digit and tag hypotheses.
+\texttt{FiveReindex.lean} proves that permuting columns preserves the
+full expectation. \texttt{FiveFiniteTheorem.lean} derives
+$6/(MN)+2/N^2$ for $N$ labels from tag data for the repeated-label cases
+and the separate distinct-label exclusion interface. The product-average
+identity is also proved, so this is the expectation over both labels and
+digits. The all-equal contribution is retained.
+
+Applying this finite theorem with $N=r^d$, constructing its tag data from
+the norm packing, and supplying distinct-label exclusion are still written
+connections. Identifying the minor-based $b$ with the Smith exponent uses
+the pinned diagonal-form lemma; Smith normal form itself is not formalized
+here. These interfaces do not supply an unproved probability bound to the
+finite theorem. Without a distinguishing tag the minor can vanish, and a
+digit inside the Schur prefix cannot supply the additional factor $1/M$.
+
+\subsection{Transfer and the new exponent}
+Conditional on $C$, exact lifting and the retained weighted-count and orbit
+estimates give a bad-triple probability at most
+\[
+ O\left((\log(2N))^2\frac{hD}{N^3}\mathbf1_J\right).
+\]
+Averaging Lemma~\ref{lem:five-collision} replaces $r^{-d}$ by $r^{-8}$.
+Set
+\[
+ \rho=249k+3,\quad \gamma=\frac{\rho}{\rho+1},\quad
+ \alpha=\rho+\gamma,\quad
+ n_r=\left\lfloor r^\gamma\sqrt{N^3/\tau}\right\rfloor.
+\]
+The exactly-two-equal and all-three-equal deletion losses have respective
+powers $2\gamma-2=-2/(\rho+1)<0$ and $2\gamma-4<0$, apart from logarithms.
+The proportional-pair power is $\gamma-3(k-1)<0$.
+The zero-case bounds and prime-progression interpolation are retained.
+Thus the written transfer gives
+\[
+ \boxed{\eta_5=\frac{2\gamma}{\alpha}=\frac2{\rho+2}
+       =\frac2{249k+5}=\frac1{145\,278\,430}.}
+\]
+Its ratio to $\eta_{\rm row}$ is
+$15\,789\,789\,943/145\,278\,430\approx108.69$.
+The inequalities and exact exponent identity are kernel-checked.
+The full geometric theorem remains conditional on the upstream estimates;
+no useful finite-$n$ threshold or unrestricted optimum is asserted.
+
+\subsection{Finite controls}
+The digit control exhausts $147456$ matrices in 36 complete conditional
+groups for two-coordinate toy labels. It checks 12 joint tails and 36
+weighted finite moments. Its small digit alphabets test the finite
+geometric sum, before imposing $\theta\le1/2$; they are not the final
+asymptotic parameters. Removing freshness gives an explicit probability
+$1/4$ against an invalid $1/8$ bound. Removing a distinguishing tag also
+breaks suppression. Thirty-two small coefficient identities verify the
+tag layout; 28 fail when its shift is removed.
+Two degree-five matrices over $\mathbb F_{37}$ each enumerate all 324 norm
+terms. Thirty-two descended terms are checked; omitting a node breaks 31.
+The layer histogram independently agrees with all 30 count entries, and
+the verifier rejects thirteen corrupted certificates. These finite tests
+complement the universal algebra and finite probability proofs. The shared
+audit now rebuilds 39 Mathlib-based modules and checks 120 exported theorems,
+including 40 new finite probability exports. Only the standard logical
+axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}
+are permitted. This does not certify the remaining geometric interfaces.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the current result, run \texttt{python scripts/build\_rowdigits.py}
+For the current result, run \texttt{python scripts/build\_five.py}
+and \texttt{python scripts/verify\_five.py}.
+For the preserved degree-seven result, run \texttt{python scripts/build\_rowdigits.py}
 and \texttt{python scripts/verify\_rowdigits.py}.
 For the preserved interval result, run \texttt{python scripts/build\_trimmed.py}
 and \texttt{python scripts/verify\_trimmed.py}.
@@ -1591,7 +1796,7 @@ For the preserved paired result, run \texttt{python scripts/build\_paired.py},
 For the preserved five-term result, run \texttt{python scripts/build\_rankfive.py},
 then \texttt{python scripts/verify\_rankfive.py}. The ternary,
 sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
-Frobenius-orbit, rank-five, paired, eighteen-form, interval and row-digit patches are thirteen alternatives applied
+Frobenius-orbit, rank-five, paired, eighteen-form, interval, row-digit and tagged degree-five patches are fourteen alternatives applied
 directly to the unchanged manuscript, not successive patches.
 The retuned, slab, central, norm, bilinear and Frobenius patches update Sections 3--8, including the full deletion
 and interpolation argument.
@@ -1713,8 +1918,9 @@ Section~4. Mathlib is pinned to commit
 the dependency lock contains all seven exact revisions.
 \texttt{scripts/verify\_algebra.py} rebuilds these five modules, the
 two bilinear modules, four Frobenius modules, four rank-five modules,
-three paired modules and three eighteen-form modules, auditing 62
-exported theorems in total. Their only logical
+three paired modules, three eighteen-form modules, three degree-seven modules,
+four degree-five algebra modules, and eleven finite probability modules,
+auditing 120 exported theorems in 39 modules in total. Their only logical
 axioms are \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}. Each compilation is limited to one thread,
 2048 MB and 120 seconds.

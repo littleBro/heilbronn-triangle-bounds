@@ -29,11 +29,11 @@ Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
 
 The command first verifies the supplied ternary, sphere, retuned, slab,
-central-layer, norm-compression, bilinear-layer, Frobenius-orbit, rank-five, paired-determinant, eighteen-form and interval certificates.
+central-layer, norm-compression, bilinear-layer, Frobenius-orbit, rank-five, paired-determinant, eighteen-form, interval, row-digit and degree-five certificates.
 It checks all saved upstream hashes, compiles the local Lean proofs, audits their
 logical axioms, exercises finite and negative controls, and checks each patch
 against the pinned original manuscript without applying it.
-It then regenerates all certificates, patches, all five Lean count tables and the interval-count proof source, and requires exact byte equality
+It then regenerates all certificates, patches, seven Lean count tables and the interval-count proof source, and requires exact byte equality
 with the supplied files. Generated text uses UTF-8 with LF line endings.
 A regeneration mismatch is a failure even when the resulting certificate would pass.
 
@@ -45,7 +45,7 @@ permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
 NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
 imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
 and a 120-second timeout. The shared algebra checker also rebuilds BilinearDescent and
-BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, plus three degree-seven modules, for 70 exported theorem audits in total, including the
+BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, plus three degree-seven and four degree-five algebra modules and eleven finite probability modules, for 120 exported theorem audits in 39 modules in total, including the
 prime-field specialization and homogeneous polynomial form. Run this part
 alone with python scripts/verify_algebra.py.
 The complete verifier runs its algebra-dependent checkers in one process,
@@ -152,7 +152,7 @@ The twelve source patches are alternatives against the same original manuscript.
 
 The current note is notes/sphere-packing.tex; the earlier ternary argument is
 notes/packing.tex. Neither is needed by the executable proof checks.
-The current note, including eighteen-form determinants, the translated interval and prime-progression transfer, compiled successfully in the desktop editor with
+The current note, including degree-five label tags, the fresh-digit estimate and prime-progression transfer, compiled successfully in the desktop editor with
 Tectonic 0.17.0+20260731. Its source hash and bundle identity are recorded in
 [artifacts/sphere-latex-status.json](../artifacts/sphere-latex-status.json).
 The initial download failure was resolved by using the
@@ -169,8 +169,22 @@ coordinate proofs, with three pairs and normalization 27. Nine transitions
 of a six-entry count table prove the exact packing layer. RowDigits.lean
 proves the changed scale arithmetic; the conditional probability lemma
 remains a written proof. Run python scripts/verify_rowdigits.py alone or use
-the full verifier, which now checks thirteen results and regenerates
-thirty-three files. Independent controls enumerate 5,832 extension-field
+the full verifier. Independent controls enumerate 5,832 extension-field
 terms for one matrix, 163,840 small digit matrices, and 2,560 conditional
 tail inequalities. The fixtures and sampling boundaries are recorded in
 artifacts/rowdigits-verification.json.
+
+The tagged degree-five checkpoint adds nine-node descent, the full degree-five
+norm and homogeneous coordinates, and the determinant factorization for two
+repeated top columns. Core Lean checks the 3,072-word layer, shifted packing,
+tag separation, fresh-position inequalities and exponent arithmetic. The
+joint probability estimate, tag-minor valuation, carry implication, column
+reindexing and label averaging now have universal Lean proofs. The final
+theorem uses structural tag and distinct-label interfaces; instantiating
+them from the norm packing and identifying the minor exponent with the
+upstream Smith divisor remain written connections.
+Run python scripts/verify_five.py alone or the full verifier, which checks
+fourteen results and reproduces thirty-six generated files. The new controls
+enumerate 147,456 digit matrices and 324 norm terms for each of two degree-five
+matrices. Exact scope, negative controls and hashes are recorded in
+artifacts/five-verification.json.

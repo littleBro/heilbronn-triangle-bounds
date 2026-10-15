@@ -1,8 +1,8 @@
 {
   "source": "notes/sphere-packing.tex",
-  "source_sha256": "5cd03fdb74632dbda740b81a226f88211add51ea59aa9f057e7431a5ab72d76b",
+  "source_sha256": "43e83ae4525949f3f6b3fe058abbe5ed2138d385f0d5ca5265f16ba0ddcbe88b",
   "attempt_date": "2026-10-13",
-  "attempt_scope": "Existing note including the row-dependent digit proof, degree-seven norm, exact sphere layer, conditional exponent and retained checkpoints",
+  "attempt_scope": "Existing note including universal finite tagged probability proofs, explicit norm-packing and Smith-divisor interfaces, and retained checkpoints",
   "compiler": "Codex built-in standalone LaTeX compiler (Tectonic)",
   "compiler_version": "Tectonic 0.17.0+20260731",
   "status": "success",

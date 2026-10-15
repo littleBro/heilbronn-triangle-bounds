@@ -39,6 +39,21 @@ THEOREMS = {
     "SevenDescent": ["bilinear_interpolation", "bilinear_determinant_descent"],
     "SevenNorm": ["term_card", "norm_expansion", "norm_decomposition", "finite_field_norm"],
     "SevenPolynomials": ["finite_field_polynomials", "prime_field_labels"],
+    "FiveDescent": ["bilinear_interpolation", "bilinear_determinant_descent"],
+    "FiveNorm": ["term_card", "norm_expansion", "norm_decomposition", "finite_field_norm"],
+    "FivePolynomials": ["finite_field_polynomials", "prime_field_labels"],
+    "FiveCollision": ["repeated_top_factorization", "all_equal_top_determinant"],
+    "FiveProbability": ["probability_le_of_completion", "average_product", "divisor_moment_of_joint_tails"],
+    "FiveDigits": ["radix_prefix", "tag_unit", "residueAlphabet_injective", "residueAlphabet_bounds", "residueAlphabet_complete", "DigitModel.schur_prefix", "linear_fresh_unique"],
+    "FiveJointTail": ["DigitModel.lowPositions_card", "DigitModel.schur_probability", "DigitModel.fresh_joint_tail", "DigitModel.uniform_divisor_moment", "DigitModel.fresh_divisor_moment"],
+    "FiveTags": ["first_differing_tag", "tagged_minor_first", "eval_first_valuation", "DigitModel.minorExponent_spec", "DigitModel.minorExponent_schur", "DigitModel.actual_uniform_moment"],
+    "FiveMoment": ["DigitModel.weighted_coefficient", "DigitModel.tagged_pair_moment", "DigitModel.tagged_pair_moment_from_tags"],
+    "FiveCarry": ["truncEval_bound", "eval_sub_trunc_dvd", "small_residue_coefficient"],
+    "FiveCoefficientBounds": ["determinant_coefficient_bound", "determinant_balanced_coefficients"],
+    "FiveLabels": ["label_pair_probability", "label_all_equal_probability", "label_mixture_moment"],
+    "FiveTagged": ["five_probability_scale", "DigitModel.smallMoment_le_uniform", "DigitModel.tagged_small_residue_moment"],
+    "FiveReindex": ["DigitModel.minorExponent_permute", "DigitModel.smallResidue_permute", "DigitModel.smallMoment_permute"],
+    "FiveFiniteTheorem": ["TaggedData.moment", "total_small_residue_moment"],
 }
 
 
@@ -65,7 +80,8 @@ def verify_algebra():
         require(result.returncode == 0 and "error:" not in output and "sorryAx" not in output,
                 "Lean failure: " + module + "\n" + output)
         for name in names:
-            namespace = ("HeilbronnSeven" if module.startswith("Seven") else
+            namespace = ("HeilbronnFive" if module.startswith("Five") else
+                         "HeilbronnSeven" if module.startswith("Seven") else
                          "HeilbronnEighteen" if module.startswith("Eighteen") else
                          "HeilbronnPaired" if module.startswith("Paired") else
                          "HeilbronnRankFive" if module.startswith("RankFive") else
@@ -96,8 +112,13 @@ def verify_algebra():
                  "determinants for every prime >= 37. The 18-form checkpoint gives 850305600 "
                  "determinants for primes >= 37 congruent to 1 mod 3, with root existence proved. "
                  "The degree-7 checkpoint gives 75816 determinants over the same primes, "
-                 "with homogeneous coordinates and the distinct-label criterion.",
-        "not_established": ["slab cap geometry", "lattice and probability estimates",
+                 "with homogeneous coordinates and the distinct-label criterion. "
+                 "The degree-5 checkpoint gives 2916 determinants, with the same interfaces; "
+                 "the two-repeated-column determinant factorization is also checked. "
+                 "The finite tagged digit model, exact joint tails, carry implication, tag valuation, "
+                 "minor-exponent moment, column reindexing and label-mixture bound are kernel-checked.",
+        "not_established": ["slab cap geometry", "lattice and orbit estimates",
+                            "norm-packing instantiation and Smith-divisor identification",
                             "prime number theorem in arithmetic progressions", "full Heilbronn theorem"],
         "evidence_sha256": {p: sha256((ROOT / p).read_bytes()).hexdigest() for p in evidence},
     }

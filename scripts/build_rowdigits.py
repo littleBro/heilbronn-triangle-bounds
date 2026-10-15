@@ -111,7 +111,7 @@ def table_source(table):
     return text+"end HeilbronnSevenLayer\n"
 
 
-def patch_sections():
+def row_sections():
     originals, changed = norm_sections()
     name = "03-norm-digits.tex"
     text = changed[name]
@@ -149,6 +149,11 @@ def patch_sections():
                         r"40000k^4r^6<B\le80000k^4r^6")
     text = replace_once(text, r"\gamma+12\beta", r"\gamma+6\beta")
     changed[name] = text
+    return originals, changed
+
+
+def patch_sections():
+    originals, changed = row_sections()
     return "".join("".join(difflib.unified_diff(
         originals[n].splitlines(keepends=True), changed[n].splitlines(keepends=True),
         fromfile="a/build/sections/"+n, tofile="b/build/sections/"+n)) for n in originals)

@@ -20,4 +20,8 @@ lean_lib Heilbronn where
     `PairedLayerData, `PairedLayerCounting, `PairedLayerRows0, `PairedLayerRows1,
     `PairedLayer, `PairedPacking, `EighteenExpansion, `EighteenNorm, `EighteenPolynomials,
     `EighteenLayerData, `EighteenLayer, `EighteenPacking, `IntervalCounting,
-    `TrimmedLayerData, `TrimmedLayer, `TrimmedPacking, `NormCompression, `Slab, `Tuned, `Sphere]
+    `TrimmedLayerData, `TrimmedLayer, `TrimmedPacking, `NormCompression, `Slab, `Tuned, `Sphere,
+    `SevenDescent, `SevenNorm, `SevenPolynomials, `SevenLayerData, `SevenLayer, `SevenPacking,
+    `RowDigits, `FiveDescent, `FiveNorm, `FivePolynomials, `FiveCollision,
+    `FiveLayerData, `FiveLayer, `FivePacking, `FiveScales,
+    `FiveProbability, `FiveDigits, `FiveJointTail, `FiveTags, `FiveMoment, `FiveCarry, `FiveCoefficientBounds, `FiveLabels, `FiveTagged, `FiveReindex, `FiveFiniteTheorem]
