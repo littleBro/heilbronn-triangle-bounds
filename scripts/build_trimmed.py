@@ -115,6 +115,25 @@ end HeilbronnTrimmedLayer
     return text
 
 
+def proof_sources(states, lower, upper):
+    """Keep each kernel compilation bounded without changing any proof body."""
+    assert len(states) == 44
+    source = proof_source(states, lower, upper)
+    starts = [source.index(f"theorem transition_{i} :" if s["depth"] < len(ALPHABETS)
+                           else f"theorem row_{i}_correct") for i, s in enumerate(states)]
+    starts.append(source.index("def alphabets"))
+    header = source[:starts[0]]
+    imports = "import IntervalCounting\nimport TrimmedLayerData"
+    result = {}
+    for j in range(4):
+        prefix = header if j == 0 else header.replace(imports, f"import TrimmedLayerRows{j-1}")
+        result[f"lean/TrimmedLayerRows{j}.lean"] = (
+            prefix + source[starts[11*j]:starts[11*(j+1)]] + "end HeilbronnTrimmedLayer\n")
+    result["lean/TrimmedLayer.lean"] = (
+        header.replace(imports, "import TrimmedLayerRows3") + source[starts[-1]:])
+    return result
+
+
 POSITIONS = r"""Use eleven coordinates with half-alphabets
 $(4,4,4,4,4,4,5,4,5,5,5)$ and radices $b_j=4A_j-1$.
 For $0\le x_j<2A_j$, put
@@ -215,7 +234,7 @@ def main():
          "parameter_choice": "explicit feasible witness; no optimality claim"}
     for path, text in [("certificates/trimmed.json", json.dumps(c, indent=2)+"\n"),
                        ("lean/TrimmedLayerData.lean", data_source(states)),
-                       ("lean/TrimmedLayer.lean", proof_source(states, lower, upper)),
+                       *proof_sources(states, lower, upper).items(),
                        ("patches/trimmed-sphere.patch", patch_source())]:
         (ROOT/path).write_text(text, encoding="utf-8", newline="\n")
     print(f"Generated interval certificate, {len(states)} count rows, recurrence proof and source patch.")

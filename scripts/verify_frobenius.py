@@ -113,7 +113,7 @@ def main():
     version = run_checked(["lean", "--version"]).strip()
     require("version 4.11.0," in version, "Lean version")
     outputs = []
-    for name in ["Sphere", "ExactLayerData", "ExactLayer", "FrobeniusPacking"]:
+    for name in ["Sphere", "ExactLayerData", "ExactLayerCounting", "ExactLayerRows0", "ExactLayerRows1", "ExactLayerRows2", "ExactLayerRows3", "ExactLayer", "FrobeniusPacking"]:
         source = (ROOT / f"lean/{name}.lean").read_text(encoding="utf-8")
         require(not re.search(r"\b(sorry|admit|axiom|unsafe|native_decide)\b", source), "proof escape")
         result = subprocess.run(["lean", "-j", "1", "-M", "2048", "-o",
@@ -133,7 +133,7 @@ def main():
     run_checked(["git", "apply", "--check", "--directory=upstream/manuscript", str(patch)])
     require(patch.read_text(encoding="utf-8").count("\n+++ b/") == 6, "patch coverage")
     evidence = list(dict.fromkeys([
-        "lean/Sphere.lean", "lean/ExactLayerData.lean", "lean/ExactLayer.lean", "lean/FrobeniusPacking.lean",
+        "lean/Sphere.lean", "lean/ExactLayerData.lean", "lean/ExactLayerCounting.lean", "lean/ExactLayerRows0.lean", "lean/ExactLayerRows1.lean", "lean/ExactLayerRows2.lean", "lean/ExactLayerRows3.lean", "lean/ExactLayer.lean", "lean/FrobeniusPacking.lean",
         "scripts/build_frobenius.py", "scripts/verify_frobenius.py", "scripts/frobenius_controls.py",
         "scripts/verify_bilinear.py", "scripts/build_bilinear.py", "scripts/bilinear_controls.py",
         "scripts/verify_norm.py", "scripts/build_norm.py", "scripts/norm_controls.py",

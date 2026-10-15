@@ -58,11 +58,11 @@
     "scripts/build_patch.py": "fb6792ff41bf1b2d16535210d38f93a33320ef72ae1c5fc41b38e8a48ea65079",
     "certificates/tuned.json": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
     "patches/tuned-parameters.patch": "6ee76644779395b51c91f64b45bcf7c3a30f5bce6aeb362e4b56681779a9b85d",
-    "notes/sphere-packing.tex": "43e83ae4525949f3f6b3fe058abbe5ed2138d385f0d5ca5265f16ba0ddcbe88b",
-    "README.md": "46440f096dfd58f4b6f559ce0a8dbecd01587788d1d49b0a9b5a56999d7c29a0",
+    "notes/sphere-packing.tex": "b2606cbefba27b3c59fb08debd5b45c88e0ab3cd7797ce71da2cb962987a3db0",
+    "README.md": "79a585ad9909c25638c1809e7ba2bd928fe0332257b40228d52a110d2e19b009",
     "NOTICE": "8d91d8eb249583000aa79abfda277e4e5d97503ff4a8f77e20568a93368a8f87",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
-    "artifacts/sphere-latex-status.json": "c80c1750e0533513c9ec8c2ddc443d905d52f75ed00630043522316a790d532a"
+    "artifacts/sphere-latex-status.json": "bbb8e2d8ecb6309d8eb9b04ba7a87c6f6cb9f2fe28de7b50c510ef1a59fcf95e"
   },
   "not_established": [
     "complete independent proof or Lean formalization of the geometric theorem",
@@ -70,5 +70,14 @@
     "formal or unrestricted parameter optimality",
     "practical construction of the full sphere or planar point set",
     "novelty, priority or independent review"
-  ]
+  ],
+  "documentation_refresh": {
+    "mathematical_inputs_unchanged": true,
+    "files": [
+      "README.md",
+      "artifacts/sphere-latex-status.json",
+      "notes/sphere-packing.tex"
+    ],
+    "reason": "This turn passed the complete checkpoint before documentation-only module and generated-file count updates."
+  }
 }

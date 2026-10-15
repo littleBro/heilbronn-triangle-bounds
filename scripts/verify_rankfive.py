@@ -21,7 +21,7 @@ from verify_sphere import repeated_power
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKING_MODULES = ["Sphere", "MixedSphere", "MixedLayerData", "MixedLayerCounting",
-                   "MixedLayerRows0", "MixedLayerRows1", "MixedLayerRows2", "MixedLayer", "RankFivePacking"]
+                   "MixedLayerRows0", "MixedLayerRows1", "MixedLayerRows2", "MixedLayerRows3", "MixedLayerRows4", "MixedLayerRows5", "MixedLayerRows6", "MixedLayerRows7", "MixedLayerRows8", "MixedLayer", "RankFivePacking"]
 
 
 def arithmetic(c, previous):

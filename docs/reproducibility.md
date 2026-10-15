@@ -29,7 +29,7 @@ Where Python is named python3, use that name instead. With Make available,
 make verify runs the same entry point.
 
 The command first verifies the supplied ternary, sphere, retuned, slab,
-central-layer, norm-compression, bilinear-layer, Frobenius-orbit, rank-five, paired-determinant, eighteen-form, interval, row-digit and degree-five certificates.
+central-layer, norm-compression, bilinear-layer, Frobenius-orbit, rank-five, paired-determinant, eighteen-form, interval, row-digit, degree-five and reserved-tag certificates.
 It checks all saved upstream hashes, compiles the local Lean proofs, audits their
 logical axioms, exercises finite and negative controls, and checks each patch
 against the pinned original manuscript without applying it.
@@ -45,7 +45,7 @@ permutation and packing proofs. It also rebuilds NormExpansion, NormDescent,
 NormAlgebra, NormPolynomials and NormVandermonde in order, using pinned Mathlib
 imports. Each algebra compilation uses one thread, a 2048 MB Lean memory limit
 and a 120-second timeout. The shared algebra checker also rebuilds BilinearDescent and
-BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and three eighteen-form modules, plus three degree-seven and four degree-five algebra modules and eleven finite probability modules, for 120 exported theorem audits in 39 modules in total, including the
+BilinearNorm, four Frobenius modules, four rank-five modules and three paired modules and seven eighteen-form modules (including four proof helpers), plus three degree-seven and four degree-five algebra modules and eleven finite probability modules, for 128 exported theorem audits in 43 modules in total, including the
 prime-field specialization and homogeneous polynomial form. Run this part
 alone with python scripts/verify_algebra.py.
 The complete verifier runs its algebra-dependent checkers in one process,
@@ -53,8 +53,9 @@ sharing one fresh algebra rebuild. Standalone checkers still rebuild algebra;
 no saved verification report or compiled local proof is trusted as a cache.
 Independent field controls use small explicit quotients; the degree-13 norm
 expansion is proved symbolically and is not enumerated.
-The bilinear-layer check also rebuilds Sphere, ExactLayerData and ExactLayer.
-Its core Lean proof checks eleven complete histogram transitions, then proves
+The bilinear-layer check also rebuilds Sphere, ExactLayerData, ExactLayerCounting,
+four ExactLayerRows modules and ExactLayer.
+Its core Lean proof checks eleven complete histogram transitions in four groups, then proves
 the symbolic recurrence, selection and packing; no table entry is trusted as a premise.
 These compilations use the same one-thread, 2048 MB and 120-second limits.
 The Frobenius checkpoint also rebuilds FrobeniusPacking after those core modules.
@@ -66,7 +67,7 @@ the enormous sphere or produce planar point configurations.
 The scripts run sequentially and need no WSL, container or parallel search.
 
 The rank-five checkpoint adds the general mixed-radix sphere proof and a
-120-entry table. Nine kernel-checked transitions are divided across three
+120-entry table. Nine kernel-checked transitions are divided across nine
 small modules to stay within the same per-process limits. The symbolic
 recurrence connects the table to actual word counting before selection and
 packing. Independent convolution and multinomial counts agree. Degree-3 and
@@ -94,7 +95,7 @@ that every referenced label exists exactly once. It does not compile or
 export another PDF. Removing the matching label is a negative control.
 
 The interval checkpoint adds a general encoded-cutoff recurrence and 44 rows
-of 33 exact counts. TrimmedLayer.lean is generated with the table: its finite
+of 33 exact counts. TrimmedLayer.lean and four recurrence helpers are generated with the table: their finite
 transitions use kernel evaluation and its recurrence proof connects the counts
 to actual words. TrimmedPacking.lean proves selection and the translated
 packing. The independent checker reads high digits first, compares all 1,452
@@ -152,7 +153,7 @@ The twelve source patches are alternatives against the same original manuscript.
 
 The current note is notes/sphere-packing.tex; the earlier ternary argument is
 notes/packing.tex. Neither is needed by the executable proof checks.
-The current note, including degree-five label tags, the fresh-digit estimate and prime-progression transfer, compiled successfully in the desktop editor with
+The current note, including reserved tag words, the fresh-digit estimate and prime-progression transfer, compiled successfully in the desktop editor with
 Tectonic 0.17.0+20260731. Its source hash and bundle identity are recorded in
 [artifacts/sphere-latex-status.json](../artifacts/sphere-latex-status.json).
 The initial download failure was resolved by using the
@@ -184,7 +185,16 @@ theorem uses structural tag and distinct-label interfaces; instantiating
 them from the norm packing and identifying the minor exponent with the
 upstream Smith divisor remain written connections.
 Run python scripts/verify_five.py alone or the full verifier, which checks
-fourteen results and reproduces thirty-six generated files. The new controls
+fifteen results and reproduces forty-four generated files. These controls
 enumerate 147,456 digit matrices and 324 norm terms for each of two degree-five
 matrices. Exact scope, negative controls and hashes are recorded in
 artifacts/five-verification.json.
+
+The reserved-tag checkpoint uses the same algebra and probability theorem.
+Its three new core Lean modules prove the exact interval count, packing,
+both tag exclusions, sparse-label distinction and numerical gain, with 14
+audited exports. Run python scripts/verify_reserved.py alone or the full
+verifier. Its independent checks enumerate 4,096 words, inspect every pair
+in the selected 2,921-word set, and reject overlapping tags. The tag span is
+ten; the field degree remains five. The new source patch applies directly
+to the same pinned manuscript, and all earlier certificates are retained.

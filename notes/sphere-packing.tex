@@ -8,7 +8,7 @@
 \newtheorem{proposition}[lemma]{Proposition}
 \title{Sphere packing and improved scales for the Heilbronn construction}
 \author{Ivan Blinov\\\small Research draft prepared with OpenAI Codex assistance}
-\date{October 13, 2026}
+\date{October 15, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -20,20 +20,21 @@ the base grows as $r^6$, while the conditional divisor moment stays bounded.
 Adding low-position label tags and retaining the small-determinant event
 in the divisor estimate now allows degree $d=5$. Two conjugate pairs,
 one singleton, and nine-node descent give $T=9\cdot18^2=2\,916$ over primes
-$r\equiv1\pmod3$. A shifted exact sphere layer and the retained slab cap give
+$r\equiv1\pmod3$. Reserving five words of a binary-digit ternary set for
+label tags removes the large shift of the norm support. This gives
 \[
- k=1\,166\,895,\qquad
- \eta_5=\frac{1}{145\,278\,430}
-       \approx6.8833\cdot10^{-9}.
+ k=408\,781,\qquad
+ \eta_{\rm res}=\frac{1}{50\,893\,237}
+       \approx1.96490\cdot10^{-8}.
 \]
-This exponent is about $108.69$ times the degree-seven exponent.
+This exponent is about $2.85457$ times the preceding degree-five exponent.
 The prime number theorem in the fixed progression supplies the required
 bounded-ratio interpolation to every sufficiently large cardinality.
 The earlier constructions are retained below.
 Lean proves the new degree-five norm decomposition, bilinear descent,
 homogeneous coordinates and the distinct-label criterion.
-It also proves the exact layer count, shifted finite packing, tag support
-separation, repeated-column factorization and integer scale inequalities.
+It also proves exact cutoff counts, the finite packing, exclusion of
+reserved tags, repeated-column factorization and integer scale inequalities.
 The algebra proof uses Mathlib;
 the packing and scale proofs use core Lean.
 The finite fresh-digit probability theorem is now proved in Lean, including
@@ -1773,15 +1774,113 @@ terms. Thirty-two descended terms are checked; omitting a node breaks 31.
 The layer histogram independently agrees with all 30 count entries, and
 the verifier rejects thirteen corrupted certificates. These finite tests
 complement the universal algebra and finite probability proofs. The shared
-audit now rebuilds 39 Mathlib-based modules and checks 120 exported theorems,
+audit now rebuilds 43 Mathlib-based modules and checks 128 exported theorems,
 including 40 new finite probability exports. Only the standard logical
 axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}
 are permitted. This does not certify the remaining geometric interfaces.
 
+\section{Reserved tag words without a support shift}\label{sec:reserved}
+The preceding construction separates tags by translating the norm positions
+through a large distance. Instead, reserve tag words inside the same
+progression-free set. Retain $d=5$, $T=2916$ and all row-dependent scales.
+Let
+\[
+ \mathcal C=\left\{\sum_{j=0}^{11}x_j3^j:x_j\in\{0,1\}\right\}.
+\]
+No carries imply that $x+y=2z$ for $x,y,z\in\mathcal C$ forces $x=y=z$.
+Equivalently, this is the half-alphabet-one sphere in twelve coordinates;
+all its words have centered squared norm $12$.
+
+The cutoff recurrence from Section~\ref{sec:trimmed} gives
+\[
+ \#(\mathcal C\cap[0,10))=5,\qquad
+ \#(\mathcal C\cap[0,204391))=2921.
+\]
+Its 47 states are checked by the Lean kernel and independently by
+enumeration of the binary words. Reserve
+\[
+ \mathcal T=\{t_0,t_1,t_2,t_3,t_4\}=\{0,1,3,4,9\},
+ \qquad \mathcal A=\mathcal C\cap[10,204391).
+\]
+Then $|\mathcal A|=2916$. Enumerate $\mathcal A$ by $u_a$ and put
+\[
+ k=408781,\qquad i_a=j_a=u_a,\qquad \ell_a=k-1-2u_a.
+\]
+Both $10$ and $204390$ occur in $\mathcal A$. The displayed positions
+are nonnegative, below $k$, and injective within each row.
+
+\begin{lemma}[Reserved tags preserve the target coefficient]
+The norm positions have the required matching property. Moreover, for all
+$s,t\in\{0,\ldots,4\}$ and norm indices $a,b$,
+\[
+ t_s+i_a+\ell_b\ne k-1,\qquad
+ t_s+t_t+\ell_a\ne k-1.
+\]
+\end{lemma}
+\begin{proof}
+A norm matching equation is $u_a+u_b=2u_c$, so midpoint rigidity gives
+$a=b=c$. A one-tag equation would give $t_s+u_a=2u_b$ in $\mathcal C$,
+and hence $t_s=u_a=u_b$, contradicting the disjoint ranges of
+$\mathcal T$ and $\mathcal A$. The two-tag equation similarly gives
+$t_s=t_t=u_a$, again impossible. Symmetry covers a single tag in row two.
+\end{proof}
+
+Prescribe residue $1$ at row one, position zero, and prescribe the five
+basis coordinates of the label at row two, positions $t_0,\ldots,t_4$.
+All other residue prescriptions retain the preceding norm construction.
+The lemma excludes every tag from the coefficient at $k-1$, so it still
+reduces to the field norm modulo $r$. In particular distinct labels exclude
+the small-residue event. Unspecified residues are zero modulo $r$;
+their unique positive representatives in the first two rows are $r$.
+
+For labels $(\lambda,\lambda,\mu)$ with $\lambda\ne\mu$, let $s$ be their
+first differing basis coordinate and set $a=t_s<10$. Below position ten,
+the row-one coefficients are $1,r,r,\ldots$. The row-two coefficients agree
+below $a$, and their difference at $a$ is nonzero with absolute value below
+$r$. Thus the same tag-minor argument gives $b\le a<10$.
+The fresh position $k-1-a$ is greater than $a$, because $k\ge20$.
+Apply the finite probability theorem with tag span ten. Its tag-span
+parameter is independent of the extension degree, which is still five.
+The resulting bound remains
+\[
+ \mathbb E[D\mathbf1_J]\le \frac6{Mr^5}+\frac2{r^{10}},
+ \qquad M=400k^2r^3.
+\]
+All three equal labels are retained in the second term.
+
+The deletion inequalities and the interpolation in a fixed prime progression
+therefore apply with $\rho=249k+3$ and $\gamma=\rho/(\rho+1)$, giving
+\[
+ \boxed{\eta_{\rm res}=\frac2{249k+5}
+       =\frac1{50\,893\,237}.}
+\]
+The gain over Section~\ref{sec:five} is
+$145278430/50893237\approx2.85457$.
+The new core proof audits fourteen exported statements: both cutoff counts,
+the selected family, complete packing, both tag exclusions, sparse-label
+distinction, fresh position and numerical identities. The full norm-packing
+instantiation of the probability theorem, identification with the Smith
+divisor, and the geometric transfers remain written, as before.
+
+The independent verifier exhausts all $4267581$ unordered pairs, including
+equal pairs, in the selected $2921$-word set. It also checks all $992$
+ordered distinct pairs of binary five-coordinate labels and $32$ small
+determinant coefficient identities. Moving a tag onto a norm position
+corrupts $31$ of those identities. Eleven corrupted certificates are rejected.
+
+\paragraph{The present obstruction to degree three.}
+With the same scales and collision bound, the two alteration powers for
+general $d$ are $2\gamma+3-d$ and $2\gamma+6-2d$. At $d=3$ both become
+$2\gamma>0$. Consequently this sufficient estimate cannot reach degree
+three merely by changing $k$. A different collision or deletion argument
+would be required; no impossibility result for other constructions follows.
+
 \section{Verification and remaining boundary}
 First prepare the pinned algebra dependencies with
 \texttt{python scripts/prepare\_mathlib.py}.
-For the current result, run \texttt{python scripts/build\_five.py}
+For the current result, run \texttt{python scripts/build\_reserved.py}
+and \texttt{python scripts/verify\_reserved.py}.
+For the preserved shifted degree-five result, run \texttt{python scripts/build\_five.py}
 and \texttt{python scripts/verify\_five.py}.
 For the preserved degree-seven result, run \texttt{python scripts/build\_rowdigits.py}
 and \texttt{python scripts/verify\_rowdigits.py}.
@@ -1796,7 +1895,7 @@ For the preserved paired result, run \texttt{python scripts/build\_paired.py},
 For the preserved five-term result, run \texttt{python scripts/build\_rankfive.py},
 then \texttt{python scripts/verify\_rankfive.py}. The ternary,
 sphere-only, retuned, slab, central-layer, compressed-norm, bilinear-layer
-Frobenius-orbit, rank-five, paired, eighteen-form, interval, row-digit and tagged degree-five patches are fourteen alternatives applied
+Frobenius-orbit, rank-five, paired, eighteen-form, interval, row-digit, tagged degree-five and reserved-tag patches are fifteen alternatives applied
 directly to the unchanged manuscript, not successive patches.
 The retuned, slab, central, norm, bilinear and Frobenius patches update Sections 3--8, including the full deletion
 and interpolation argument.
@@ -1918,9 +2017,9 @@ Section~4. Mathlib is pinned to commit
 the dependency lock contains all seven exact revisions.
 \texttt{scripts/verify\_algebra.py} rebuilds these five modules, the
 two bilinear modules, four Frobenius modules, four rank-five modules,
-three paired modules, three eighteen-form modules, three degree-seven modules,
+three paired modules, seven eighteen-form modules (including four proof helpers), three degree-seven modules,
 four degree-five algebra modules, and eleven finite probability modules,
-auditing 120 exported theorems in 39 modules in total. Their only logical
+auditing 128 exported theorems in 43 modules in total. Their only logical
 axioms are \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}. Each compilation is limited to one thread,
 2048 MB and 120 seconds.
@@ -1941,12 +2040,14 @@ nodes, the three-factor projection formula and the determinant descent.
 regrouping and proves the functional norm identity, homogeneous
 polynomial form and distinct-label specialization. The hypotheses
 supply only the fields and their degree and cardinality, not a desired
-decomposition. \texttt{ExactLayer.lean} symbolically enumerates digit
+decomposition. \texttt{ExactLayerCounting.lean} symbolically enumerates digit
 words, proves their nonduplication and the counting recurrence, and
 checks every row of the finite table with the Lean kernel. It then
 selects the words and proves \texttt{bilinear\_packing}. No count-table
 entry or layer-capacity hypothesis is assumed. The count table is
-checked by list equalities in eleven separate transitions, within
+checked by list equalities in eleven separate transitions, split across
+four helper modules. The final family and packing proofs remain in
+\texttt{ExactLayer.lean}, within
 the same one-thread, 2048 MB and 120-second compilation limits.
 
 The new finite controls check all basis products and five determinants
@@ -2008,7 +2109,7 @@ checks still perform a fresh rebuild.
 \texttt{MixedSphere.lean} proves sphere rigidity and mixed-radix matching
 for a list of half-alphabets. \texttt{MixedLayerCounting.lean} connects
 symbolic word enumeration to the counting recurrence. The nine checked
-transitions of the 120-entry histogram are divided into three modules to
+transitions of the 120-entry histogram are divided into nine modules to
 keep each compilation within the stated limits. \texttt{MixedLayer.lean}
 identifies the exact coefficient, and \texttt{RankFivePacking.lean}
 proves word selection, the complete packing and the lower gain bound.
