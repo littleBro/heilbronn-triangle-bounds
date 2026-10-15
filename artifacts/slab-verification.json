@@ -148,16 +148,26 @@
     "certificates/tuned.json": "1c793b8561eaf8b1c69c5bd8d7a89c0ba3481365f8016ba4148d2ddabdd1373e",
     "certificates/slab.json": "df7a70005c8a734cff376de212aa49c4dae4413c2c68a17dc1069adf80a0d819",
     "patches/slab-cap.patch": "3e274f138968cc77f37c0e334fb7c1728b6346db06a7c22e89f92696c217e9a6",
-    "notes/sphere-packing.tex": "43e83ae4525949f3f6b3fe058abbe5ed2138d385f0d5ca5265f16ba0ddcbe88b",
-    "README.md": "46440f096dfd58f4b6f559ce0a8dbecd01587788d1d49b0a9b5a56999d7c29a0",
-    "docs/review.md": "b2dbbd4c48e983d98acc19e9f8a9696c47f0ec1fe41a1ef64707bb459b2f9041",
+    "notes/sphere-packing.tex": "b2606cbefba27b3c59fb08debd5b45c88e0ab3cd7797ce71da2cb962987a3db0",
+    "README.md": "79a585ad9909c25638c1809e7ba2bd928fe0332257b40228d52a110d2e19b009",
+    "docs/review.md": "cd6caf9203ade17b5ab871da0869a9b27496e1e6d967e0b809b4ff8e7609a641",
     "upstream/manifest.json": "6375e074f2867b705c8b2e09c3c7fde793e6c60d3f4ff43745df6fd0846bc62a",
-    "artifacts/sphere-latex-status.json": "c80c1750e0533513c9ec8c2ddc443d905d52f75ed00630043522316a790d532a"
+    "artifacts/sphere-latex-status.json": "bbb8e2d8ecb6309d8eb9b04ba7a87c6f6cb9f2fe28de7b50c510ef1a59fcf95e"
   },
   "not_established": [
     "Lean proof of the slab cap geometry or full geometric theorem",
     "complete independent audit of upstream estimates",
     "practical finite-n improvement",
     "novelty, priority or global optimality"
-  ]
+  ],
+  "documentation_refresh": {
+    "mathematical_inputs_unchanged": true,
+    "files": [
+      "README.md",
+      "artifacts/sphere-latex-status.json",
+      "docs/review.md",
+      "notes/sphere-packing.tex"
+    ],
+    "reason": "This turn passed the complete checkpoint before documentation-only module and generated-file count updates."
+  }
 }

@@ -185,7 +185,7 @@ def table_source(table):
     return text+"end HeilbronnFiveLayer\n"
 
 
-def patch_sections():
+def five_sections():
     originals, changed = row_sections()
     name = "03-norm-digits.tex"
     text = changed[name]
@@ -229,6 +229,11 @@ At every remaining position the residue is zero.""")
     text = replace_once(text, r"\frac1{\rho+1}=\frac1{249k+4}",
                               r"\frac2{\rho+2}=\frac2{249k+5}=\frac1{145\,278\,430}")
     changed[name] = text
+    return originals, changed
+
+
+def patch_sections():
+    originals, changed = five_sections()
     return "".join("".join(difflib.unified_diff(
         originals[n].splitlines(keepends=True), changed[n].splitlines(keepends=True),
         fromfile="a/build/sections/"+n, tofile="b/build/sections/"+n)) for n in originals)

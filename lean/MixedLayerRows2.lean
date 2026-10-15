@@ -5,10 +5,6 @@ set_option maxHeartbeats 1000000
 
 namespace HeilbronnMixedLayer
 
-theorem recurrence_6 : nextList 9 row6.toList = row7.toList := by decide
-
-theorem recurrence_7 : nextList 9 row7.toList = row8.toList := by decide
-
-theorem recurrence_8 : nextList 10 row8.toList = row9.toList := by decide
+theorem recurrence_2 : nextList 9 row2.toList = row3.toList := by decide
 
 end HeilbronnMixedLayer

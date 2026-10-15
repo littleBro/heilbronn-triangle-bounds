@@ -18,10 +18,12 @@ lean_lib Heilbronn where
     `MixedLayerCounting, `MixedLayerRows0, `MixedLayerRows1, `MixedLayerRows2,
     `MixedLayer, `RankFivePacking, `PairedExpansion, `PairedNorm, `PairedPolynomials,
     `PairedLayerData, `PairedLayerCounting, `PairedLayerRows0, `PairedLayerRows1,
-    `PairedLayer, `PairedPacking, `EighteenExpansion, `EighteenNorm, `EighteenPolynomials,
+    `PairedLayer, `PairedPacking, `EighteenForms, `EighteenBlocks0, `EighteenBlocks1,
+    `EighteenBlocks2, `EighteenExpansion, `EighteenNorm, `EighteenPolynomials,
     `EighteenLayerData, `EighteenLayer, `EighteenPacking, `IntervalCounting,
     `TrimmedLayerData, `TrimmedLayer, `TrimmedPacking, `NormCompression, `Slab, `Tuned, `Sphere,
     `SevenDescent, `SevenNorm, `SevenPolynomials, `SevenLayerData, `SevenLayer, `SevenPacking,
     `RowDigits, `FiveDescent, `FiveNorm, `FivePolynomials, `FiveCollision,
     `FiveLayerData, `FiveLayer, `FivePacking, `FiveScales,
-    `FiveProbability, `FiveDigits, `FiveJointTail, `FiveTags, `FiveMoment, `FiveCarry, `FiveCoefficientBounds, `FiveLabels, `FiveTagged, `FiveReindex, `FiveFiniteTheorem]
+    `FiveProbability, `FiveDigits, `FiveJointTail, `FiveTags, `FiveMoment, `FiveCarry, `FiveCoefficientBounds, `FiveLabels, `FiveTagged, `FiveReindex, `FiveFiniteTheorem,
+    `ReservedLayerData, `ReservedLayer, `ReservedPacking]

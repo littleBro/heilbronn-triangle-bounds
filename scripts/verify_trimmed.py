@@ -18,7 +18,8 @@ from verify_slab import rejected, scale_constraints
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = ["Sphere", "MixedSphere", "MixedLayerData", "MixedLayerCounting",
-           "IntervalCounting", "TrimmedLayerData", "TrimmedLayer", "TrimmedPacking"]
+           "IntervalCounting", "TrimmedLayerData", "TrimmedLayerRows0", "TrimmedLayerRows1",
+           "TrimmedLayerRows2", "TrimmedLayerRows3", "TrimmedLayer", "TrimmedPacking"]
 
 
 def arithmetic(c, previous):
